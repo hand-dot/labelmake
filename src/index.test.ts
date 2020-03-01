@@ -1,6 +1,8 @@
-import hi from "./index";
-describe("greet", () => {
-  test("should say hello to Tom.", () => {
-    expect(hi("Tom")).toBe("Hello Tom");
+import Labelmake from "./index";
+describe("test", () => {
+  test("test", () => {
+    const labelmake = new Labelmake();
+    const pdf = labelmake.create([{test:'test'}])
+    expect(pdf).toEqual([{test:'test'}]);
   });
 });
