@@ -3,7 +3,7 @@ import {
   validateBarcodeInput,
   createDocDefinition,
   createPdfBinary
-} from "./logic";
+} from "./pdf";
 
 describe("validateBarcodeInput", () => {
   test("qrcode", () => {

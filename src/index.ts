@@ -1,3 +1,4 @@
+import pdf from "./pdf";
 import { Template } from "./type";
 class Labelmake {
   private font: { [key: string]: string } = {};

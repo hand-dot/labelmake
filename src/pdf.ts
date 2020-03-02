@@ -111,8 +111,7 @@ export const createDocDefinition = async (
   labelDatas: {
     [key: string]: string | null;
   }[],
-  templateData: TemplateData,
-  preview = false
+  templateData: TemplateData
 ): Promise<DocDefinition> => {
   const { image, position, pageSize, fontName } = templateData;
   const docDefinition: DocDefinition = {
@@ -133,23 +132,6 @@ export const createDocDefinition = async (
       width: mm2pt(pageSize.width),
       pageBreak: index === 0 ? "" : "before"
     });
-    if (preview) {
-      docDefinition.content.push({
-        absolutePosition: {
-          x: mm2pt(0),
-          y: mm2pt(pageSize.height / 2 - 25)
-        },
-        alignment: "center",
-        columns: [
-          {
-            text: "P r e v i e w",
-            color: "#999",
-            width: mm2pt(pageSize.width),
-            fontSize: 50
-          }
-        ]
-      });
-    }
     const keys = Object.keys(position);
     for (let j = 0; j < keys.length; j++) {
       const key = keys[j];
@@ -241,3 +223,10 @@ export const createPdfBinary = (
     pdf.getDataUrl((base64: string) => resolve(toBlob(base64)));
   });
 };
+
+export default (
+  labelDatas: {
+    [key: string]: string | null;
+  }[],
+  templateData: TemplateData
+) => createDocDefinition(labelDatas, templateData).then(createPdfBinary);
