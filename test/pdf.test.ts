@@ -154,10 +154,11 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
           type: "text",
+          alignment: "left",
+          fontSize: 10,
+          fontName: "FontName2",
+          characterSpacing: 0,
           lineHeight: 1
         }
       },
@@ -166,13 +167,13 @@ describe("createDocDefinition", () => {
         width: 100,
         height: 100
       },
-      fontName: "FontName"
+      fontName: "FontName1"
     };
     const dd = await createDocDefinition(labelDatas, templateData);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
-      defaultStyle: { font: "FontName" },
+      defaultStyle: { font: "FontName1" },
       content: [
         {
           image:
@@ -188,7 +189,8 @@ describe("createDocDefinition", () => {
             {
               text: "hello1",
               width: 56.692,
-              fontSize: 100,
+              font: "FontName2",
+              fontSize: 10,
               characterSpacing: 0,
               lineHeight: 1
             }
@@ -208,7 +210,8 @@ describe("createDocDefinition", () => {
             {
               text: "hello2",
               width: 56.692,
-              fontSize: 100,
+              font: "FontName2",
+              fontSize: 10,
               characterSpacing: 0,
               lineHeight: 1
             }
@@ -234,11 +237,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "image",
-          lineHeight: 1
+          type: "image"
         }
       },
       background: null,
@@ -298,11 +297,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "svg",
-          lineHeight: 1
+          type: "svg"
         }
       },
       background: null,
@@ -360,11 +355,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "qrcode",
-          lineHeight: 1
+          type: "qrcode"
         }
       },
       background: null,
@@ -424,11 +415,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "japanpost",
-          lineHeight: 1
+          type: "japanpost"
         }
       },
       background: null,
@@ -488,11 +475,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "ean13",
-          lineHeight: 1
+          type: "ean13"
         }
       },
       background: null,
@@ -552,11 +535,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "ean8",
-          lineHeight: 1
+          type: "ean8"
         }
       },
       background: null,
@@ -616,11 +595,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "code39",
-          lineHeight: 1
+          type: "code39"
         }
       },
       background: null,
@@ -680,11 +655,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "code128",
-          lineHeight: 1
+          type: "code128"
         }
       },
       background: null,
@@ -744,11 +715,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "nw7",
-          lineHeight: 1
+          type: "nw7"
         }
       },
       background: null,
@@ -808,11 +775,7 @@ describe("createDocDefinition", () => {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
-          alignment: "left",
-          size: 100,
-          space: 0,
-          type: "itf14",
-          lineHeight: 1
+          type: "itf14"
         }
       },
       background: null,

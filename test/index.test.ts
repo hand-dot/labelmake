@@ -19,14 +19,14 @@ const getPdf = (pdfFilePath: string) => {
 const getTmpPath = (fileName: string) => __dirname + `/tmp/${fileName}`;
 
 const getTemplateData = (): TemplateData => ({
-  image: null,
+  background: null,
   position: {
     test: {
       position: { x: 10, y: 10 },
       width: 20,
       alignment: "left",
-      size: 8,
-      space: 0,
+      fontSize: 8,
+      characterSpacing: 0,
       type: "text",
       lineHeight: 1
     }

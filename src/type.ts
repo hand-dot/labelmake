@@ -14,13 +14,14 @@ export type TemplateType =
 export type BarCodeType = Exclude<TemplateType, "text" | "image" | "svg">;
 
 export interface TemplatePosition {
+  type: TemplateType;
   position: { x: number; y: number };
   width: number;
-  alignment: "left" | "right" | "center";
-  size: number;
-  space: number;
-  type: TemplateType;
-  lineHeight: number;
+  alignment?: "left" | "right" | "center";
+  fontName?: string;
+  fontSize?: number;
+  characterSpacing?: number;
+  lineHeight?: number;
 }
 interface PageSize {
   width: number;

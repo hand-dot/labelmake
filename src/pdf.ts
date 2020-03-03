@@ -183,8 +183,9 @@ export const createDocDefinition = async (
           {
             text: input || "",
             width: mm2pt(labelData.width),
-            fontSize: labelData.size,
-            characterSpacing: labelData.space,
+            font: labelData.fontName,
+            fontSize: labelData.fontSize,
+            characterSpacing: labelData.characterSpacing,
             lineHeight: labelData.lineHeight
           }
         ];
