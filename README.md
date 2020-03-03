@@ -1,4 +1,4 @@
-CURRENTLY ALPHA VERSION 
+# CURRENTLY ALPHA VERSION 
 
 ![Unit Testing](https://github.com/hand-dot/labelmake/workflows/Unit%20Testing/badge.svg)
 # labelmake
