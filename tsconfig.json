@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "commonjs",
+        "declaration": true,
+        "strict": true,
+        "typeRoots": [
+            "src/",
+            "node_modules/@types"
+        ],
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "outDir": "dist"
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.test.ts"
+    ],
+}
