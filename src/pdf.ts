@@ -14,6 +14,9 @@ const dummyImage =
   base64PngHeader +
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQI12NgYAAAAAMAASDVlMcAAAAASUVORK5CYII=";
 
+const dummySvg =
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 0"></svg>';
+
 const mm2pt = (mm: number): number => {
   // https://www.ddc.co.jp/words/archives/20090701114500.html
   const pointRatio = 2.8346;
@@ -28,6 +31,9 @@ const pngBuffer2PngBase64 = (buffer: Buffer) =>
 const validateBase64Image = (base64: string) =>
   base64 !== "" &&
   [base64PngHeader, base64JpegHeader].some(h => base64.startsWith(h));
+
+const validateSvg = (svg: string) =>
+  svg.startsWith("<svg") && svg.endsWith("</svg>");
 
 const createBarCode = async ({
   type,
@@ -59,6 +65,14 @@ const createImage = (base64Image: string | null) => {
     return base64Image;
   } else {
     return dummyImage;
+  }
+};
+
+const createSvg = (svg: string | null) => {
+  if (svg && validateSvg(svg)) {
+    return svg;
+  } else {
+    return dummySvg;
   }
 };
 
@@ -124,7 +138,7 @@ export const createDocDefinition = async (
   }[],
   templateData: TemplateData
 ): Promise<DocDefinition> => {
-  const { image, position, pageSize, fontName } = templateData;
+  const { background, position, pageSize, fontName } = templateData;
   const docDefinition: DocDefinition = {
     pageSize: {
       width: mm2pt(pageSize.width),
@@ -137,12 +151,21 @@ export const createDocDefinition = async (
   for (let i = 0; i < labelDatas.length; i++) {
     const data = labelDatas[i];
     const index = i;
-    docDefinition.content.push({
-      image: createImage(image),
+    const bg: Content = {
+      image: createImage(background),
       absolutePosition: { x: 0, y: 0 },
       width: mm2pt(pageSize.width),
       pageBreak: index === 0 ? "" : "before"
-    });
+    };
+    // TODO リファクタ
+    if (background) {
+      if (validateSvg(background)) {
+        bg.image = createImage(background);
+      } else if (validateBase64Image(background)) {
+        bg.svg = createImage(background);
+      }
+    }
+    docDefinition.content.push(bg);
     const keys = Object.keys(position);
     for (let j = 0; j < keys.length; j++) {
       const key = keys[j];
@@ -167,6 +190,9 @@ export const createDocDefinition = async (
         ];
       } else if (labelData.type === "image") {
         obj.image = createImage(input);
+        obj.width = mm2pt(labelData.width);
+      } else if (labelData.type === "svg") {
+        obj.svg = createSvg(input);
         obj.width = mm2pt(labelData.width);
       } else if (labelData.type === "qrcode") {
         // バーコードの縦横比に応じて分けている

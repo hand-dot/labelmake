@@ -1,6 +1,7 @@
 export type TemplateType =
   | "text"
   | "image"
+  | "svg"
   | "qrcode"
   | "japanpost"
   | "ean13"
@@ -10,7 +11,7 @@ export type TemplateType =
   | "nw7"
   | "itf14";
 
-export type BarCodeType = Exclude<TemplateType, "text" | "image">;
+export type BarCodeType = Exclude<TemplateType, "text" | "image" | "svg">;
 
 export interface TemplatePosition {
   position: { x: number; y: number };
@@ -21,28 +22,17 @@ export interface TemplatePosition {
   type: TemplateType;
   lineHeight: number;
 }
-export interface PageSize {
+interface PageSize {
   width: number;
   height: number;
 }
 
-export interface Template {
-  sampledata: { [key: string]: string }[];
+export type TemplateData = {
   position: { [key: string]: TemplatePosition };
-  image: string | null;
+  background: string | null;
   pageSize: PageSize;
-  columns: { data: string; title: string }[];
-  dataSchema: { [key: string]: null };
-  name: string;
-  id: string;
   fontName: string;
-}
-
-export type TemplateData = Pick<
-  Template,
-  "image" | "position" | "pageSize" | "fontName"
->;
-
+};
 interface Style {
   font?: any;
   fontSize?: number;
@@ -74,10 +64,11 @@ export interface Content {
   columns?: Content[];
   stack?: Content[];
   image?: string;
+  svg?: string;
   width?: string | number;
   height?: string | number;
   fit?: [number, number];
-  pageBreak?: "before" | "after";
+  pageBreak?: "before" | "after" | "";
   alignment?: Alignment;
   ul?: Content[];
   ol?: Content[];
