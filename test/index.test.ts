@@ -17,7 +17,7 @@ describe("test", () => {
           position: { x: 10, y: 10 },
           width: 20,
           alignment: "left",
-          size: 100,
+          size: 8,
           space: 0,
           type: "text",
           lineHeight: 1
@@ -30,9 +30,10 @@ describe("test", () => {
       fontName: "NotoSansCJKjp"
     };
     const pdf = await labelmake.create(templateData, [{ test: "hello" }]);
+    // TODO PDFのアサーションとファイルの削除
     fs.writeFileSync("./sans.pdf", pdf);
   });
-    test("NotoSerifCJKjp", async () => {
+  test("NotoSerifCJKjp", async () => {
     const labelmake = new Labelmake();
     labelmake.registerFont("NotoSerifCJKjp", serif_vfs_fonts);
     const templateData: TemplateData = {
@@ -42,7 +43,7 @@ describe("test", () => {
           position: { x: 10, y: 10 },
           width: 20,
           alignment: "left",
-          size: 100,
+          size: 8,
           space: 0,
           type: "text",
           lineHeight: 1
@@ -55,6 +56,7 @@ describe("test", () => {
       fontName: "NotoSerifCJKjp"
     };
     const pdf = await labelmake.create(templateData, [{ test: "hello" }]);
+    // TODO PDFのアサーションとファイルの削除
     fs.writeFileSync("./serif.pdf", pdf);
   });
 });

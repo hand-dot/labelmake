@@ -1,4 +1,4 @@
-import * as pdfMake from "pdfmake/build/pdfmake";
+import pdfMake from "pdfmake/build/pdfmake";
 import pdf from "./pdf";
 import { TemplateData } from "./type";
 class Labelmake {
