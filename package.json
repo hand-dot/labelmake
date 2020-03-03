@@ -42,12 +42,14 @@
   },
   "homepage": "https://github.com/hand-dot/labelmake#readme",
   "dependencies": {
+    "@types/pdfmake": "^0.1.10",
     "bwip-js": "^2.0.6",
     "pdfmake": "^0.1.64"
   },
   "devDependencies": {
     "@types/bwip-js": "^1.7.0",
     "@types/jest": "^25.1.3",
+    "@types/node": "^13.7.7",
     "jest": "^25.1.0",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3"

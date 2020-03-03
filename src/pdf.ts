@@ -1,7 +1,5 @@
 //@ts-ignore
 import * as bwipjs from "bwip-js/dist/node-bwipjs.js";
-//@ts-ignore
-import * as pdfMake from "pdfmake/build/pdfmake";
 import {
   TemplateData,
   TemplatePosition,
@@ -30,6 +28,52 @@ const pngBuffer2PngBase64 = (buffer: Buffer) =>
 const validateBase64Image = (base64: string) =>
   base64 !== "" &&
   [base64PngHeader, base64JpegHeader].some(h => base64.startsWith(h));
+
+const createBarCode = async ({
+  type,
+  input,
+  width,
+  height
+}: {
+  type: BarCodeType;
+  input: string | null;
+  width: number;
+  height: number;
+}) => {
+  if (input && validateBarcodeInput(type, input)) {
+    //@ts-ignore
+    const buffer = await bwipjs.toBuffer({
+      bcid: type === "nw7" ? "rationalizedCodabar" : type,
+      text: input,
+      width: width * 3, // BWIPPは72dpiで画像を作成するため印刷用に画像を大きくしておく
+      height: height * 3
+    });
+    return pngBuffer2PngBase64(buffer);
+  } else {
+    return dummyImage;
+  }
+};
+
+const createImage = (base64Image: string | null) => {
+  if (base64Image && validateBase64Image(base64Image)) {
+    return base64Image;
+  } else {
+    return dummyImage;
+  }
+};
+
+const atob = (str: string) => {
+  return Buffer.from(str, "base64").toString("binary");
+};
+
+const toBlob = (base64: string) => {
+  const bin = atob(base64.split(",")[1]);
+  const arraybuffer = new Uint8Array(bin.length);
+  for (let i = 0, l = bin.length; l > i; i++) {
+    arraybuffer[i] = bin.charCodeAt(i);
+  }
+  return Buffer.from(arraybuffer);
+};
 
 export const validateBarcodeInput = (type: BarCodeType, input: string) => {
   if (!input) return false;
@@ -72,39 +116,6 @@ export const validateBarcodeInput = (type: BarCodeType, input: string) => {
     return regexp.test(input);
   }
   return false;
-};
-
-const createBarCode = async ({
-  type,
-  input,
-  width,
-  height
-}: {
-  type: BarCodeType;
-  input: string | null;
-  width: number;
-  height: number;
-}) => {
-  if (input && validateBarcodeInput(type, input)) {
-    //@ts-ignore
-    const buffer = await bwipjs.toBuffer({
-      bcid: type === "nw7" ? "rationalizedCodabar" : type,
-      text: input,
-      width: width * 3, // BWIPPは72dpiで画像を作成するため印刷用に画像を大きくしておく
-      height: height * 3
-    });
-    return pngBuffer2PngBase64(buffer);
-  } else {
-    return dummyImage;
-  }
-};
-
-const createImage = (base64Image: string | null) => {
-  if (base64Image && validateBase64Image(base64Image)) {
-    return base64Image;
-  } else {
-    return dummyImage;
-  }
 };
 
 export const createDocDefinition = async (
@@ -202,31 +213,18 @@ export const createDocDefinition = async (
   return docDefinition;
 };
 
-const atob = (str: string) => {
-  return Buffer.from(str, "base64").toString("binary");
-};
-
-const toBlob = (base64: string) => {
-  const bin = atob(base64.split(",")[1]);
-  const arraybuffer = new Uint8Array(bin.length);
-  for (let i = 0, l = bin.length; l > i; i++) {
-    arraybuffer[i] = bin.charCodeAt(i);
-  }
-  return Buffer.from(arraybuffer);
-};
-
-export const createPdfBinary = (
-  docDefinition: DocDefinition
-): Promise<Buffer> => {
-  return new Promise(resolve => {
-    const pdf = pdfMake.createPdf(docDefinition);
-    pdf.getDataUrl((base64: string) => resolve(toBlob(base64)));
-  });
-};
-
 export default (
   labelDatas: {
     [key: string]: string | null;
   }[],
-  templateData: TemplateData
-) => createDocDefinition(labelDatas, templateData).then(createPdfBinary);
+  templateData: TemplateData,
+  pdfMake: any
+): Promise<Buffer> =>
+  createDocDefinition(labelDatas, templateData).then(
+    docDefinition =>
+      new Promise(resolve => {
+        pdfMake
+          .createPdf(docDefinition)
+          .getDataUrl((base64: string) => resolve(toBlob(base64)));
+      })
+  );

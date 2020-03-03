@@ -1,17 +1,29 @@
+import * as pdfMake from "pdfmake/build/pdfmake";
 import pdf from "./pdf";
-import { Template } from "./type";
+import { TemplateData } from "./type";
 class Labelmake {
-  private font: { [key: string]: string } = {};
-  private template: { [key: string]: Template } = {};
-  registerFont(key: string, value: string) {
-    this.font[key] = value;
+  private pdfMake = pdfMake;
+  registerFont(name: string, value: string) {
+    if (!this.pdfMake.vfs) {
+      this.pdfMake.vfs = {};
+    }
+    if (!this.pdfMake.vfs[name]) {
+      this.pdfMake.vfs[name] = "";
+    }
+    this.pdfMake.vfs[name] = value;
+
+    if (!this.pdfMake.fonts) {
+      this.pdfMake.fonts = {};
+    }
+    if (!this.pdfMake.fonts[name]) {
+      this.pdfMake.fonts[name] = {};
+    }
+    this.pdfMake.fonts[name] = {
+      normal: name
+    };
   }
-  registerTemplate(key: string, value: Template) {
-    this.template[key] = value;
-  }
-  // key or templateを第一引数にとる？
-  create(datas: { [key: string]: string }[]) {
-    return datas;
+  create(templateData: TemplateData, datas: { [key: string]: string }[]) {
+    return pdf(datas, templateData, this.pdfMake);
   }
 }
 

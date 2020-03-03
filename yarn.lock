@@ -405,10 +405,15 @@
     jest-diff "^25.1.0"
     pretty-format "^25.1.0"
 
-"@types/node@*":
+"@types/node@*", "@types/node@^13.7.7":
   version "13.7.7"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-13.7.7.tgz#1628e6461ba8cc9b53196dfeaeec7b07fa6eea99"
   integrity sha512-Uo4chgKbnPNlxQwoFmYIwctkQVkMMmsAoGGU4JKwLuvBefF0pCq4FybNSnfkfRCpC7ZW7kttcC/TrRtAJsvGtg==
+
+"@types/pdfmake@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@types/pdfmake/-/pdfmake-0.1.10.tgz#27969380559a767be662993990a2ad75bc1ac5da"
+  integrity sha512-dr0MCqJbckV3QmOq0hvObTMBUt/BMbnGfTAutNJxVYycIszEul1pysvk+4QvpPiZl4SQRe+uPiTb/2JLYfqz9Q==
 
 "@types/stack-utils@^1.0.1":
   version "1.0.1"
