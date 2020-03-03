@@ -17,7 +17,9 @@ The result is a PDF based on templates and variable data, which makes the progra
 
 ## Install
 
-```npm install labelmake```
+```
+npm install labelmake
+```
 
 
 ## Methods
