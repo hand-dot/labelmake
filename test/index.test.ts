@@ -134,4 +134,5 @@ describe("Labelmake integrate test", () => {
     const [a, e] = ress;
     expect(a).toEqual(e);
   });
+  // ここはlabelmake.jpで使っているテンプレートをそのままテストにする
 });
