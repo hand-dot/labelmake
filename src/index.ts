@@ -1,7 +1,7 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdf from "./pdf";
 import { TemplateData } from "./type";
-class Labelmake {
+export default class Labelmake {
   private pdfMake = pdfMake;
   registerFont(name: string, value: string) {
     if (!this.pdfMake.vfs) {
@@ -26,5 +26,3 @@ class Labelmake {
     return pdf(datas, templateData, this.pdfMake);
   }
 }
-
-export default Labelmake;
