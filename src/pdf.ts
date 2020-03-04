@@ -157,13 +157,9 @@ export const createDocDefinition = async (
       width: mm2pt(pageSize.width),
       pageBreak: index === 0 ? "" : "before"
     };
-    // TODO リファクタ
-    if (background) {
-      if (validateSvg(background)) {
-        bg.image = createImage(background);
-      } else if (validateBase64Image(background)) {
-        bg.svg = createImage(background);
-      }
+    if (background && validateSvg(background)) {
+      bg.svg = createSvg(background);
+      delete bg.image;
     }
     docDefinition.content.push(bg);
     const keys = Object.keys(position);
