@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "esnext",
-        "module": "commonjs",
+        "module": "umd",
         "declaration": true,
         "strict": true,
         "typeRoots": [
@@ -9,6 +9,7 @@
             "node_modules/@types"
         ],
         "esModuleInterop": true,
+        "moduleResolution": "node",
         "outDir": "dist"
     },
     "include": [

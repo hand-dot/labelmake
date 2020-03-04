@@ -4,11 +4,12 @@
   "description": "PDF generation library of declarative style programing.",
   "main": "dist/index.js",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "jest --coverage",
+    "test:watch": "jest --coverage --watch",
     "lint": "tsc --noEmit",
     "lint:watch": "tsc -w --noEmit",
-    "build": "tsc --module umd",
+    "prebuild": "rimraf dist",
+    "build": "tsc",
     "prepublishOnly": "npm run build"
   },
   "repository": {
@@ -52,6 +53,7 @@
     "@types/node": "^13.7.7",
     "jest": "^25.1.0",
     "pdf2json": "^1.1.8",
+    "rimraf": "^3.0.2",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3"
   }

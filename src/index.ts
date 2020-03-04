@@ -26,3 +26,5 @@ export default class Labelmake {
     return pdf(datas, templateData, this.pdfMake);
   }
 }
+
+module.exports = Labelmake;
