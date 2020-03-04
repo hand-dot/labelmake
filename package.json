@@ -1,6 +1,6 @@
 {
   "name": "labelmake",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "PDF generation library of declarative style programing.",
   "main": "dist/index.js",
   "scripts": {
