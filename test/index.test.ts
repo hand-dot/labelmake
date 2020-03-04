@@ -60,7 +60,7 @@ describe("Labelmake integrate test", () => {
   test("NotoSansCJKjp", async () => {
     const fontName = "NotoSansCJKjp";
     const labelmake = new Labelmake();
-    labelmake.registerFont("NotoSansCJKjp", sans_vfs_fonts);
+    labelmake.registerFont(fontName, sans_vfs_fonts);
     const pdf = await labelmake.create(
       Object.assign(getTemplateData(), { fontName }),
       [{ test: "hello" }]
@@ -78,7 +78,7 @@ describe("Labelmake integrate test", () => {
   test("NotoSerifCJKjp", async () => {
     const fontName = "NotoSerifCJKjp";
     const labelmake = new Labelmake();
-    labelmake.registerFont("NotoSerifCJKjp", serif_vfs_fonts);
+    labelmake.registerFont(fontName, serif_vfs_fonts);
     const pdf = await labelmake.create(
       Object.assign(getTemplateData(), { fontName }),
       [{ test: "hello" }]
@@ -88,6 +88,48 @@ describe("Labelmake integrate test", () => {
     const ress = await Promise.all([
       getPdf(file),
       getPdf(__dirname + "/assert/serif.pdf")
+    ]);
+    const [a, e] = ress;
+    expect(a).toEqual(e);
+  });
+
+  test("NotoSansCJKjp and NotoSerifCJKjp", async () => {
+    const fontName1 = "NotoSansCJKjp";
+    const fontName2 = "NotoSerifCJKjp";
+    const labelmake = new Labelmake();
+    labelmake.registerFont(fontName1, sans_vfs_fonts);
+    labelmake.registerFont(fontName2, serif_vfs_fonts);
+    const templateData = getTemplateData();
+    templateData.fontName = fontName1;
+    templateData.position = {
+      sans: {
+        position: { x: 10, y: 10 },
+        width: 20,
+        alignment: "left",
+        fontSize: 8,
+        characterSpacing: 0,
+        type: "text",
+        lineHeight: 1
+      },
+      serif: {
+        position: { x: 10, y: 20 },
+        width: 20,
+        alignment: "left",
+        fontName: fontName2,
+        fontSize: 8,
+        characterSpacing: 0,
+        type: "text",
+        lineHeight: 1
+      }
+    };
+    const pdf = await labelmake.create(templateData, [
+      { sans: "hello", serif: "hello" }
+    ]);
+    const file = getTmpPath("sans&serif.pdf");
+    fs.writeFileSync(file, pdf);
+    const ress = await Promise.all([
+      getPdf(file),
+      getPdf(__dirname + "/assert/sans&serif.pdf")
     ]);
     const [a, e] = ress;
     expect(a).toEqual(e);
