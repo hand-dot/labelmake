@@ -8,7 +8,6 @@
             "src/",
             "node_modules/@types"
         ],
-        "resolveJsonModule": true,
         "esModuleInterop": true,
         "outDir": "dist"
     },
