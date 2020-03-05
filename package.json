@@ -43,7 +43,6 @@
   },
   "homepage": "https://github.com/hand-dot/labelmake#readme",
   "dependencies": {
-    "@types/pdfmake": "^0.1.10",
     "bwip-js": "^2.0.6",
     "pdfmake": "^0.1.64"
   },

@@ -1,9 +1,7 @@
-//@ts-ignore
 import { sans_vfs_fonts } from "./fonts/sans_vfs_fonts";
-//@ts-ignore
 import { serif_vfs_fonts } from "./fonts/serif_vfs_fonts";
 import fs from "fs";
-import Labelmake from "../src/index";
+import labelmake from "../src/index";
 const PDFParser = require("pdf2json");
 import { TemplateData } from "../src/type";
 
@@ -23,7 +21,7 @@ const getTemplateData = (): TemplateData => ({
   position: {
     test: {
       position: { x: 10, y: 10 },
-      width: 20,
+      width: 80,
       alignment: "left",
       fontSize: 8,
       characterSpacing: 0,
@@ -38,70 +36,80 @@ const getTemplateData = (): TemplateData => ({
   fontName: ""
 });
 
-describe("Labelmake integrate test", () => {
-  afterAll(() => {
-    const dir = __dirname + "/tmp";
-    fs.readdir(dir, (err, files) => {
-      if (err) {
-        throw err;
-      }
-      files.forEach(file => {
-        if (file !== ".gitkeep") {
-          fs.unlink(`${dir}/${file}`, err => {
-            if (err) {
-              throw err;
-            }
-          });
-        }
-      });
-    });
+describe("labelmake integrate test", () => {
+  // afterAll(() => {
+  //   const dir = __dirname + "/tmp";
+  //   fs.readdir(dir, (err, files) => {
+  //     if (err) {
+  //       throw err;
+  //     }
+  //     files.forEach(file => {
+  //       if (file !== ".gitkeep") {
+  //         fs.unlink(`${dir}/${file}`, err => {
+  //           if (err) {
+  //             throw err;
+  //           }
+  //         });
+  //       }
+  //     });
+  //   });
+  // });
+
+  test("Default Font(Roboto)", async () => {
+    const input = [{ test: "This is Roboto" }];
+    const template = getTemplateData();
+    delete template.fontName;
+    const pdf = await labelmake({ input, template });
+    const file = getTmpPath("roboto.pdf");
+    fs.writeFileSync(file, pdf);
+    const res = await Promise.all([
+      getPdf(file),
+      getPdf(__dirname + "/assert/roboto.pdf")
+    ]);
+    const [a, e] = res;
+    expect(a).toEqual(e);
   });
 
   test("NotoSansCJKjp", async () => {
     const fontName = "NotoSansCJKjp";
-    const labelmake = new Labelmake();
-    labelmake.registerFont(fontName, sans_vfs_fonts);
-    const pdf = await labelmake.create(
-      Object.assign(getTemplateData(), { fontName }),
-      [{ test: "hello" }]
-    );
+    const input = [{ test: "我輩は猫である by NotoSansCJKjp" }];
+    const template = Object.assign(getTemplateData(), { fontName });
+    const font = { [fontName]: sans_vfs_fonts };
+    const pdf = await labelmake({ input, template, font });
     const file = getTmpPath("sans.pdf");
     fs.writeFileSync(file, pdf);
-    const ress = await Promise.all([
+    const res = await Promise.all([
       getPdf(file),
       getPdf(__dirname + "/assert/sans.pdf")
     ]);
-    const [a, e] = ress;
+    const [a, e] = res;
     expect(a).toEqual(e);
   });
 
   test("NotoSerifCJKjp", async () => {
     const fontName = "NotoSerifCJKjp";
-    const labelmake = new Labelmake();
-    labelmake.registerFont(fontName, serif_vfs_fonts);
-    const pdf = await labelmake.create(
-      Object.assign(getTemplateData(), { fontName }),
-      [{ test: "hello" }]
-    );
+    const input = [{ test: "我輩は猫である by NotoSerifCJKjp" }];
+    const template = Object.assign(getTemplateData(), { fontName });
+    const font = { [fontName]: serif_vfs_fonts };
+    const pdf = await labelmake({ input, template, font });
     const file = getTmpPath("serif.pdf");
     fs.writeFileSync(file, pdf);
-    const ress = await Promise.all([
+    const res = await Promise.all([
       getPdf(file),
       getPdf(__dirname + "/assert/serif.pdf")
     ]);
-    const [a, e] = ress;
+    const [a, e] = res;
     expect(a).toEqual(e);
   });
 
   test("NotoSansCJKjp and NotoSerifCJKjp", async () => {
     const fontName1 = "NotoSansCJKjp";
     const fontName2 = "NotoSerifCJKjp";
-    const labelmake = new Labelmake();
-    labelmake.registerFont(fontName1, sans_vfs_fonts);
-    labelmake.registerFont(fontName2, serif_vfs_fonts);
-    const templateData = getTemplateData();
-    templateData.fontName = fontName1;
-    templateData.position = {
+
+    const input = [{ sans: "hello", serif: "hello" }];
+    const template = getTemplateData();
+    template.fontName = fontName1;
+    template.position = {
       sans: {
         position: { x: 10, y: 10 },
         width: 20,
@@ -122,9 +130,8 @@ describe("Labelmake integrate test", () => {
         lineHeight: 1
       }
     };
-    const pdf = await labelmake.create(templateData, [
-      { sans: "hello", serif: "hello" }
-    ]);
+    const font = { [fontName1]: sans_vfs_fonts, [fontName2]: serif_vfs_fonts };
+    const pdf = await labelmake({ input, template, font });
     const file = getTmpPath("sans&serif.pdf");
     fs.writeFileSync(file, pdf);
     const ress = await Promise.all([
@@ -134,5 +141,6 @@ describe("Labelmake integrate test", () => {
     const [a, e] = ress;
     expect(a).toEqual(e);
   });
-  // ここはlabelmake.jpで使っているテンプレートをそのままテストにする
+
+  // TODO 複雑なパターンのテストが必要labelmake.jpで使っているテンプレートをそのままテストにする
 });

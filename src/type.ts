@@ -32,7 +32,7 @@ export type TemplateData = {
   position: { [key: string]: TemplatePosition };
   background: string | null;
   pageSize: PageSize;
-  fontName: string;
+  fontName?: string;
 };
 interface Style {
   font?: any;
