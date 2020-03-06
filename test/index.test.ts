@@ -72,7 +72,7 @@ describe("labelmake integrate test", () => {
 
   test("NotoSansCJKjp", async () => {
     const fontName = "NotoSansCJKjp";
-    const input = [{ test: "我輩は猫である by NotoSansCJKjp" }];
+    const input = [{ test: "1234 １２３４ 春夏秋冬我輩は猫である　𩸽が大好き by NotoSansCJKjp" }];
     const template = Object.assign(getTemplateData(), { fontName });
     const font = { [fontName]: sans_vfs_fonts };
     const pdf = await labelmake({ input, template, font });
@@ -88,7 +88,7 @@ describe("labelmake integrate test", () => {
 
   test("NotoSerifCJKjp", async () => {
     const fontName = "NotoSerifCJKjp";
-    const input = [{ test: "我輩は猫である by NotoSerifCJKjp" }];
+    const input = [{ test: "1234 １２３４ 春夏秋冬我輩は猫である　𩸽が大好き by NotoSerifCJKjp" }];
     const template = Object.assign(getTemplateData(), { fontName });
     const font = { [fontName]: serif_vfs_fonts };
     const pdf = await labelmake({ input, template, font });
