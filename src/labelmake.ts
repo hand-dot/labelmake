@@ -1,5 +1,5 @@
 //@ts-ignore
-import pdfMake from "pdfmake/build/pdfmake";
+import * as pdfMake from "pdfmake/build/pdfmake";
 import { roboto } from "./roboto";
 import { createDocDefinition } from "./pdf";
 import { TemplateData } from "./type";
@@ -46,4 +46,3 @@ const labelmake = <T>({
 };
 
 export default labelmake;
-module.exports = labelmake;
