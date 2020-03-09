@@ -1,7 +1,8 @@
-import pdfMake from "./pdfMake";
-import { roboto } from "./roboto";
+import PdfMake from "./PdfMake";
 import { createDocDefinition } from "./pdf";
 import { TemplateData } from "./type";
+
+const pdfMake = new PdfMake();
 
 const labelmake = <T>({
   input,
@@ -15,21 +16,11 @@ const labelmake = <T>({
   return createDocDefinition(input, template).then(
     docDefinition =>
       new Promise(resolve => {
-        if (!pdfMake.fonts) pdfMake.fonts = {};
-        if (!pdfMake.vfs) pdfMake.vfs = {};
         if (font) {
           Object.entries(font).forEach(entry => {
             const [name, value] = entry;
-            if (!pdfMake.fonts[name]) pdfMake.fonts[name] = {};
-            if (!pdfMake.vfs[name]) pdfMake.vfs[name] = "";
-            pdfMake.vfs[name] = value;
-            pdfMake.fonts[name] = { normal: name };
+            pdfMake.setFont(name, value);
           });
-        } else {
-          pdfMake.vfs.Roboto = roboto;
-          pdfMake.fonts = {
-            Roboto: { normal: "Roboto" }
-          };
         }
         pdfMake.createPdf(docDefinition).getDataUrl((base64: string) => {
           const data = base64.split(",")[1];
