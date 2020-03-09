@@ -1,5 +1,6 @@
-src/
 test/
+dist/test
+coverage/
+assets/
 .DS_Store
 .github/
-assets/

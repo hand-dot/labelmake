@@ -12,7 +12,7 @@ const labelmake = <T>({
   input: { [key: string]: string }[];
   template: TemplateData<T>;
   font?: { [key: string]: string };
-}) => {
+}): Promise<Buffer> => {
   return createDocDefinition(input, template).then(
     docDefinition =>
       new Promise(resolve => {
