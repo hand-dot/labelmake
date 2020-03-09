@@ -1,5 +1,4 @@
-//@ts-ignore
-import * as pdfMake from "pdfmake/build/pdfmake";
+import pdfMake from "./pdfMake";
 import { roboto } from "./roboto";
 import { createDocDefinition } from "./pdf";
 import { TemplateData } from "./type";
