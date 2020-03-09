@@ -11,8 +11,21 @@ const libraryName = "labelmake";
 export default {
   input: `src/${libraryName}.ts`,
   output: [
-    { file: pkg.main, name: libraryName, format: "umd", sourcemap: true },
-    { file: pkg.module, format: "es", sourcemap: true }
+    {
+      file: pkg.main,
+      name: libraryName,
+      format: "umd",
+      sourcemap: true,
+      compact: true,
+      freeze: false
+    },
+    {
+      file: pkg.module,
+      format: "es",
+      sourcemap: true,
+      compact: true,
+      freeze: false
+    }
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
   external: [],
