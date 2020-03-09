@@ -1,6 +1,8 @@
 import { TemplateData } from "../src/type";
 import { validateBarcodeInput, createDocDefinition } from "../src/pdf";
 
+type Input = { test: string };
+
 describe("validateBarcodeInput", () => {
   test("qrcode", () => {
     // 漢字を含まない500文字以下
@@ -155,7 +157,7 @@ describe("createDocDefinition", () => {
 
   test("Background Image", async () => {
     const labelDatas = [{ test: "hello1" }, { test: "hello2" }];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -227,7 +229,7 @@ describe("createDocDefinition", () => {
 
   test("Background Svg", async () => {
     const labelDatas = [{ test: "hello1" }, { test: "hello2" }];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -299,7 +301,7 @@ describe("createDocDefinition", () => {
 
   test("Text Type", async () => {
     const labelDatas = [{ test: "hello1" }, { test: "hello2" }];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -378,7 +380,7 @@ describe("createDocDefinition", () => {
         test: testImage
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -434,7 +436,7 @@ describe("createDocDefinition", () => {
         test: testSvg
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -490,7 +492,7 @@ describe("createDocDefinition", () => {
         test: "hoge"
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -548,7 +550,7 @@ describe("createDocDefinition", () => {
         test: "10000131-3-2-503"
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -606,7 +608,7 @@ describe("createDocDefinition", () => {
         test: "111111111111"
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -664,7 +666,7 @@ describe("createDocDefinition", () => {
         test: "1111111"
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -722,7 +724,7 @@ describe("createDocDefinition", () => {
         test: "12345"
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -780,7 +782,7 @@ describe("createDocDefinition", () => {
         test: "12345"
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -838,7 +840,7 @@ describe("createDocDefinition", () => {
         test: "A12345D"
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },
@@ -896,7 +898,7 @@ describe("createDocDefinition", () => {
         test: "1111111111111"
       }
     ];
-    const templateData: TemplateData = {
+    const templateData: TemplateData<Input> = {
       position: {
         test: {
           position: { x: 10, y: 10 },

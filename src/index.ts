@@ -4,13 +4,13 @@ import { roboto } from "./roboto";
 import { createDocDefinition } from "./pdf";
 import { TemplateData } from "./type";
 
-const labelmake = ({
+const labelmake = <T>({
   input,
   template,
   font
 }: {
   input: { [key: string]: string }[];
-  template: TemplateData;
+  template: TemplateData<T>;
   font?: { [key: string]: string };
 }) => {
   return createDocDefinition(input, template).then(

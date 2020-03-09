@@ -123,7 +123,7 @@ export const createDocDefinition = async (
   labelDatas: {
     [key: string]: string | null;
   }[],
-  templateData: TemplateData
+  templateData: TemplateData<any>
 ): Promise<DocDefinition> => {
   const { background, position, pageSize, fontName } = templateData;
   const docDefinition: DocDefinition = {
@@ -221,4 +221,4 @@ export const createDocDefinition = async (
     }
   }
   return docDefinition;
-};  
+};
