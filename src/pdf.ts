@@ -76,19 +76,6 @@ const createSvg = (svg: string | null) => {
   }
 };
 
-const atob = (str: string) => {
-  return Buffer.from(str, "base64").toString("binary");
-};
-
-const toBlob = (base64: string) => {
-  const bin = atob(base64.split(",")[1]);
-  const arraybuffer = new Uint8Array(bin.length);
-  for (let i = 0, l = bin.length; l > i; i++) {
-    arraybuffer[i] = bin.charCodeAt(i);
-  }
-  return Buffer.from(arraybuffer);
-};
-
 export const validateBarcodeInput = (type: BarCodeType, input: string) => {
   if (!input) return false;
   if (type === "qrcode") {
@@ -136,7 +123,7 @@ export const createDocDefinition = async (
   labelDatas: {
     [key: string]: string | null;
   }[],
-  templateData: TemplateData
+  templateData: TemplateData<any>
 ): Promise<DocDefinition> => {
   const { background, position, pageSize, fontName } = templateData;
   const docDefinition: DocDefinition = {
@@ -235,19 +222,3 @@ export const createDocDefinition = async (
   }
   return docDefinition;
 };
-
-export default (
-  labelDatas: {
-    [key: string]: string | null;
-  }[],
-  templateData: TemplateData,
-  pdfMake: any
-): Promise<Buffer> =>
-  createDocDefinition(labelDatas, templateData).then(
-    docDefinition =>
-      new Promise(resolve => {
-        pdfMake
-          .createPdf(docDefinition)
-          .getDataUrl((base64: string) => resolve(toBlob(base64)));
-      })
-  );

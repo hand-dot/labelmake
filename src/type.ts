@@ -28,11 +28,11 @@ interface PageSize {
   height: number;
 }
 
-export type TemplateData = {
-  position: { [key: string]: TemplatePosition };
+export type TemplateData<T> = {
+  position: { [P in keyof T]: TemplatePosition };
   background: string | null;
   pageSize: PageSize;
-  fontName: string;
+  fontName?: string;
 };
 interface Style {
   font?: any;
