@@ -23,10 +23,18 @@ const mm2pt = (mm: number): number => {
   return parseFloat(String(mm)) * pointRatio;
 };
 
+const btoa = (str: string) => {
+  let buffer;
+  if (Buffer.isBuffer(str)) {
+    buffer = str;
+  } else {
+    buffer = new Buffer(str.toString(), "binary");
+  }
+  return buffer.toString("base64");
+};
+
 const pngBuffer2PngBase64 = (buffer: Buffer) =>
-  typeof window === "undefined"
-    ? buffer.toString("base64")
-    : base64PngHeader + btoa(String.fromCharCode(...new Uint8Array(buffer)));
+  base64PngHeader + btoa(String.fromCharCode(...new Uint8Array(buffer)));
 
 const validateBase64Image = (base64: string) =>
   base64 !== "" &&
