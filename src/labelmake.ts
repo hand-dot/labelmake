@@ -1,5 +1,4 @@
 import PdfMake from "./PdfMake";
-import { Buffer as Vuffer } from "buffer";
 import { createDocDefinition } from "./pdf";
 import { TemplateData } from "./type";
 
@@ -23,15 +22,7 @@ const labelmake = <T>({
             pdfMake.setFont(name, value);
           });
         }
-        pdfMake.createPdf(docDefinition).getDataUrl((base64: string) => {
-          const data = base64.split(",")[1];
-          const bin = Vuffer.from(data, "base64").toString("binary");
-          const arraybuffer = new Uint8Array(bin.length);
-          for (let i = 0, l = bin.length; l > i; i++) {
-            arraybuffer[i] = bin.charCodeAt(i);
-          }
-          resolve(Vuffer.from(arraybuffer));
-        });
+        pdfMake.createPdf(docDefinition).getBuffer(resolve);
       })
   );
 };
