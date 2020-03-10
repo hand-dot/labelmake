@@ -19,6 +19,11 @@ export default class {
     this.pdfMake.fonts[name] = { normal: name };
   }
   createPdf(docDefinition: any) {
-    return this.pdfMake.createPdf(docDefinition);
+    if (this.pdfMake.createPdf) {
+      return this.pdfMake.createPdf(docDefinition);
+    } else {
+      //@ts-ignore
+      return this.pdfMake.default.createPdf(docDefinition);
+    }
   }
 }

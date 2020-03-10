@@ -47,13 +47,16 @@ const createBarCode = async ({
   height: number;
 }) => {
   if (input && validateBarcodeInput(type, input)) {
-    //@ts-ignore
-    const buffer = await bwipjs.toBuffer({
+    const bwipjsArg = {
       bcid: type === "nw7" ? "rationalizedCodabar" : type,
       text: input,
       width: width * 3, // BWIPPは72dpiで画像を作成するため印刷用に画像を大きくしておく
       height: height * 3
-    });
+    };
+    //@ts-ignore
+    const buffer = bwipjs.toBuffer
+      ? await bwipjs.toBuffer(bwipjsArg)
+      : await bwipjs.default.toBuffer(bwipjsArg);
     return pngBuffer2PngBase64(buffer);
   } else {
     return dummyImage;
