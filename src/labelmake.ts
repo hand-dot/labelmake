@@ -1,4 +1,5 @@
 import PdfMake from "./PdfMake";
+import { Buffer as Vuffer } from "buffer";
 import { createDocDefinition } from "./pdf";
 import { TemplateData } from "./type";
 
@@ -24,12 +25,12 @@ const labelmake = <T>({
         }
         pdfMake.createPdf(docDefinition).getDataUrl((base64: string) => {
           const data = base64.split(",")[1];
-          const bin = Buffer.from(data, "base64").toString("binary");
+          const bin = Vuffer.from(data, "base64").toString("binary");
           const arraybuffer = new Uint8Array(bin.length);
           for (let i = 0, l = bin.length; l > i; i++) {
             arraybuffer[i] = bin.charCodeAt(i);
           }
-          resolve(Buffer.from(arraybuffer));
+          resolve(Vuffer.from(arraybuffer));
         });
       })
   );

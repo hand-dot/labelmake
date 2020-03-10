@@ -1,5 +1,6 @@
 //@ts-ignore
 import * as bwipjs from "bwip-js/dist/node-bwipjs.js";
+import { Buffer } from "buffer";
 import {
   TemplateData,
   TemplatePosition,
@@ -28,7 +29,7 @@ const btoa = (str: string) => {
   if (Buffer.isBuffer(str)) {
     buffer = str;
   } else {
-    buffer = new Buffer(str.toString(), "binary");
+    buffer = Buffer.from(str.toString(), "binary");
   }
   return buffer.toString("base64");
 };

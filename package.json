@@ -46,6 +46,7 @@
   },
   "homepage": "https://github.com/hand-dot/labelmake#readme",
   "dependencies": {
+    "buffer": "^5.5.0",
     "bwip-js": "^2.0.6",
     "pdfmake": "^0.1.64"
   },
@@ -59,6 +60,8 @@
     "pdf2json": "^1.1.8",
     "rimraf": "^3.0.2",
     "rollup": "^2.0.2",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-typescript2": "^0.26.0",
     "ts-jest": "^25.2.1",
     "ts-node": "^8.6.2",
