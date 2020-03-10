@@ -2,8 +2,7 @@
   "name": "labelmake",
   "version": "1.0.16",
   "description": "PDF generation library of declarative style programing.",
-  "main": "dist/labelmake.umd.js",
-  "module": "dist/labelmake.es5.js",
+  "main": "dist/labelmake.js",
   "typings": "dist/types/labelmake.d.ts",
   "scripts": {
     "start": "rollup -c rollup.config.ts -w",
@@ -51,6 +50,8 @@
     "pdfmake": "^0.1.64"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
     "@types/bwip-js": "^1.7.0",
     "@types/jest": "^25.1.3",
     "@types/node": "^13.7.7",
@@ -58,13 +59,9 @@
     "pdf2json": "^1.1.8",
     "rimraf": "^3.0.2",
     "rollup": "^2.0.2",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-sourcemaps": "^0.5.0",
     "rollup-plugin-typescript2": "^0.26.0",
-    "ts-node": "^8.6.2",
     "ts-jest": "^25.2.1",
+    "ts-node": "^8.6.2",
     "typescript": "^3.8.3"
   }
 }
