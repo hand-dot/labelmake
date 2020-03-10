@@ -2,6 +2,7 @@ import PdfMake from "./PdfMake";
 import { createDocDefinition } from "./pdf";
 import { TemplateData } from "./type";
 
+const info = { info: { creator: "labelmake.jp", producer: "labelmake.jp" } };
 const pdfMake = new PdfMake();
 
 const labelmake = <T>({
@@ -22,7 +23,9 @@ const labelmake = <T>({
             pdfMake.setFont(name, value);
           });
         }
-        pdfMake.createPdf(docDefinition).getBuffer(resolve);
+        pdfMake
+          .createPdf(Object.assign(info, docDefinition))
+          .getBuffer(resolve);
       })
   );
 };
