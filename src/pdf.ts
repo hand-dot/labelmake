@@ -41,8 +41,7 @@ const validateBase64Image = (base64: string) =>
   base64 !== "" &&
   [base64PngHeader, base64JpegHeader].some(h => base64.startsWith(h));
 
-const validateSvg = (svg: string) =>
-  svg.startsWith("<svg") && svg.endsWith("</svg>");
+const validateSvg = (svg: string) => svg.endsWith("</svg>");
 
 const createBarCode = async ({
   type,
