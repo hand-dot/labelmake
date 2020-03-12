@@ -1,3 +1,5 @@
+# CURRENTLY ALPHA VERSION
+
 ![Unit Testing](https://github.com/hand-dot/labelmake/workflows/Unit%20Testing/badge.svg)
 # labelmake
 ![bank-phrom-Tzm3Oyu_6sk-unsplash](./assets/top.jpg)
@@ -17,6 +19,7 @@ The result is a PDF based on templates and variable data, which makes the progra
 
 ## Example PDF & Code
 
+TODO
 
 ## Features
 
@@ -43,8 +46,10 @@ Variable data supports the following input types
 npm install labelmake
 ```
 
-
-
 ### Node
 
+TODO
+
 ### Browser
+
+TODO
