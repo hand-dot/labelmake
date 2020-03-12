@@ -6,7 +6,7 @@
   "typings": "dist/types/labelmake.d.ts",
   "scripts": {
     "start": "rollup -c rollup.config.ts -w",
-    "test": "jest --coverage",
+    "test": "jest",
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run test -- --no-cache",
     "lint": "tsc --noEmit",

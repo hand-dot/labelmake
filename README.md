@@ -1,12 +1,10 @@
-# CURRENTLY ALPHA VERSION 
-
 ![Unit Testing](https://github.com/hand-dot/labelmake/workflows/Unit%20Testing/badge.svg)
 # labelmake
 ![bank-phrom-Tzm3Oyu_6sk-unsplash](./assets/top.jpg)
 
 https://www.npmjs.com/package/labelmake
 
-A JavaScript PDF generation library for Node and the browser.  
+Declarative style PDF generation library for Node and the browser.  
 Specializes in variable data printing. makes easy to build an automatic typesetting system.
 
 ## Description
@@ -17,18 +15,8 @@ So, I developed this library aiming at a declarative style programing PDF genera
 
 The result is a PDF based on templates and variable data, which makes the program very simple.
 
-## Install
+## Example PDF & Code
 
-```
-npm install labelmake
-```
-
-
-## Methods
-
-- registerTemplate
-- registerFont
-- create
 
 ## Features
 
@@ -46,3 +34,17 @@ Variable data supports the following input types
   - Code 128
   - Codabar(NW-7)
   - ITF-14
+
+## Usage
+
+### Install
+
+```
+npm install labelmake
+```
+
+
+
+### Node
+
+### Browser

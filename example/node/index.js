@@ -25,5 +25,5 @@ const template = {
 };
 const input = [{ test1: "aa", test2: "aa" }];
 labelmake({ input, template }).then(pdf => {
-  fs.writeFileSync(__dirname + "/check.pdf", pdf);
+  fs.writeFileSync(__dirname + "/index.pdf", pdf);
 });
