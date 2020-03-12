@@ -79,15 +79,7 @@ const createImage = (base64Image: string | null) => {
   }
 };
 
-const createSvg = (svg: string | null) => {
-  if (svg && validateSvg(svg)) {
-    console.log('OK')
-    return svg;
-  } else {
-    console.log('NG')
-    return dummySvg;
-  }
-};
+const createSvg = (svg: string | null) => svg && validateSvg(svg) ? svg:dummySvg;
 
 export const validateBarcodeInput = (type: BarCodeType, input: string) => {
   if (!input) return false;
