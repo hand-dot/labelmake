@@ -1,7 +1,7 @@
 import { sans_vfs_fonts } from "./fonts/sans_vfs_fonts";
 // import { serif_vfs_fonts } from "./fonts/serif_vfs_fonts";
-import fs from "fs";
-import labelmake from "../src/index";
+const fs = require("fs");
+import labelmake from "../src/labelmake";
 const PDFParser = require("pdf2json");
 import { TemplateData } from "../src/type";
 
@@ -40,13 +40,13 @@ const getTemplateData = (): TemplateData<Input> => ({
 describe("labelmake integrate test", () => {
   afterAll(() => {
     const dir = __dirname + "/tmp";
-    fs.readdir(dir, (err, files) => {
+    fs.readdir(dir, (err: any, files: any) => {
       if (err) {
         throw err;
       }
-      files.forEach(file => {
+      files.forEach((file: any) => {
         if (file !== ".gitkeep") {
-          fs.unlink(`${dir}/${file}`, err => {
+          fs.unlink(`${dir}/${file}`, (err: any) => {
             if (err) {
               throw err;
             }
@@ -75,8 +75,7 @@ describe("labelmake integrate test", () => {
     const fontName = "NotoSansCJKjp";
     const input = [
       {
-        test:
-          "1234 １２３４ 我輩は猫である by NotoSansCJKjp"
+        test: "1234 １２３４ 我輩は猫である by NotoSansCJKjp"
       }
     ];
     const template = Object.assign(getTemplateData(), { fontName });

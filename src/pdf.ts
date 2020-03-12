@@ -1,5 +1,6 @@
 //@ts-ignore
 import * as bwipjs from "bwip-js/dist/node-bwipjs.js";
+import { Buffer } from "buffer";
 import {
   TemplateData,
   TemplatePosition,
@@ -23,17 +24,24 @@ const mm2pt = (mm: number): number => {
   return parseFloat(String(mm)) * pointRatio;
 };
 
+const btoa = (str: string) => {
+  let buffer;
+  if (Buffer.isBuffer(str)) {
+    buffer = str;
+  } else {
+    buffer = Buffer.from(str.toString(), "binary");
+  }
+  return buffer.toString("base64");
+};
+
 const pngBuffer2PngBase64 = (buffer: Buffer) =>
-  typeof window === "undefined"
-    ? buffer.toString("base64")
-    : base64PngHeader + btoa(String.fromCharCode(...new Uint8Array(buffer)));
+  base64PngHeader + btoa(String.fromCharCode(...new Uint8Array(buffer)));
 
 const validateBase64Image = (base64: string) =>
   base64 !== "" &&
   [base64PngHeader, base64JpegHeader].some(h => base64.startsWith(h));
 
-const validateSvg = (svg: string) =>
-  svg.startsWith("<svg") && svg.endsWith("</svg>");
+const validateSvg = (svg: string) => svg.replace(/\r?\n/g, '').endsWith("</svg>");
 
 const createBarCode = async ({
   type,
@@ -47,13 +55,16 @@ const createBarCode = async ({
   height: number;
 }) => {
   if (input && validateBarcodeInput(type, input)) {
-    //@ts-ignore
-    const buffer = await bwipjs.toBuffer({
+    const bwipjsArg = {
       bcid: type === "nw7" ? "rationalizedCodabar" : type,
       text: input,
       width: width * 3, // BWIPPは72dpiで画像を作成するため印刷用に画像を大きくしておく
       height: height * 3
-    });
+    };
+    //@ts-ignore
+    const buffer = bwipjs.toBuffer
+      ? await bwipjs.toBuffer(bwipjsArg)
+      : await bwipjs.default.toBuffer(bwipjsArg);
     return pngBuffer2PngBase64(buffer);
   } else {
     return dummyImage;
@@ -70,8 +81,10 @@ const createImage = (base64Image: string | null) => {
 
 const createSvg = (svg: string | null) => {
   if (svg && validateSvg(svg)) {
+    console.log('OK')
     return svg;
   } else {
+    console.log('NG')
     return dummySvg;
   }
 };

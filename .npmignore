@@ -1,5 +1,6 @@
 test/
-dist/test
+dist/lib/test
+dist/types/test
 coverage/
 assets/
 .DS_Store
