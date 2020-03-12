@@ -1,4 +1,4 @@
-import PdfMake from "./PdfMake";
+import PdfMake from "./pdfMake";
 import { createDocDefinition } from "./pdf";
 import { TemplateData } from "./type";
 
