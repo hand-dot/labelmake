@@ -41,7 +41,7 @@ const validateBase64Image = (base64: string) =>
   base64 !== "" &&
   [base64PngHeader, base64JpegHeader].some(h => base64.startsWith(h));
 
-const validateSvg = (svg: string) => svg.endsWith("</svg>");
+const validateSvg = (svg: string) => svg.replace(/\r?\n/g, '').endsWith("</svg>");
 
 const createBarCode = async ({
   type,
@@ -81,8 +81,10 @@ const createImage = (base64Image: string | null) => {
 
 const createSvg = (svg: string | null) => {
   if (svg && validateSvg(svg)) {
+    console.log('OK')
     return svg;
   } else {
+    console.log('NG')
     return dummySvg;
   }
 };
