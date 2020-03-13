@@ -1,5 +1,5 @@
-import { sans_vfs_fonts } from "./fonts/sans_vfs_fonts";
-import { serif_vfs_fonts } from "./fonts/serif_vfs_fonts";
+import NotoSansJP from "./fonts/NotoSansJP";
+import NotoSerifJP from "./fonts/NotoSerifJP";
 const fs = require("fs");
 import labelmake from "../src/labelmake";
 const PDFParser = require("pdf2json");
@@ -38,23 +38,23 @@ const getTemplateData = (): TemplateData<Input> => ({
 });
 
 describe("labelmake integrate test", () => {
-  afterAll(() => {
-    const dir = __dirname + "/tmp";
-    fs.readdir(dir, (err: any, files: any) => {
-      if (err) {
-        throw err;
-      }
-      files.forEach((file: any) => {
-        if (file !== ".gitkeep") {
-          fs.unlink(`${dir}/${file}`, (err: any) => {
-            if (err) {
-              throw err;
-            }
-          });
-        }
-      });
-    });
-  });
+  // afterAll(() => {
+  //   const dir = __dirname + "/tmp";
+  //   fs.readdir(dir, (err: any, files: any) => {
+  //     if (err) {
+  //       throw err;
+  //     }
+  //     files.forEach((file: any) => {
+  //       if (file !== ".gitkeep") {
+  //         fs.unlink(`${dir}/${file}`, (err: any) => {
+  //           if (err) {
+  //             throw err;
+  //           }
+  //         });
+  //       }
+  //     });
+  //   });
+  // });
 
   test("Default Font(Roboto)", async () => {
     const input: Input[] = [{ test: "This is Roboto" }];
@@ -79,7 +79,7 @@ describe("labelmake integrate test", () => {
       }
     ];
     const template = Object.assign(getTemplateData(), { fontName });
-    const font = { [fontName]: sans_vfs_fonts };
+    const font = { [fontName]: NotoSansJP };
     const pdf = await labelmake({ input, template, font });
     const file = getTmpPath("sans.pdf");
     fs.writeFileSync(file, pdf);
@@ -95,12 +95,11 @@ describe("labelmake integrate test", () => {
     const fontName = "NotoSerifCJKjp";
     const input = [
       {
-        test:
-          "1234 １２３４　春夏秋冬我輩は猫である by NotoSerifCJKjp"
+        test: "1234 １２３４　春夏秋冬我輩は猫である by NotoSerifCJKjp"
       }
     ];
     const template = Object.assign(getTemplateData(), { fontName });
-    const font = { [fontName]: serif_vfs_fonts };
+    const font = { [fontName]: NotoSerifJP };
     const pdf = await labelmake({ input, template, font });
     const file = getTmpPath("serif.pdf");
     fs.writeFileSync(file, pdf);
@@ -118,10 +117,8 @@ describe("labelmake integrate test", () => {
     type Input = { sans: string; serif: string };
     const input: Input[] = [
       {
-        sans:
-          "1234 １２３４　春夏秋冬我輩は猫である by NotoSansCJKjp",
-        serif:
-          "1234 １２３４　春夏秋冬我輩は猫である by NotoSerifCJKjp"
+        sans: "1234 １２３４　春夏秋冬我輩は猫である by NotoSansCJKjp",
+        serif: "1234 １２３４　春夏秋冬我輩は猫である by NotoSerifCJKjp"
       }
     ];
     const template: TemplateData<Input> = {
@@ -153,7 +150,7 @@ describe("labelmake integrate test", () => {
       },
       fontName: fontName1
     };
-    const font = { [fontName1]: sans_vfs_fonts, [fontName2]: serif_vfs_fonts };
+    const font = { [fontName1]: NotoSansJP, [fontName2]: NotoSerifJP };
     const pdf = await labelmake({ input, template, font });
     const file = getTmpPath("sans&serif.pdf");
     fs.writeFileSync(file, pdf);
