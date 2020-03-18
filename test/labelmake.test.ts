@@ -4,6 +4,7 @@ const fs = require("fs");
 import labelmake from "../src/labelmake";
 const PDFParser = require("pdf2json");
 import { TemplateData } from "../src/type";
+const atena8 = require("./templates/atena8.json");
 
 const getPdf = (pdfFilePath: string) => {
   const pdfParser = new PDFParser();
@@ -37,7 +38,7 @@ const getTemplateData = (): TemplateData<Input> => ({
   fontName: ""
 });
 
-describe("labelmake integrate test", () => {
+describe("labelmake integrate simple test", () => {
   afterAll(() => {
     const dir = __dirname + "/tmp";
     fs.readdir(dir, (err: any, files: any) => {
@@ -71,11 +72,11 @@ describe("labelmake integrate test", () => {
     expect(a).toEqual(e);
   });
 
-  test("NotoSansCJKjp", async () => {
-    const fontName = "NotoSansCJKjp";
+  test("NotoSansJP", async () => {
+    const fontName = "NotoSansJP";
     const input = [
       {
-        test: "1234 １２３４　我輩は猫である by NotoSansCJKjp"
+        test: "1234 １２３４　我輩は猫である by NotoSansJP"
       }
     ];
     const template = Object.assign(getTemplateData(), { fontName });
@@ -111,13 +112,13 @@ describe("labelmake integrate test", () => {
     expect(a).toEqual(e);
   });
 
-  test("NotoSansCJKjp and NotoSerifCJKjp", async () => {
-    const fontName1 = "NotoSansCJKjp";
+  test("NotoSansJP and NotoSerifCJKjp", async () => {
+    const fontName1 = "NotoSansJP";
     const fontName2 = "NotoSerifCJKjp";
     type Input = { sans: string; serif: string };
     const input: Input[] = [
       {
-        sans: "1234 １２３４　春夏秋冬我輩は猫である by NotoSansCJKjp",
+        sans: "1234 １２３４　春夏秋冬我輩は猫である by NotoSansJP",
         serif: "1234 １２３４　春夏秋冬我輩は猫である by NotoSerifCJKjp"
       }
     ];
@@ -161,6 +162,18 @@ describe("labelmake integrate test", () => {
     const [a, e] = ress;
     expect(a).toEqual(e);
   });
+});
 
-  // TODO 複雑なパターンのテストが必要labelmake.jpで使っているテンプレートをそのままテストにする
+describe("labelmake integrate complex test", () => {
+  test.only("atena8", async () => {
+    console.log(atena8);
+    const pdf = await labelmake({
+      input: atena8.sampledata,
+      template: atena8,
+      font: { NotoSansJP }
+    });
+    const file = getTmpPath("atena8.pdf");
+    fs.writeFileSync(file, pdf);
+    expect("test").toBe("test");
+  });
 });
