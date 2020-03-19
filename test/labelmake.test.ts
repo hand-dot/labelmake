@@ -170,6 +170,7 @@ describe("labelmake integrate complex test", () => {
     const pdf = await labelmake({
       input: atena8.sampledata,
       template: atena8,
+      // font: { NotoSerifJP }
       font: { NotoSansJP }
     });
     const file = getTmpPath("atena8.pdf");
