@@ -76,7 +76,7 @@ describe("labelmake integrate test", () => {
       const fontName = "NotoSansJP";
       const input = [
         {
-          test: "1234 １２３４　我輩は猫である by NotoSansJP"
+          test: "1234 １２３４　春夏秋冬我我輩は猫である by NotoSansJP"
         }
       ];
       const template = Object.assign(getTemplateData(), { fontName });
@@ -164,7 +164,7 @@ describe("labelmake integrate test", () => {
     });
   });
 
-  describe.only("complex", () => {
+  describe("complex", () => {
     test("atena8sans", async () => {
       const pdf = await labelmake({
         input: atena8.sampledata,
