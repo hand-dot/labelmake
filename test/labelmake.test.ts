@@ -1,5 +1,5 @@
-import NotoSansJP from "./fonts/NotoSansJP";
-import NotoSerifJP from "./fonts/NotoSerifJP";
+import SauceHanSansJP from "./fonts/SauceHanSansJP";
+import SauceHanSerifJP from "./fonts/SauceHanSerifJP";
 const fs = require("fs");
 import labelmake from "../src/labelmake";
 const PDFParser = require("pdf2json");
@@ -72,15 +72,15 @@ describe("labelmake integrate test", () => {
       expect(a).toEqual(e);
     });
 
-    test("NotoSansJP", async () => {
-      const fontName = "NotoSansJP";
+    test("SauceHanSansJP", async () => {
+      const fontName = "SauceHanSansJP";
       const input = [
         {
-          test: "1234 １２３４　春夏秋冬我我輩は猫である by NotoSansJP"
+          test: "1234 １２３４　春夏秋冬我我輩は猫である by SauceHanSansJP"
         }
       ];
       const template = Object.assign(getTemplateData(), { fontName });
-      const font = { [fontName]: NotoSansJP };
+      const font = { [fontName]: SauceHanSansJP };
       const pdf = await labelmake({ input, template, font });
       const file = getTmpPath("sans.pdf");
       fs.writeFileSync(file, pdf);
@@ -92,15 +92,15 @@ describe("labelmake integrate test", () => {
       expect(a).toEqual(e);
     });
 
-    test("NotoSerifCJKjp", async () => {
-      const fontName = "NotoSerifCJKjp";
+    test("SauceHanSerifJP", async () => {
+      const fontName = "SauceHanSerifJP";
       const input = [
         {
-          test: "1234 １２３４　春夏秋冬我輩は猫である by NotoSerifCJKjp"
+          test: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP"
         }
       ];
       const template = Object.assign(getTemplateData(), { fontName });
-      const font = { [fontName]: NotoSerifJP };
+      const font = { SauceHanSerifJP };
       const pdf = await labelmake({ input, template, font });
       const file = getTmpPath("serif.pdf");
       fs.writeFileSync(file, pdf);
@@ -112,14 +112,14 @@ describe("labelmake integrate test", () => {
       expect(a).toEqual(e);
     });
 
-    test("NotoSansJP and NotoSerifCJKjp", async () => {
-      const fontName1 = "NotoSansJP";
-      const fontName2 = "NotoSerifCJKjp";
+    test("SauceHanSansJP and SauceHanSerifJP", async () => {
+      const fontName1 = "SauceHanSansJP";
+      const fontName2 = "SauceHanSerifJP";
       type Input = { sans: string; serif: string };
       const input: Input[] = [
         {
-          sans: "1234 １２３４　春夏秋冬我輩は猫である by NotoSansJP",
-          serif: "1234 １２３４　春夏秋冬我輩は猫である by NotoSerifCJKjp"
+          sans: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSansJP",
+          serif: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP"
         }
       ];
       const template: TemplateData<Input> = {
@@ -151,7 +151,7 @@ describe("labelmake integrate test", () => {
         },
         fontName: fontName1
       };
-      const font = { [fontName1]: NotoSansJP, [fontName2]: NotoSerifJP };
+      const font = { [fontName1]: SauceHanSansJP, [fontName2]: SauceHanSerifJP };
       const pdf = await labelmake({ input, template, font });
       const file = getTmpPath("sans&serif.pdf");
       fs.writeFileSync(file, pdf);
@@ -169,7 +169,7 @@ describe("labelmake integrate test", () => {
       const pdf = await labelmake({
         input: atena8.sampledata,
         template: atena8,
-        font: { NotoSansJP }
+        font: { SauceHanSansJP }
       });
       const file = getTmpPath("atena8sans.pdf");
       fs.writeFileSync(file, pdf);
@@ -182,11 +182,11 @@ describe("labelmake integrate test", () => {
     });
     test("atena8serif", async () => {
       const atena8serif = JSON.parse(JSON.stringify(atena8));
-      atena8serif.fontName = "NotoSerifJP";
+      atena8serif.fontName = "SauceHanSerifJP";
       const pdf = await labelmake({
         input: atena8.sampledata,
         template: atena8serif,
-        font: { NotoSerifJP }
+        font: { SauceHanSerifJP }
       });
       const file = getTmpPath("atena8serif.pdf");
       fs.writeFileSync(file, pdf);
