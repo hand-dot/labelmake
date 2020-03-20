@@ -39,23 +39,23 @@ const getTemplateData = (): TemplateData<Input> => ({
 });
 
 describe("labelmake integrate test", () => {
-  // afterAll(() => {
-  //   const dir = __dirname + "/tmp";
-  //   fs.readdir(dir, (err: any, files: any) => {
-  //     if (err) {
-  //       throw err;
-  //     }
-  //     files.forEach((file: any) => {
-  //       if (file !== ".gitkeep") {
-  //         fs.unlink(`${dir}/${file}`, (err: any) => {
-  //           if (err) {
-  //             throw err;
-  //           }
-  //         });
-  //       }
-  //     });
-  //   });
-  // });
+  afterAll(() => {
+    const dir = __dirname + "/tmp";
+    fs.readdir(dir, (err: any, files: any) => {
+      if (err) {
+        throw err;
+      }
+      files.forEach((file: any) => {
+        if (file !== ".gitkeep") {
+          fs.unlink(`${dir}/${file}`, (err: any) => {
+            if (err) {
+              throw err;
+            }
+          });
+        }
+      });
+    });
+  });
   describe("simple", () => {
     test("Default Font(Roboto)", async () => {
       const input: Input[] = [{ test: "This is Roboto" }];
