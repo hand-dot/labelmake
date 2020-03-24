@@ -58,12 +58,12 @@ const getTemplate = () => ({
       type: "image"
     },
     creditorQr: {
-      position: { x: 144, y: 197 },
+      position: { x: 144, y: 200 },
       width: 34,
       type: "qrcode"
     },
     debtorQr: {
-      position: { x: 144, y: 241 },
+      position: { x: 144, y: 244 },
       width: 34,
       type: "qrcode"
     }

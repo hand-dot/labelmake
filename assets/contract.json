@@ -65,7 +65,7 @@
       "lineHeight": 1
     },
     "creditorQr": {
-      "position": { "x": 144, "y": 197 },
+      "position": { "x": 144, "y": 200 },
       "width": 34,
       "alignment": "left",
       "type": "qrcode",
@@ -74,7 +74,7 @@
       "lineHeight": 1
     },
     "debtorQr": {
-      "position": { "x": 144, "y": 241 },
+      "position": { "x": 144, "y": 244 },
       "width": 34,
       "alignment": "left",
       "type": "qrcode",
