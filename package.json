@@ -48,7 +48,7 @@
   "dependencies": {
     "buffer": "^5.5.0",
     "bwip-js": "^2.0.6",
-    "pdfmake": "^0.1.64"
+    "pdfmake": "^0.1.65"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
