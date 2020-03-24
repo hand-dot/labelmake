@@ -71,10 +71,10 @@ labelmake({ input, template }).then(pdf => {
 
 - Template data Template data supports embedding of Image (jpeg, png) and SVG.
 - Input data supports the following input types.
-  - Text
+  - Text(Uses the Roboto font by default. Can use custom fonts)
   - Image(jpeg, png)
   - SVG
-  - Barcode
+  - Barcode(Checksum is calculated automatically)
     - QR Code
     - Japan Post 4 State Customer Code
     - EAN-13
@@ -86,8 +86,8 @@ labelmake({ input, template }).then(pdf => {
 
 ## Documentation
 
-Please see the following page for more information (In development)
+Please see the following page for more information
 
 
-- [Developer guides]()
-- [API Reference]()
+- [Developer guides(In development)](https://labelmake.jp/labelmake)
+- [API Reference(In development)](https://labelmake.jp/labelmake)
