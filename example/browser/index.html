@@ -3,8 +3,10 @@
   <script src="https://cdn.jsdelivr.net/npm/labelmake/dist/labelmake.min.js"></script>
   <script type="text/javascript" src="../template.js"></script>
   <script type="text/javascript" src="../input.js"></script>
+  <script type="text/javascript" src="../font.js"></script>
   <script type="text/javascript">
-    labelmake({ input, template }).then(buffer => {
+    console.log(Object.keys(font)[0] === template.fontName);
+    labelmake({ input, template, font }).then(buffer => {
       const blob = new Blob([buffer.buffer], { type: "application/pdf" });
       document.getElementById("iframe").src = URL.createObjectURL(blob);
     });
