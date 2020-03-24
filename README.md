@@ -18,7 +18,7 @@ So, I developed this library aiming at a declarative style programing PDF genera
 
 The result is a PDF based on templates and variable data, which makes the program very simple.
 
-### Installation
+## Installation
 
 Use [npm](https://www.npmjs.com/package/labelmake) to install the latest version.
 
@@ -31,7 +31,7 @@ You can use Yarn, NuGet or other methods as well. You can load it directly from 
 
 ## Usage
 
-
+TODO template, input data
 
 You can see [example](https://github.com/hand-dot/labelmake/tree/master/example) folder.
 
@@ -69,24 +69,25 @@ labelmake({ input, template }).then(pdf => {
 
 ## Features
 
-Variable data supports the following input types
+- Template data Template data supports embedding of Image (jpeg, png) and SVG.
+- Input data supports the following input types.
+  - Text
+  - Image(jpeg, png)
+  - SVG
+  - Barcode
+    - QR Code
+    - Japan Post 4 State Customer Code
+    - EAN-13
+    - EAN-8
+    - Code 39
+    - Code 128
+    - Codabar(NW-7)
+    - ITF-14
 
-- Text
-- Image
-- SVG
-- Barcode
-  - QR Code
-  - Japan Post 4 State Customer Code
-  - EAN-13
-  - EAN-8
-  - Code 39
-  - Code 128
-  - Codabar(NW-7)
-  - ITF-14
+## Documentation
 
-Documentation
+Please see the following page for more information (In development)
 
-Please see the following page for more information
 
 - [Developer guides]()
 - [API Reference]()
