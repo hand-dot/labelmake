@@ -1,5 +1,5 @@
 const fs = require("fs");
-const labelmake = require("../../dist/labelmake");
+const labelmake = require("../../dist/labelmake.min");
 const template = {
   background: null,
   position: {

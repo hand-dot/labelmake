@@ -2,7 +2,7 @@
   "name": "labelmake",
   "version": "1.0.19",
   "description": "PDF generation library of declarative style programing.",
-  "main": "dist/labelmake.js",
+  "main": "dist/labelmake.min.js",
   "typings": "dist/types/labelmake.d.ts",
   "scripts": {
     "start": "rollup -c rollup.config.ts -w",
