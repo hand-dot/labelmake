@@ -158,7 +158,7 @@ describe("createDocDefinition", () => {
   test("Background Image", async () => {
     const labelDatas = [{ test: "hello1" }, { test: "hello2" }];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -230,7 +230,7 @@ describe("createDocDefinition", () => {
   test("Background Svg", async () => {
     const labelDatas = [{ test: "hello1" }, { test: "hello2" }];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -302,7 +302,7 @@ describe("createDocDefinition", () => {
   test("Text Type", async () => {
     const labelDatas = [{ test: "hello1" }, { test: "hello2" }];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -381,7 +381,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -437,7 +437,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -493,7 +493,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -551,7 +551,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -609,7 +609,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -667,7 +667,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -725,7 +725,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -783,7 +783,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -841,7 +841,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,
@@ -899,7 +899,7 @@ describe("createDocDefinition", () => {
       }
     ];
     const templateData: TemplateData<Input> = {
-      position: {
+      schema: {
         test: {
           position: { x: 10, y: 10 },
           width: 20,

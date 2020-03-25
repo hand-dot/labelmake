@@ -13,7 +13,7 @@ export type TemplateType =
 
 export type BarCodeType = Exclude<TemplateType, "text" | "image" | "svg">;
 
-export interface TemplatePosition {
+export interface TemplateSchema {
   type: TemplateType;
   position: { x: number; y: number };
   width: number;
@@ -29,7 +29,7 @@ interface PageSize {
 }
 
 export type TemplateData<T> = {
-  position: { [P in keyof T]: TemplatePosition };
+  schema: { [P in keyof T]: TemplateSchema };
   background: string | null;
   pageSize: PageSize;
   fontName?: string;

@@ -12,7 +12,7 @@
       "debtorQr": "https://labelmake.jp#2"
     }
   ],
-  "position": {
+  "schema": {
     "principal": {
       "position": { "x": 67, "y": 75.5 },
       "width": 50,

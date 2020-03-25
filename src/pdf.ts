@@ -3,7 +3,7 @@ import * as bwipjs from "bwip-js/dist/node-bwipjs.js";
 import { Buffer } from "buffer";
 import {
   TemplateData,
-  TemplatePosition,
+  TemplateSchema,
   BarCodeType,
   Content,
   DocDefinition
@@ -41,7 +41,8 @@ const validateBase64Image = (base64: string) =>
   base64 !== "" &&
   [base64PngHeader, base64JpegHeader].some(h => base64.startsWith(h));
 
-const validateSvg = (svg: string) => svg.replace(/\r?\n/g, '').endsWith("</svg>");
+const validateSvg = (svg: string) =>
+  svg.replace(/\r?\n/g, "").endsWith("</svg>");
 
 const createBarCode = async ({
   type,
@@ -79,7 +80,8 @@ const createImage = (base64Image: string | null) => {
   }
 };
 
-const createSvg = (svg: string | null) => svg && validateSvg(svg) ? svg:dummySvg;
+const createSvg = (svg: string | null) =>
+  svg && validateSvg(svg) ? svg : dummySvg;
 
 export const validateBarcodeInput = (type: BarCodeType, input: string) => {
   if (!input) return false;
@@ -130,7 +132,7 @@ export const createDocDefinition = async (
   }[],
   templateData: TemplateData<any>
 ): Promise<DocDefinition> => {
-  const { background, position, pageSize, fontName } = templateData;
+  const { background, schema, pageSize, fontName } = templateData;
   const docDefinition: DocDefinition = {
     pageSize: {
       width: mm2pt(pageSize.width),
@@ -154,10 +156,10 @@ export const createDocDefinition = async (
       delete bg.image;
     }
     docDefinition.content.push(bg);
-    const keys = Object.keys(position);
+    const keys = Object.keys(schema);
     for (let j = 0; j < keys.length; j++) {
       const key = keys[j];
-      const labelData: TemplatePosition = position[key];
+      const labelData: TemplateSchema = schema[key];
       const obj: Content = {
         absolutePosition: {
           x: mm2pt(labelData.position.x),
