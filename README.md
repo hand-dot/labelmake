@@ -4,8 +4,8 @@
 [![](https://data.jsdelivr.com/v1/package/npm/labelmake/badge)](https://www.jsdelivr.com/package/npm/labelmake)
 
 # labelmake
-![top](./assets/top.png)
 
+![top](./assets/top.png)
 
 labelmake is a declarative style PDF generation library for Node and the browser.  
 Specializes in variable data printing. makes easy to build an automatic typesetting system.
@@ -28,41 +28,42 @@ npm install labelmake
 
 You can use Yarn, NuGet or other methods as well. You can load it directly from [jsDelivr](https://www.jsdelivr.com/package/npm/labelmake).
 
-
 ## Usage
 
 ### Data
 
 template
+
 ```json
 {
-    background: null,
-    schema: {
-      test1: {
-        position: { x: 0, y: 0 },
-        width: 50,
-        type: "qrcode"
+    "background": null,
+    "schema": {
+      "test1": {
+        "position": { "x": 0, "y": 0 },
+        "width": 50,
+        "type": "qrcode"
       },
-      test2: {
-        position: { x: 60, y: 60 },
-        width: 50,
-        alignment: "left",
-        fontSize: 8,
-        characterSpacing: 0,
-        type: "text",
-        lineHeight: 1
+      "test2": {
+        "position": { "x": 60, "y": 60 },
+        "width": 50,
+        "alignment": "left",
+        "fontSize": 8,
+        "characterSpacing": 0,
+        "type": "text",
+        "lineHeight": 1
       }
     },
-    pageSize: {
-      width: 100,
-      height: 100
+    "pageSize": {
+      "width": 100,
+      "height": 100
     }
 };
 ```
 
 input
+
 ```json
- [{ test1: "aa", test2: "aa" }]
+[{ "test1": "aa", "test2": "aa" }]
 ```
 
 ### Node
@@ -95,14 +96,11 @@ labelmake({ input, template }).then(pdf => {
 </html>
 ```
 
-### result
+### Result
 
 ![result](./assets/result.png)
 
-
-
 You can see demo in [example](https://github.com/hand-dot/labelmake/tree/master/example) folder.
-
 
 ## Features
 
@@ -124,7 +122,6 @@ You can see demo in [example](https://github.com/hand-dot/labelmake/tree/master/
 ## Documentation
 
 Please see the following page for more information
-
 
 - [Developer guides(In development)](https://labelmake.jp/labelmake)
 - [API Reference(In development)](https://labelmake.jp/labelmake)
