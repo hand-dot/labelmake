@@ -10,11 +10,11 @@ Specializes in variable data printing. makes easy to build an automatic typesett
 
 ## Description
 
-I just realised that Other PDF generation libraries makes program complex by imperative operations.
+I am developing [labelmake.jp](https://labelmake.jp/). That is PDF creation service that can do variable printing.
 
-So, I developed this library aiming at a declarative style programing PDF generation library.
+I just realised in developing labelmake.jp that other PDF generation libraries makes program complex by imperative operations.
 
-The result is a PDF based on templates and variable data, which makes the program very simple.
+So, I developed this library aiming at a more simple declarative style PDF generation library and released it as OSS.
 
 ## Installation
 
