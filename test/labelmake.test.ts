@@ -20,7 +20,7 @@ const getTmpPath = (fileName: string) => __dirname + `/tmp/${fileName}`;
 type Input = { test: string };
 const getTemplateData = (): TemplateData<Input> => ({
   background: null,
-  position: {
+  schema: {
     test: {
       position: { x: 10, y: 10 },
       width: 80,
@@ -124,7 +124,7 @@ describe("labelmake integrate test", () => {
       ];
       const template: TemplateData<Input> = {
         background: null,
-        position: {
+        schema: {
           sans: {
             position: { x: 10, y: 10 },
             width: 80,
@@ -151,7 +151,10 @@ describe("labelmake integrate test", () => {
         },
         fontName: fontName1
       };
-      const font = { [fontName1]: SauceHanSansJP, [fontName2]: SauceHanSerifJP };
+      const font = {
+        [fontName1]: SauceHanSansJP,
+        [fontName2]: SauceHanSerifJP
+      };
       const pdf = await labelmake({ input, template, font });
       const file = getTmpPath("sans&serif.pdf");
       fs.writeFileSync(file, pdf);

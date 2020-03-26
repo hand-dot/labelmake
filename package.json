@@ -1,8 +1,8 @@
 {
   "name": "labelmake",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "PDF generation library of declarative style programing.",
-  "main": "dist/labelmake.js",
+  "main": "dist/labelmake.min.js",
   "typings": "dist/types/labelmake.d.ts",
   "scripts": {
     "start": "rollup -c rollup.config.ts -w",
@@ -48,7 +48,7 @@
   "dependencies": {
     "buffer": "^5.5.0",
     "bwip-js": "^2.0.6",
-    "pdfmake": "^0.1.64"
+    "pdfmake": "^0.1.65"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",

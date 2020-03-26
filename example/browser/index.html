@@ -1,34 +1,15 @@
 <html>
-  <p>labelmake</p>
-  <iframe id="iframe" width="100%" height="700"></iframe>
-
-  <script type="text/javascript" src="../../dist/labelmake.js"></script>
+  <head>
+    <meta charset="utf-8" />
+  </head>
+  <iframe id="iframe" width="100%" height="900"></iframe>
+  <script src="https://cdn.jsdelivr.net/npm/labelmake/dist/labelmake.min.js"></script>
+  <script type="text/javascript" src="../template.js"></script>
+  <script type="text/javascript" src="../input.js"></script>
+  <script type="text/javascript" src="../font.js"></script>
   <script type="text/javascript">
-    const template = {
-      background: null,
-      position: {
-        test1: {
-          position: { x: 0, y: 0 },
-          width: 50,
-          type: "qrcode"
-        },
-        test2: {
-          position: { x: 60, y: 60 },
-          width: 50,
-          alignment: "left",
-          fontSize: 8,
-          characterSpacing: 0,
-          type: "text",
-          lineHeight: 1
-        }
-      },
-      pageSize: {
-        width: 100,
-        height: 100
-      }
-    };
-    const input = [{ test1: "aa", test2: "aa" }];
-    labelmake({ input, template }).then(buffer => {
+    console.log(Object.keys(font)[0] === template.fontName);
+    labelmake({ input, template, font }).then(buffer => {
       const blob = new Blob([buffer.buffer], { type: "application/pdf" });
       document.getElementById("iframe").src = URL.createObjectURL(blob);
     });
