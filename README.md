@@ -9,7 +9,7 @@ labelmake is a declarative style PDF generation library for Node and the browser
 
 ## Description
 
-I am developing [labelmake.jp](https://labelmake.jp/). That is PDF creation service that can do variable printing.
+I am developing [labelmake.jp](https://labelmake.jp/). That is PDF creation service that can do [variable data printing](https://en.wikipedia.org/wiki/Variable_data_printing).
 
 I just realised in developing labelmake.jp that other PDF generation libraries makes program complex by imperative operations.
 
