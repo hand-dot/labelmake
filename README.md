@@ -1,5 +1,3 @@
-# CURRENTLY ALPHA VERSION
-
 ![Unit Testing](https://github.com/hand-dot/labelmake/workflows/Unit%20Testing/badge.svg)
 [![](https://data.jsdelivr.com/v1/package/npm/labelmake/badge)](https://www.jsdelivr.com/package/npm/labelmake)
 
