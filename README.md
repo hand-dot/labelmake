@@ -6,7 +6,6 @@
 ![top](./assets/top.png)
 
 labelmake is a declarative style PDF generation library for Node and the browser.  
-Specializes in variable data printing. makes easy to build an automatic typesetting system.
 
 ## Description
 
