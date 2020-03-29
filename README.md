@@ -43,10 +43,10 @@ template
       "test2": {
         "position": { "x": 60, "y": 60 },
         "width": 50,
+        "type": "text",
         "alignment": "left",
         "fontSize": 8,
         "characterSpacing": 0,
-        "type": "text",
         "lineHeight": 1
       }
     },
