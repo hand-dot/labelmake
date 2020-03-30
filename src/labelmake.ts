@@ -5,20 +5,16 @@ import { TemplateData } from "./type";
 const info = { info: { creator: "labelmake.jp", producer: "labelmake.jp" } };
 const pdfMake = new PdfMake();
 
-const labelmake = <T>({
-  input,
-  template,
-  font
-}: {
+const labelmake = <T>(data: {
   input: { [key: string]: string }[];
   template: TemplateData<T>;
   font?: { [key: string]: string };
-}): Promise<Buffer> => {
-  return createDocDefinition(input, template).then(
+}): Promise<Buffer> =>
+  createDocDefinition(data.input, data.template).then(
     docDefinition =>
       new Promise(resolve => {
-        if (font) {
-          Object.entries(font).forEach(entry => {
+        if (data.font) {
+          Object.entries(data.font).forEach(entry => {
             const [name, value] = entry;
             pdfMake.setFont(name, value);
           });
@@ -28,6 +24,5 @@ const labelmake = <T>({
           .getBuffer(resolve);
       })
   );
-};
 
 export default labelmake;
