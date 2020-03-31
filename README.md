@@ -3,7 +3,7 @@
 
 # labelmake
 
-![top](./assets/top.png)
+![top](./assets/readme-top.png)
 
 labelmake is a declarative style PDF generation library for Node and the browser.  
 
