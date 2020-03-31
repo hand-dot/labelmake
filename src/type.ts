@@ -1,4 +1,4 @@
-export type TemplateType =
+export type TemplateSchemaType =
   | "text"
   | "image"
   | "svg"
@@ -11,10 +11,10 @@ export type TemplateType =
   | "nw7"
   | "itf14";
 
-export type BarCodeType = Exclude<TemplateType, "text" | "image" | "svg">;
+export type BarCodeType = Exclude<TemplateSchemaType, "text" | "image" | "svg">;
 
 export interface TemplateSchema {
-  type: TemplateType;
+  type: TemplateSchemaType;
   position: { x: number; y: number };
   width: number;
   alignment?: "left" | "right" | "center";
