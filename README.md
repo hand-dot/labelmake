@@ -25,6 +25,10 @@ npm install labelmake
 
 You can use Yarn, NuGet or other methods as well. You can load it directly from [jsDelivr](https://www.jsdelivr.com/package/npm/labelmake).
 
+## Demo
+
+[https://labelmake.jp/javascript-pdf-generator-library/example](https://labelmake.jp/javascript-pdf-generator-library/example)
+
 ## Usage
 
 ### Data
@@ -120,5 +124,5 @@ You can see demo in [example](https://github.com/hand-dot/labelmake/tree/master/
 
 Please see the following page for more information
 
-- [Developer guides(In development)](https://labelmake.jp/labelmake)
-- [API Reference(In development)](https://labelmake.jp/labelmake)
+- [API Reference](https://labelmake.jp/javascript-pdf-generator-library/api)
+- [Developer guides](https://labelmake.jp/javascript-pdf-generator-library/guides)
