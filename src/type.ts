@@ -17,6 +17,7 @@ export interface TemplateSchema {
   type: TemplateSchemaType;
   position: { x: number; y: number };
   width: number;
+  height: number;
   alignment?: "left" | "right" | "center";
   fontName?: string;
   fontSize?: number;

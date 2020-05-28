@@ -6,7 +6,7 @@ import {
   TemplateSchema,
   BarCodeType,
   Content,
-  DocDefinition
+  DocDefinition,
 } from "./type";
 
 const base64PngHeader = "data:image/png;base64,";
@@ -39,7 +39,7 @@ const pngBuffer2PngBase64 = (buffer: Buffer) =>
 
 const validateBase64Image = (base64: string) =>
   base64 !== "" &&
-  [base64PngHeader, base64JpegHeader].some(h => base64.startsWith(h));
+  [base64PngHeader, base64JpegHeader].some((h) => base64.startsWith(h));
 
 const validateSvg = (svg: string) =>
   svg.replace(/\r?\n/g, "").endsWith("</svg>");
@@ -48,7 +48,7 @@ const createBarCode = async ({
   type,
   input,
   width,
-  height
+  height,
 }: {
   type: BarCodeType;
   input: string | null;
@@ -60,7 +60,7 @@ const createBarCode = async ({
       bcid: type === "nw7" ? "rationalizedCodabar" : type,
       text: input,
       width: width * 3, // BWIPPは72dpiで画像を作成するため印刷用に画像を大きくしておく
-      height: height * 3
+      height: height * 3,
     };
     //@ts-ignore
     const buffer = bwipjs.toBuffer
@@ -136,11 +136,11 @@ export const createDocDefinition = async (
   const docDefinition: DocDefinition = {
     pageSize: {
       width: mm2pt(pageSize.width),
-      height: mm2pt(pageSize.height)
+      height: mm2pt(pageSize.height),
     },
     pageMargins: [0, 0, 0, -mm2pt(20)],
     defaultStyle: { font: fontName },
-    content: []
+    content: [],
   };
   for (let i = 0; i < labelDatas.length; i++) {
     const data = labelDatas[i];
@@ -149,7 +149,7 @@ export const createDocDefinition = async (
       image: createImage(background),
       absolutePosition: { x: 0, y: 0 },
       width: mm2pt(pageSize.width),
-      pageBreak: index === 0 ? "" : "before"
+      pageBreak: index === 0 ? "" : "before",
     };
     if (background && validateSvg(background)) {
       bg.svg = createSvg(background);
@@ -163,8 +163,8 @@ export const createDocDefinition = async (
       const obj: Content = {
         absolutePosition: {
           x: mm2pt(labelData.position.x),
-          y: mm2pt(labelData.position.y)
-        }
+          y: mm2pt(labelData.position.y),
+        },
       };
       const input = data[key] ? data[key] : "";
       if (labelData.type === "text") {
@@ -176,41 +176,22 @@ export const createDocDefinition = async (
             font: labelData.fontName,
             fontSize: labelData.fontSize,
             characterSpacing: labelData.characterSpacing,
-            lineHeight: labelData.lineHeight
-          }
+            lineHeight: labelData.lineHeight,
+          },
         ];
       } else if (labelData.type === "image") {
         obj.image = createImage(input);
         obj.width = mm2pt(labelData.width);
+        obj.height = mm2pt(labelData.height);
       } else if (labelData.type === "svg") {
         obj.svg = createSvg(input);
         obj.width = mm2pt(labelData.width);
-      } else if (labelData.type === "qrcode") {
-        // バーコードの縦横比に応じて分けている
-        obj.image = await createBarCode({
-          type: "qrcode",
-          width: labelData.width,
-          height: labelData.width,
-          input
-        });
-        obj.width = mm2pt(labelData.width);
-      } else if (labelData.type === "japanpost") {
-        obj.image = await createBarCode({
-          type: "japanpost",
-          width: labelData.width,
-          height: labelData.width / 5,
-          input
-        });
-        obj.width = mm2pt(labelData.width);
-      } else if (labelData.type === "ean13" || labelData.type === "ean8") {
-        obj.image = await createBarCode({
-          type: labelData.type,
-          width: labelData.width,
-          height: labelData.width / 2,
-          input
-        });
-        obj.width = mm2pt(labelData.width);
+        obj.height = mm2pt(labelData.height);
       } else if (
+        labelData.type === "qrcode" ||
+        labelData.type === "ean13" ||
+        labelData.type === "ean8" ||
+        labelData.type === "japanpost" ||
         labelData.type === "code39" ||
         labelData.type === "code128" ||
         labelData.type === "nw7" ||
@@ -219,10 +200,11 @@ export const createDocDefinition = async (
         obj.image = await createBarCode({
           type: labelData.type,
           width: labelData.width,
-          height: labelData.width / 3,
-          input
+          height: labelData.height,
+          input,
         });
         obj.width = mm2pt(labelData.width);
+        obj.height = mm2pt(labelData.height);
       }
       docDefinition.content.push(obj);
     }
