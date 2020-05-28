@@ -1,0 +1,95 @@
+{
+  "sampledata": [
+    {
+      "qrcode": "https://www.google.com/",
+      "japanpost": "10000131-3-2-503",
+      "ean13": "111111111111",
+      "ean8": "1111111",
+      "code39": "12345",
+      "code128": "12345"
+    }
+  ],
+  "schema": {
+    "qrcode": {
+      "position": { "x": 0, "y": 0 },
+      "width": 50,
+      "height": 50,
+      "alignment": "left",
+      "type": "qrcode",
+      "fontSize": 18,
+      "characterSpacing": 0,
+      "lineHeight": 1
+    },
+    "japanpost": {
+      "position": { "x": 0, "y": 70 },
+      "width": 50,
+      "height": 5,
+      "alignment": "left",
+      "type": "japanpost",
+      "fontSize": 18,
+      "characterSpacing": 0,
+      "lineHeight": 1
+    },
+    "ean13": {
+      "position": { "x": 0, "y": 100 },
+      "width": 50,
+      "height": 20,
+      "alignment": "left",
+      "type": "ean13",
+      "fontSize": 18,
+      "characterSpacing": 0,
+      "lineHeight": 1
+    },
+    "ean8": {
+      "position": { "x": 0, "y": 150 },
+      "width": 50,
+      "height": 20,
+      "alignment": "left",
+      "type": "ean8",
+      "fontSize": 18,
+      "characterSpacing": 0,
+      "lineHeight": 1
+    },
+    "code39": {
+      "position": { "x": 0, "y": 200 },
+      "width": 50,
+      "height": 20,
+      "alignment": "left",
+      "type": "code39",
+      "fontSize": 18,
+      "characterSpacing": 0,
+      "lineHeight": 1
+    },
+    "code128": {
+      "position": { "x": 0, "y": 250 },
+      "width": 50,
+      "height": 20,
+      "alignment": "left",
+      "type": "code128",
+      "fontSize": 18,
+      "characterSpacing": 0,
+      "lineHeight": 1
+    }
+  },
+  "background": null,
+  "pageSize": { "width": 210, "height": 297 },
+  "columns": [
+    { "data": "qrcode", "title": "qrcode" },
+    { "data": "japanpost", "title": "japanpost" },
+    { "data": "ean13", "title": "ean13" },
+    { "data": "ean8", "title": "ean8" },
+    { "data": "code39", "title": "code39" },
+    { "data": "code128", "title": "code128" }
+  ],
+  "dataSchema": {
+    "qrcode": null,
+    "japanpost": null,
+    "ean13": null,
+    "ean8": null,
+    "code39": null,
+    "code128": null
+  },
+  "name": "barcode",
+  "fontName": "SauceHanSansJP",
+  "id": "121c4160-a09e-11ea-af3a-0b34bcf2059c"
+}

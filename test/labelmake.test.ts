@@ -7,6 +7,7 @@ import { TemplateData } from "../src/type";
 const atena8 = require("./templates/atena8.json");
 const image = require("./templates/image.json");
 const svg = require("./templates/svg.json");
+const barcode = require("./templates/barcode.json");
 
 const getPdf = (pdfFilePath: string) => {
   const pdfParser = new PDFParser();
@@ -42,23 +43,23 @@ const getTemplateData = (): TemplateData<Input> => ({
 });
 
 describe("labelmake integrate test", () => {
-  afterAll(() => {
-    const dir = __dirname + "/tmp";
-    fs.readdir(dir, (err: any, files: any) => {
-      if (err) {
-        throw err;
-      }
-      files.forEach((file: any) => {
-        if (file !== ".gitkeep") {
-          fs.unlink(`${dir}/${file}`, (err: any) => {
-            if (err) {
-              throw err;
-            }
-          });
-        }
-      });
-    });
-  });
+  // afterAll(() => {
+  //   const dir = __dirname + "/tmp";
+  //   fs.readdir(dir, (err: any, files: any) => {
+  //     if (err) {
+  //       throw err;
+  //     }
+  //     files.forEach((file: any) => {
+  //       if (file !== ".gitkeep") {
+  //         fs.unlink(`${dir}/${file}`, (err: any) => {
+  //           if (err) {
+  //             throw err;
+  //           }
+  //         });
+  //       }
+  //     });
+  //   });
+  // });
   describe("simple", () => {
     test("Default Font(Roboto)", async () => {
       const input: Input[] = [{ test: "This is Roboto" }];
@@ -225,7 +226,7 @@ describe("labelmake integrate test", () => {
     });
   });
   describe("complex svg", () => {
-    test("image", async () => {
+    test("svg", async () => {
       const pdf = await labelmake({
         input: svg.sampledata,
         template: svg,
@@ -241,5 +242,21 @@ describe("labelmake integrate test", () => {
       expect(a).toEqual(e);
     });
   });
-  // TODO バーコードを埋め込んだテスト
+  describe("complex barcode", () => {
+    test("barcode", async () => {
+      const pdf = await labelmake({
+        input: barcode.sampledata,
+        template: barcode,
+        font: { SauceHanSansJP },
+      });
+      const file = getTmpPath("barcode.pdf");
+      fs.writeFileSync(file, pdf);
+      const ress = await Promise.all([
+        getPdf(file),
+        getPdf(__dirname + "/assert/barcode.pdf"),
+      ]);
+      const [a, e] = ress;
+      expect(a).toEqual(e);
+    });
+  });
 });
