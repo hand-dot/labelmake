@@ -5,7 +5,7 @@
 
 ![top](./assets/readme-top.png)
 
-labelmake is a declarative style PDF generation library for Node and the browser.  
+labelmake is a declarative style PDF generation library for Node and the browser.
 
 ## Description
 
@@ -42,6 +42,7 @@ template
       "test1": {
         "position": { "x": 0, "y": 0 },
         "width": 50,
+        "height": 50,
         "type": "qrcode"
       },
       "test2": {
@@ -75,7 +76,7 @@ const labelmake = require("labelmake");
 const template = require("../template");
 const input = require("../input");
 
-labelmake({ input, template }).then(pdf => {
+labelmake({ input, template }).then((pdf) => {
   fs.writeFileSync(__dirname + "/my.pdf", pdf);
 });
 ```
@@ -89,7 +90,7 @@ labelmake({ input, template }).then(pdf => {
   <script type="text/javascript" src="../template.js"></script>
   <script type="text/javascript" src="../input.js"></script>
   <script type="text/javascript">
-    labelmake({ input, template }).then(buffer => {
+    labelmake({ input, template }).then((buffer) => {
       const blob = new Blob([buffer.buffer], { type: "application/pdf" });
       document.getElementById("iframe").src = URL.createObjectURL(blob);
     });

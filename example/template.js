@@ -9,7 +9,7 @@ const getTemplate = () => ({
       type: "text",
       fontSize: 12,
       characterSpacing: 0,
-      lineHeight: 1
+      lineHeight: 1,
     },
     interestOnPrincipal: {
       position: { x: 79, y: 83 },
@@ -18,7 +18,7 @@ const getTemplate = () => ({
       type: "text",
       fontSize: 12,
       characterSpacing: 0,
-      lineHeight: 1
+      lineHeight: 1,
     },
     date: {
       position: { x: 30, y: 183 },
@@ -27,7 +27,7 @@ const getTemplate = () => ({
       type: "text",
       fontSize: 12,
       characterSpacing: 0,
-      lineHeight: 1
+      lineHeight: 1,
     },
     creditor: {
       position: { x: 57, y: 195.5 },
@@ -36,7 +36,7 @@ const getTemplate = () => ({
       type: "text",
       fontSize: 12,
       characterSpacing: 0,
-      lineHeight: 1
+      lineHeight: 1,
     },
     debtor: {
       position: { x: 57, y: 237 },
@@ -45,31 +45,35 @@ const getTemplate = () => ({
       type: "text",
       fontSize: 12,
       characterSpacing: 0,
-      lineHeight: 1
+      lineHeight: 1,
     },
     creditorSign: {
       position: { x: 30, y: 204 },
       width: 80,
-      type: "image"
+      height: 25,
+      type: "image",
     },
     debtorSign: {
       position: { x: 30, y: 244 },
       width: 80,
-      type: "image"
+      height: 25,
+      type: "image",
     },
     creditorQr: {
       position: { x: 144, y: 200 },
       width: 34,
-      type: "qrcode"
+      height: 34,
+      type: "qrcode",
     },
     debtorQr: {
       position: { x: 144, y: 244 },
       width: 34,
-      type: "qrcode"
-    }
+      height: 34,
+      type: "qrcode",
+    },
   },
   pageSize: { width: 210, height: 297 },
-  fontName: "SauceHanSerifJP"
+  fontName: "SauceHanSerifJP",
 });
 
 if (typeof window !== "undefined") {
