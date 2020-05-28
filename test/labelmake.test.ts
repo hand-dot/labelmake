@@ -5,6 +5,8 @@ import labelmake from "../src/labelmake";
 const PDFParser = require("pdf2json");
 import { TemplateData } from "../src/type";
 const atena8 = require("./templates/atena8.json");
+const image = require("./templates/image.json");
+const svg = require("./templates/svg.json");
 
 const getPdf = (pdfFilePath: string) => {
   const pdfParser = new PDFParser();
@@ -24,18 +26,19 @@ const getTemplateData = (): TemplateData<Input> => ({
     test: {
       position: { x: 10, y: 10 },
       width: 80,
+      height: 80,
       alignment: "left",
       fontSize: 8,
       characterSpacing: 0,
       type: "text",
-      lineHeight: 1
-    }
+      lineHeight: 1,
+    },
   },
   pageSize: {
     width: 100,
-    height: 100
+    height: 100,
   },
-  fontName: ""
+  fontName: "",
 });
 
 describe("labelmake integrate test", () => {
@@ -66,7 +69,7 @@ describe("labelmake integrate test", () => {
       fs.writeFileSync(file, pdf);
       const res = await Promise.all([
         getPdf(file),
-        getPdf(__dirname + "/assert/roboto.pdf")
+        getPdf(__dirname + "/assert/roboto.pdf"),
       ]);
       const [a, e] = res;
       expect(a).toEqual(e);
@@ -76,8 +79,8 @@ describe("labelmake integrate test", () => {
       const fontName = "SauceHanSansJP";
       const input = [
         {
-          test: "1234 １２３４　春夏秋冬我我輩は猫である by SauceHanSansJP"
-        }
+          test: "1234 １２３４　春夏秋冬我我輩は猫である by SauceHanSansJP",
+        },
       ];
       const template = Object.assign(getTemplateData(), { fontName });
       const font = { [fontName]: SauceHanSansJP };
@@ -86,7 +89,7 @@ describe("labelmake integrate test", () => {
       fs.writeFileSync(file, pdf);
       const res = await Promise.all([
         getPdf(file),
-        getPdf(__dirname + "/assert/sans.pdf")
+        getPdf(__dirname + "/assert/sans.pdf"),
       ]);
       const [a, e] = res;
       expect(a).toEqual(e);
@@ -96,8 +99,8 @@ describe("labelmake integrate test", () => {
       const fontName = "SauceHanSerifJP";
       const input = [
         {
-          test: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP"
-        }
+          test: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP",
+        },
       ];
       const template = Object.assign(getTemplateData(), { fontName });
       const font = { SauceHanSerifJP };
@@ -106,7 +109,7 @@ describe("labelmake integrate test", () => {
       fs.writeFileSync(file, pdf);
       const res = await Promise.all([
         getPdf(file),
-        getPdf(__dirname + "/assert/serif.pdf")
+        getPdf(__dirname + "/assert/serif.pdf"),
       ]);
       const [a, e] = res;
       expect(a).toEqual(e);
@@ -119,8 +122,8 @@ describe("labelmake integrate test", () => {
       const input: Input[] = [
         {
           sans: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSansJP",
-          serif: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP"
-        }
+          serif: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP",
+        },
       ];
       const template: TemplateData<Input> = {
         background: null,
@@ -128,57 +131,60 @@ describe("labelmake integrate test", () => {
           sans: {
             position: { x: 10, y: 10 },
             width: 80,
+            height: 80,
+
             alignment: "left",
             fontSize: 8,
             characterSpacing: 0,
             type: "text",
-            lineHeight: 1
+            lineHeight: 1,
           },
           serif: {
             position: { x: 10, y: 60 },
             width: 80,
+            height: 80,
             alignment: "left",
             fontName: fontName2,
             fontSize: 8,
             characterSpacing: 0,
             type: "text",
-            lineHeight: 1
-          }
+            lineHeight: 1,
+          },
         },
         pageSize: {
           width: 100,
-          height: 100
+          height: 100,
         },
-        fontName: fontName1
+        fontName: fontName1,
       };
       const font = {
         [fontName1]: SauceHanSansJP,
-        [fontName2]: SauceHanSerifJP
+        [fontName2]: SauceHanSerifJP,
       };
       const pdf = await labelmake({ input, template, font });
       const file = getTmpPath("sans&serif.pdf");
       fs.writeFileSync(file, pdf);
       const ress = await Promise.all([
         getPdf(file),
-        getPdf(__dirname + "/assert/sans&serif.pdf")
+        getPdf(__dirname + "/assert/sans&serif.pdf"),
       ]);
       const [a, e] = ress;
       expect(a).toEqual(e);
     });
   });
 
-  describe("complex", () => {
+  describe("complex text", () => {
     test("atena8sans", async () => {
       const pdf = await labelmake({
         input: atena8.sampledata,
         template: atena8,
-        font: { SauceHanSansJP }
+        font: { SauceHanSansJP },
       });
       const file = getTmpPath("atena8sans.pdf");
       fs.writeFileSync(file, pdf);
       const ress = await Promise.all([
         getPdf(file),
-        getPdf(__dirname + "/assert/atena8sans.pdf")
+        getPdf(__dirname + "/assert/atena8sans.pdf"),
       ]);
       const [a, e] = ress;
       expect(a).toEqual(e);
@@ -189,16 +195,51 @@ describe("labelmake integrate test", () => {
       const pdf = await labelmake({
         input: atena8.sampledata,
         template: atena8serif,
-        font: { SauceHanSerifJP }
+        font: { SauceHanSerifJP },
       });
       const file = getTmpPath("atena8serif.pdf");
       fs.writeFileSync(file, pdf);
       const ress = await Promise.all([
         getPdf(file),
-        getPdf(__dirname + "/assert/atena8serif.pdf")
+        getPdf(__dirname + "/assert/atena8serif.pdf"),
       ]);
       const [a, e] = ress;
       expect(a).toEqual(e);
     });
   });
+  describe("complex image", () => {
+    test("image", async () => {
+      const pdf = await labelmake({
+        input: image.sampledata,
+        template: image,
+        font: { SauceHanSansJP },
+      });
+      const file = getTmpPath("image.pdf");
+      fs.writeFileSync(file, pdf);
+      const ress = await Promise.all([
+        getPdf(file),
+        getPdf(__dirname + "/assert/image.pdf"),
+      ]);
+      const [a, e] = ress;
+      expect(a).toEqual(e);
+    });
+  });
+  describe("complex svg", () => {
+    test("image", async () => {
+      const pdf = await labelmake({
+        input: svg.sampledata,
+        template: svg,
+        font: { SauceHanSansJP },
+      });
+      const file = getTmpPath("svg.pdf");
+      fs.writeFileSync(file, pdf);
+      const ress = await Promise.all([
+        getPdf(file),
+        getPdf(__dirname + "/assert/svg.pdf"),
+      ]);
+      const [a, e] = ress;
+      expect(a).toEqual(e);
+    });
+  });
+  // TODO バーコードを埋め込んだテスト
 });
