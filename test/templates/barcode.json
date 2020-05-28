@@ -6,7 +6,9 @@
       "ean13": "111111111111",
       "ean8": "1111111",
       "code39": "12345",
-      "code128": "12345"
+      "code128": "12345",
+      "nw7": "A12345D",
+      "itf14": "1111111111111"
     }
   ],
   "schema": {
@@ -21,7 +23,7 @@
       "lineHeight": 1
     },
     "japanpost": {
-      "position": { "x": 0, "y": 70 },
+      "position": { "x": 0, "y": 60 },
       "width": 50,
       "height": 5,
       "alignment": "left",
@@ -31,7 +33,7 @@
       "lineHeight": 1
     },
     "ean13": {
-      "position": { "x": 0, "y": 100 },
+      "position": { "x": 0, "y": 70 },
       "width": 50,
       "height": 20,
       "alignment": "left",
@@ -41,7 +43,7 @@
       "lineHeight": 1
     },
     "ean8": {
-      "position": { "x": 0, "y": 150 },
+      "position": { "x": 0, "y": 100 },
       "width": 50,
       "height": 20,
       "alignment": "left",
@@ -51,7 +53,7 @@
       "lineHeight": 1
     },
     "code39": {
-      "position": { "x": 0, "y": 200 },
+      "position": { "x": 0, "y": 130 },
       "width": 50,
       "height": 20,
       "alignment": "left",
@@ -61,11 +63,31 @@
       "lineHeight": 1
     },
     "code128": {
-      "position": { "x": 0, "y": 250 },
+      "position": { "x": 0, "y": 160 },
       "width": 50,
       "height": 20,
       "alignment": "left",
       "type": "code128",
+      "fontSize": 18,
+      "characterSpacing": 0,
+      "lineHeight": 1
+    },
+    "nw7": {
+      "position": { "x": 0, "y": 190 },
+      "width": 50,
+      "height": 20,
+      "alignment": "left",
+      "type": "nw7",
+      "fontSize": 18,
+      "characterSpacing": 0,
+      "lineHeight": 1
+    },
+    "itf14": {
+      "position": { "x": 0, "y": 220 },
+      "width": 50,
+      "height": 20,
+      "alignment": "left",
+      "type": "itf14",
       "fontSize": 18,
       "characterSpacing": 0,
       "lineHeight": 1
@@ -79,7 +101,9 @@
     { "data": "ean13", "title": "ean13" },
     { "data": "ean8", "title": "ean8" },
     { "data": "code39", "title": "code39" },
-    { "data": "code128", "title": "code128" }
+    { "data": "code128", "title": "code128" },
+    { "data": "nw7", "title": "nw7" },
+    { "data": "itf14", "title": "itf14" }
   ],
   "dataSchema": {
     "qrcode": null,
@@ -87,7 +111,9 @@
     "ean13": null,
     "ean8": null,
     "code39": null,
-    "code128": null
+    "code128": null,
+    "nw7": null,
+    "itf14": null
   },
   "name": "barcode",
   "fontName": "SauceHanSansJP",
