@@ -28,12 +28,31 @@ interface PageSize {
   width: number;
   height: number;
 }
+export interface Setting {
+  pageSize: PageSize;
+  fontName?: string;
+  info?: {
+    title?: string;
+    author?: string;
+    subject?: string;
+    keywords?: string;
+  };
+  userPassword?: string;
+  ownerPassword?: string;
+  permissions?: {
+    printing?: string;
+    modifying?: boolean;
+    copying?: boolean;
+    annotating?: boolean;
+    fillingForms?: boolean;
+    contentAccessibility?: boolean;
+    documentAssembly?: boolean;
+  };
+}
 
 export type TemplateData<T> = {
   schema: { [P in keyof T]: TemplateSchema };
   background: string | null;
-  pageSize: PageSize;
-  fontName?: string;
 };
 interface Style {
   font?: any;

@@ -1,5 +1,5 @@
 {
-  "sampledata": [
+  "inputs": [
     {
       "qrcode": "https://www.google.com/",
       "japanpost": "10000131-3-2-503",
@@ -11,111 +11,95 @@
       "itf14": "1111111111111"
     }
   ],
-  "schema": {
-    "qrcode": {
-      "position": { "x": 0, "y": 0 },
-      "width": 50,
-      "height": 50,
-      "alignment": "left",
-      "type": "qrcode",
-      "fontSize": 18,
-      "characterSpacing": 0,
-      "lineHeight": 1
-    },
-    "japanpost": {
-      "position": { "x": 0, "y": 60 },
-      "width": 50,
-      "height": 5,
-      "alignment": "left",
-      "type": "japanpost",
-      "fontSize": 18,
-      "characterSpacing": 0,
-      "lineHeight": 1
-    },
-    "ean13": {
-      "position": { "x": 0, "y": 70 },
-      "width": 50,
-      "height": 20,
-      "alignment": "left",
-      "type": "ean13",
-      "fontSize": 18,
-      "characterSpacing": 0,
-      "lineHeight": 1
-    },
-    "ean8": {
-      "position": { "x": 0, "y": 100 },
-      "width": 50,
-      "height": 20,
-      "alignment": "left",
-      "type": "ean8",
-      "fontSize": 18,
-      "characterSpacing": 0,
-      "lineHeight": 1
-    },
-    "code39": {
-      "position": { "x": 0, "y": 130 },
-      "width": 50,
-      "height": 20,
-      "alignment": "left",
-      "type": "code39",
-      "fontSize": 18,
-      "characterSpacing": 0,
-      "lineHeight": 1
-    },
-    "code128": {
-      "position": { "x": 0, "y": 160 },
-      "width": 50,
-      "height": 20,
-      "alignment": "left",
-      "type": "code128",
-      "fontSize": 18,
-      "characterSpacing": 0,
-      "lineHeight": 1
-    },
-    "nw7": {
-      "position": { "x": 0, "y": 190 },
-      "width": 50,
-      "height": 20,
-      "alignment": "left",
-      "type": "nw7",
-      "fontSize": 18,
-      "characterSpacing": 0,
-      "lineHeight": 1
-    },
-    "itf14": {
-      "position": { "x": 0, "y": 220 },
-      "width": 50,
-      "height": 20,
-      "alignment": "left",
-      "type": "itf14",
-      "fontSize": 18,
-      "characterSpacing": 0,
-      "lineHeight": 1
+  "templates": [
+    {
+      "schema": {
+        "qrcode": {
+          "position": { "x": 0, "y": 0 },
+          "width": 50,
+          "height": 50,
+          "alignment": "left",
+          "type": "qrcode",
+          "fontSize": 18,
+          "characterSpacing": 0,
+          "lineHeight": 1
+        },
+        "japanpost": {
+          "position": { "x": 0, "y": 60 },
+          "width": 50,
+          "height": 5,
+          "alignment": "left",
+          "type": "japanpost",
+          "fontSize": 18,
+          "characterSpacing": 0,
+          "lineHeight": 1
+        },
+        "ean13": {
+          "position": { "x": 0, "y": 70 },
+          "width": 50,
+          "height": 20,
+          "alignment": "left",
+          "type": "ean13",
+          "fontSize": 18,
+          "characterSpacing": 0,
+          "lineHeight": 1
+        },
+        "ean8": {
+          "position": { "x": 0, "y": 100 },
+          "width": 50,
+          "height": 20,
+          "alignment": "left",
+          "type": "ean8",
+          "fontSize": 18,
+          "characterSpacing": 0,
+          "lineHeight": 1
+        },
+        "code39": {
+          "position": { "x": 0, "y": 130 },
+          "width": 50,
+          "height": 20,
+          "alignment": "left",
+          "type": "code39",
+          "fontSize": 18,
+          "characterSpacing": 0,
+          "lineHeight": 1
+        },
+        "code128": {
+          "position": { "x": 0, "y": 160 },
+          "width": 50,
+          "height": 20,
+          "alignment": "left",
+          "type": "code128",
+          "fontSize": 18,
+          "characterSpacing": 0,
+          "lineHeight": 1
+        },
+        "nw7": {
+          "position": { "x": 0, "y": 190 },
+          "width": 50,
+          "height": 20,
+          "alignment": "left",
+          "type": "nw7",
+          "fontSize": 18,
+          "characterSpacing": 0,
+          "lineHeight": 1
+        },
+        "itf14": {
+          "position": { "x": 0, "y": 220 },
+          "width": 50,
+          "height": 20,
+          "alignment": "left",
+          "type": "itf14",
+          "fontSize": 18,
+          "characterSpacing": 0,
+          "lineHeight": 1
+        }
+      },
+      "background": null
     }
-  },
-  "background": null,
-  "pageSize": { "width": 210, "height": 297 },
-  "columns": [
-    { "data": "qrcode", "title": "qrcode" },
-    { "data": "japanpost", "title": "japanpost" },
-    { "data": "ean13", "title": "ean13" },
-    { "data": "ean8", "title": "ean8" },
-    { "data": "code39", "title": "code39" },
-    { "data": "code128", "title": "code128" },
-    { "data": "nw7", "title": "nw7" },
-    { "data": "itf14", "title": "itf14" }
   ],
-  "dataSchema": {
-    "qrcode": null,
-    "japanpost": null,
-    "ean13": null,
-    "ean8": null,
-    "code39": null,
-    "code128": null,
-    "nw7": null,
-    "itf14": null
-  },
-  "name": "barcode",
-  "fontName": "SauceHanSansJP",
-  "id": "121c4160-a09e-11ea-af3a-0b34bcf2059c"
+  "setting": {
+    "pageSize": { "width": 210, "height": 297 },
+    "fontName": "SauceHanSansJP"
+  }
 }

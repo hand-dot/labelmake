@@ -2,6 +2,7 @@
 import * as bwipjs from "bwip-js/dist/node-bwipjs.js";
 import { Buffer } from "buffer";
 import {
+  Setting,
   TemplateData,
   TemplateSchema,
   BarCodeType,
@@ -130,83 +131,86 @@ export const createDocDefinition = async (
   labelDatas: {
     [key: string]: string | null;
   }[],
-  templateData: TemplateData<any>
+  templateDatas: TemplateData<any>[],
+  setting: Setting
 ): Promise<DocDefinition> => {
-  const { background, schema, pageSize, fontName } = templateData;
   const docDefinition: DocDefinition = {
     pageSize: {
-      width: mm2pt(pageSize.width),
-      height: mm2pt(pageSize.height),
+      width: mm2pt(setting.pageSize.width),
+      height: mm2pt(setting.pageSize.height),
     },
     pageMargins: [0, 0, 0, -mm2pt(20)],
-    defaultStyle: { font: fontName },
+    defaultStyle: { font: setting.fontName },
     content: [],
   };
-  for (let i = 0; i < labelDatas.length; i++) {
-    const data = labelDatas[i];
-    const index = i;
-    const bg: Content = {
-      image: createImage(background),
-      absolutePosition: { x: 0, y: 0 },
-      width: mm2pt(pageSize.width),
-      pageBreak: index === 0 ? "" : "before",
-    };
-    if (background && validateSvg(background)) {
-      bg.svg = createSvg(background);
-      delete bg.image;
-    }
-    docDefinition.content.push(bg);
-    const keys = Object.keys(schema);
-    for (let j = 0; j < keys.length; j++) {
-      const key = keys[j];
-      const labelData: TemplateSchema = schema[key];
-      const obj: Content = {
-        absolutePosition: {
-          x: mm2pt(labelData.position.x),
-          y: mm2pt(labelData.position.y),
-        },
+  for (let l = 0; l < templateDatas.length; l++) {
+    const { background, schema } = templateDatas[l];
+    for (let i = 0; i < labelDatas.length; i++) {
+      const data = labelDatas[i];
+      const index = i;
+      const bg: Content = {
+        image: createImage(background),
+        absolutePosition: { x: 0, y: 0 },
+        width: mm2pt(setting.pageSize.width),
+        pageBreak: index === 0 ? "" : "before",
       };
-      const input = data[key] ? data[key] : "";
-      if (labelData.type === "text") {
-        obj.alignment = labelData.alignment;
-        obj.columns = [
-          {
-            text: input || "",
-            width: mm2pt(labelData.width),
-            font: labelData.fontName,
-            fontSize: labelData.fontSize,
-            characterSpacing: labelData.characterSpacing,
-            lineHeight: labelData.lineHeight,
-          },
-        ];
-      } else if (labelData.type === "image") {
-        obj.image = createImage(input);
-        obj.width = mm2pt(labelData.width);
-        obj.height = mm2pt(labelData.height);
-      } else if (labelData.type === "svg") {
-        obj.svg = createSvg(input);
-        obj.width = mm2pt(labelData.width);
-        obj.height = mm2pt(labelData.height);
-      } else if (
-        labelData.type === "qrcode" ||
-        labelData.type === "ean13" ||
-        labelData.type === "ean8" ||
-        labelData.type === "japanpost" ||
-        labelData.type === "code39" ||
-        labelData.type === "code128" ||
-        labelData.type === "nw7" ||
-        labelData.type === "itf14"
-      ) {
-        obj.image = await createBarCode({
-          type: labelData.type,
-          width: labelData.width,
-          height: labelData.height,
-          input,
-        });
-        obj.width = mm2pt(labelData.width);
-        obj.height = mm2pt(labelData.height);
+      if (background && validateSvg(background)) {
+        bg.svg = createSvg(background);
+        delete bg.image;
       }
-      docDefinition.content.push(obj);
+      docDefinition.content.push(bg);
+      const keys = Object.keys(schema);
+      for (let j = 0; j < keys.length; j++) {
+        const key = keys[j];
+        const labelData: TemplateSchema = schema[key];
+        const obj: Content = {
+          absolutePosition: {
+            x: mm2pt(labelData.position.x),
+            y: mm2pt(labelData.position.y),
+          },
+        };
+        const input = data[key] ? data[key] : "";
+        if (labelData.type === "text") {
+          obj.alignment = labelData.alignment;
+          obj.columns = [
+            {
+              text: input || "",
+              width: mm2pt(labelData.width),
+              font: labelData.fontName,
+              fontSize: labelData.fontSize,
+              characterSpacing: labelData.characterSpacing,
+              lineHeight: labelData.lineHeight,
+            },
+          ];
+        } else if (labelData.type === "image") {
+          obj.image = createImage(input);
+          obj.width = mm2pt(labelData.width);
+          obj.height = mm2pt(labelData.height);
+        } else if (labelData.type === "svg") {
+          obj.svg = createSvg(input);
+          obj.width = mm2pt(labelData.width);
+          obj.height = mm2pt(labelData.height);
+        } else if (
+          labelData.type === "qrcode" ||
+          labelData.type === "ean13" ||
+          labelData.type === "ean8" ||
+          labelData.type === "japanpost" ||
+          labelData.type === "code39" ||
+          labelData.type === "code128" ||
+          labelData.type === "nw7" ||
+          labelData.type === "itf14"
+        ) {
+          obj.image = await createBarCode({
+            type: labelData.type,
+            width: labelData.width,
+            height: labelData.height,
+            input,
+          });
+          obj.width = mm2pt(labelData.width);
+          obj.height = mm2pt(labelData.height);
+        }
+        docDefinition.content.push(obj);
+      }
     }
   }
   return docDefinition;
