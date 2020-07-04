@@ -51,7 +51,7 @@ export interface Setting {
 }
 
 export type TemplateData<T> = {
-  schema: { [P in keyof T]: TemplateSchema };
+  schema: { [key: string]: TemplateSchema };
   background: string | null;
 };
 interface Style {
