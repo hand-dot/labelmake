@@ -176,6 +176,7 @@ export const createDocDefinition = async (
               text: input || "",
               width: mm2pt(labelData.width),
               font: labelData.fontName,
+              color: labelData.fontColor,
               fontSize: labelData.fontSize,
               characterSpacing: labelData.characterSpacing,
               lineHeight: labelData.lineHeight,

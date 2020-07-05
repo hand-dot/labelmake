@@ -21,6 +21,7 @@ export interface TemplateSchema {
   alignment?: "left" | "right" | "center";
   fontName?: string;
   fontSize?: number;
+  fontColor?: string;
   characterSpacing?: number;
   lineHeight?: number;
 }
