@@ -1,4 +1,4 @@
-const getInput = () => [
+const getInputs = () => [
   {
     principal: "123456円",
     interestOnPrincipal: "54321円",
@@ -15,7 +15,7 @@ const getInput = () => [
 ];
 
 if (typeof window !== "undefined") {
-  window.input = getInput();
+  window.inputs = getInputs();
 } else {
-  module.exports = getInput();
+  module.exports = getInputs();
 }

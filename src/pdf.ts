@@ -143,23 +143,15 @@ export const createDocDefinition = async (
     defaultStyle: { font: setting.fontName },
     content: [],
   };
-  for (let l = 0; l < templateDatas.length; l++) {
-    const { background, schema } = templateDatas[l];
-    if (l !== 0) {
-      docDefinition.content.push({
-        image: createImage(null),
-        absolutePosition: { x: 0, y: 0 },
-        width: mm2pt(setting.pageSize.width),
-        pageBreak: "after",
-      });
-    }
-    for (let i = 0; i < labelDatas.length; i++) {
+  for (let i = 0; i < labelDatas.length; i++) {
+    for (let l = 0; l < templateDatas.length; l++) {
+      const { background, schema } = templateDatas[l];
       const data = labelDatas[i];
       const bg: Content = {
         image: createImage(background),
         absolutePosition: { x: 0, y: 0 },
         width: mm2pt(setting.pageSize.width),
-        pageBreak: i === 0 ? "" : "before",
+        pageBreak: i === 0 && l === 0 ? "" : "before",
       };
       if (background && validateSvg(background)) {
         bg.svg = createSvg(background);

@@ -270,4 +270,80 @@ describe("labelmake integrate test", () => {
       expect(a).toEqual(e);
     });
   });
+  describe("multiple template", () => {
+    test("test", async () => {
+      const pdf = await labelmake({
+        inputs: [
+          { a: "a1", b: "b1", c: "c1" },
+          { a: "a2", b: "b2", c: "c2" },
+          { a: "a3", b: "b3", c: "c3" },
+        ],
+        templates: [
+          {
+            schema: {
+              a: {
+                type: "text",
+                position: { x: 10, y: 10 },
+                width: 20,
+                height: 20,
+              },
+              b: {
+                type: "text",
+                position: { x: 20, y: 20 },
+                width: 20,
+                height: 20,
+              },
+            },
+            background: null,
+          },
+          {
+            schema: {
+              c: {
+                type: "text",
+                position: { x: 30, y: 30 },
+                width: 20,
+                height: 20,
+              },
+            },
+            background: null,
+          },
+          {
+            schema: {
+              a: {
+                type: "text",
+                position: { x: 10, y: 10 },
+                width: 20,
+                height: 20,
+              },
+              b: {
+                type: "text",
+                position: { x: 20, y: 20 },
+                width: 20,
+                height: 20,
+              },
+              c: {
+                type: "text",
+                position: { x: 30, y: 30 },
+                width: 20,
+                height: 20,
+              },
+            },
+            background: null,
+          },
+        ],
+        setting: {
+          pageSize: { width: 100, height: 100 },
+        },
+        font: { SauceHanSansJP },
+      });
+      const file = getTmpPath("multiple.pdf");
+      fs.writeFileSync(file, pdf);
+      const ress = await Promise.all([
+        getPdf(file),
+        getPdf(__dirname + "/assert/multiple.pdf"),
+      ]);
+      const [a, e] = ress;
+      expect(a).toEqual(e);
+    });
+  });
 });
