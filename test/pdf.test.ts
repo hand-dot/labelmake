@@ -1,4 +1,4 @@
-import { TemplateData } from "../src/type";
+import { TemplateData, Setting } from "../src/type";
 import { validateBarcodeInput, createDocDefinition } from "../src/pdf";
 
 type Input = { test: string };
@@ -157,28 +157,32 @@ describe("createDocDefinition", () => {
 
   test("Background Image", async () => {
     const labelDatas = [{ test: "hello1" }, { test: "hello2" }];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "text",
-          alignment: "left",
-          fontSize: 10,
-          fontName: "FontName2",
-          characterSpacing: 0,
-          lineHeight: 1,
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "text",
+            alignment: "left",
+            fontSize: 10,
+            fontName: "FontName2",
+            characterSpacing: 0,
+            lineHeight: 1,
+          },
         },
+        background: testImage,
       },
-      background: testImage,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName1",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -230,28 +234,32 @@ describe("createDocDefinition", () => {
 
   test("Background Svg", async () => {
     const labelDatas = [{ test: "hello1" }, { test: "hello2" }];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "text",
-          alignment: "left",
-          fontSize: 10,
-          fontName: "FontName2",
-          characterSpacing: 0,
-          lineHeight: 1,
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "text",
+            alignment: "left",
+            fontSize: 10,
+            fontName: "FontName2",
+            characterSpacing: 0,
+            lineHeight: 1,
+          },
         },
+        background: testSvg,
       },
-      background: testSvg,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName1",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -303,28 +311,32 @@ describe("createDocDefinition", () => {
 
   test("Text Type", async () => {
     const labelDatas = [{ test: "hello1" }, { test: "hello2" }];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "text",
-          alignment: "left",
-          fontSize: 10,
-          fontName: "FontName2",
-          characterSpacing: 0,
-          lineHeight: 1,
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "text",
+            alignment: "left",
+            fontSize: 10,
+            fontName: "FontName2",
+            characterSpacing: 0,
+            lineHeight: 1,
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName1",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -383,23 +395,27 @@ describe("createDocDefinition", () => {
         test: testImage,
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "image",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "image",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -442,23 +458,27 @@ describe("createDocDefinition", () => {
         test: testSvg,
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "svg",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "svg",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -501,23 +521,27 @@ describe("createDocDefinition", () => {
         test: "hoge",
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "qrcode",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "qrcode",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -562,23 +586,27 @@ describe("createDocDefinition", () => {
         test: "10000131-3-2-503",
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "japanpost",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "japanpost",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -623,23 +651,27 @@ describe("createDocDefinition", () => {
         test: "111111111111",
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "ean13",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "ean13",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -684,23 +716,27 @@ describe("createDocDefinition", () => {
         test: "1111111",
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "ean8",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "ean8",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -745,23 +781,27 @@ describe("createDocDefinition", () => {
         test: "12345",
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "code39",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "code39",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -806,23 +846,27 @@ describe("createDocDefinition", () => {
         test: "12345",
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "code128",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "code128",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -867,23 +911,27 @@ describe("createDocDefinition", () => {
         test: "A12345D",
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "nw7",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "nw7",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],
@@ -928,23 +976,27 @@ describe("createDocDefinition", () => {
         test: "1111111111111",
       },
     ];
-    const templateData: TemplateData<Input> = {
-      schema: {
-        test: {
-          position: { x: 10, y: 10 },
-          width: 20,
-          height: 20,
-          type: "itf14",
+    const templateDatas: TemplateData<Input>[] = [
+      {
+        schema: {
+          test: {
+            position: { x: 10, y: 10 },
+            width: 20,
+            height: 20,
+            type: "itf14",
+          },
         },
+        background: null,
       },
-      background: null,
+    ];
+    const setting: Setting = {
       pageSize: {
         width: 100,
         height: 100,
       },
       fontName: "FontName",
     };
-    const dd = await createDocDefinition(labelDatas, templateData);
+    const dd = await createDocDefinition(labelDatas, templateDatas, setting);
     expect(dd).toEqual({
       pageSize: { width: 283.46, height: 283.46 },
       pageMargins: [0, 0, 0, -56.692],

@@ -3,7 +3,7 @@ import SauceHanSerifJP from "./fonts/SauceHanSerifJP";
 const fs = require("fs");
 import labelmake from "../src/labelmake";
 const PDFParser = require("pdf2json");
-import { TemplateData } from "../src/type";
+import { TemplateData, Setting } from "../src/type";
 const atena8 = require("./templates/atena8.json");
 const image = require("./templates/image.json");
 const svg = require("./templates/svg.json");
@@ -21,20 +21,25 @@ const getPdf = (pdfFilePath: string) => {
 const getTmpPath = (fileName: string) => __dirname + `/tmp/${fileName}`;
 
 type Input = { test: string };
-const getTemplateData = (): TemplateData<Input> => ({
-  background: null,
-  schema: {
-    test: {
-      position: { x: 10, y: 10 },
-      width: 80,
-      height: 80,
-      alignment: "left",
-      fontSize: 8,
-      characterSpacing: 0,
-      type: "text",
-      lineHeight: 1,
+const getTemplateData = (): TemplateData<Input>[] => [
+  {
+    background: null,
+    schema: {
+      test: {
+        position: { x: 10, y: 10 },
+        width: 80,
+        height: 80,
+        alignment: "left",
+        fontSize: 8,
+        characterSpacing: 0,
+        type: "text",
+        lineHeight: 1,
+      },
     },
   },
+];
+
+const getSetting = (): Setting => ({
   pageSize: {
     width: 100,
     height: 100,
@@ -62,10 +67,11 @@ describe("labelmake integrate test", () => {
   });
   describe("simple", () => {
     test("Default Font(Roboto)", async () => {
-      const input: Input[] = [{ test: "This is Roboto" }];
-      const template = getTemplateData();
-      delete template.fontName;
-      const pdf = await labelmake({ input, template });
+      const inputs: Input[] = [{ test: "This is Roboto" }];
+      const templates = getTemplateData();
+      const setting = getSetting();
+      delete setting.fontName;
+      const pdf = await labelmake({ inputs, templates, setting });
       const file = getTmpPath("roboto.pdf");
       fs.writeFileSync(file, pdf);
       const res = await Promise.all([
@@ -78,14 +84,15 @@ describe("labelmake integrate test", () => {
 
     test("SauceHanSansJP", async () => {
       const fontName = "SauceHanSansJP";
-      const input = [
+      const inputs = [
         {
           test: "1234 １２３４　春夏秋冬我我輩は猫である by SauceHanSansJP",
         },
       ];
-      const template = Object.assign(getTemplateData(), { fontName });
+      const templates = getTemplateData();
+      const setting = Object.assign(getSetting(), { fontName });
       const font = { [fontName]: SauceHanSansJP };
-      const pdf = await labelmake({ input, template, font });
+      const pdf = await labelmake({ inputs, templates, setting, font });
       const file = getTmpPath("sans.pdf");
       fs.writeFileSync(file, pdf);
       const res = await Promise.all([
@@ -98,14 +105,15 @@ describe("labelmake integrate test", () => {
 
     test("SauceHanSerifJP", async () => {
       const fontName = "SauceHanSerifJP";
-      const input = [
+      const inputs = [
         {
           test: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP",
         },
       ];
-      const template = Object.assign(getTemplateData(), { fontName });
+      const templates = getTemplateData();
+      const setting = Object.assign(getSetting(), { fontName });
       const font = { SauceHanSerifJP };
-      const pdf = await labelmake({ input, template, font });
+      const pdf = await labelmake({ inputs, templates, setting, font });
       const file = getTmpPath("serif.pdf");
       fs.writeFileSync(file, pdf);
       const res = await Promise.all([
@@ -120,49 +128,47 @@ describe("labelmake integrate test", () => {
       const fontName1 = "SauceHanSansJP";
       const fontName2 = "SauceHanSerifJP";
       type Input = { sans: string; serif: string };
-      const input: Input[] = [
+      const inputs: Input[] = [
         {
           sans: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSansJP",
           serif: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP",
         },
       ];
-      const template: TemplateData<Input> = {
-        background: null,
-        schema: {
-          sans: {
-            position: { x: 10, y: 10 },
-            width: 80,
-            height: 80,
+      const templates: TemplateData<Input>[] = [
+        {
+          background: null,
+          schema: {
+            sans: {
+              position: { x: 10, y: 10 },
+              width: 80,
+              height: 80,
 
-            alignment: "left",
-            fontSize: 8,
-            characterSpacing: 0,
-            type: "text",
-            lineHeight: 1,
-          },
-          serif: {
-            position: { x: 10, y: 60 },
-            width: 80,
-            height: 80,
-            alignment: "left",
-            fontName: fontName2,
-            fontSize: 8,
-            characterSpacing: 0,
-            type: "text",
-            lineHeight: 1,
+              alignment: "left",
+              fontSize: 8,
+              characterSpacing: 0,
+              type: "text",
+              lineHeight: 1,
+            },
+            serif: {
+              position: { x: 10, y: 60 },
+              width: 80,
+              height: 80,
+              alignment: "left",
+              fontName: fontName2,
+              fontSize: 8,
+              characterSpacing: 0,
+              type: "text",
+              lineHeight: 1,
+            },
           },
         },
-        pageSize: {
-          width: 100,
-          height: 100,
-        },
-        fontName: fontName1,
-      };
+      ];
+      const setting = Object.assign(getSetting(), { fontName: fontName1 });
       const font = {
         [fontName1]: SauceHanSansJP,
         [fontName2]: SauceHanSerifJP,
       };
-      const pdf = await labelmake({ input, template, font });
+      const pdf = await labelmake({ inputs, templates, setting, font });
       const file = getTmpPath("sans&serif.pdf");
       fs.writeFileSync(file, pdf);
       const ress = await Promise.all([
@@ -177,8 +183,9 @@ describe("labelmake integrate test", () => {
   describe("complex text", () => {
     test("atena8sans", async () => {
       const pdf = await labelmake({
-        input: atena8.sampledata,
-        template: atena8,
+        inputs: atena8.inputs,
+        templates: atena8.templates,
+        setting: atena8.setting,
         font: { SauceHanSansJP },
       });
       const file = getTmpPath("atena8sans.pdf");
@@ -192,10 +199,11 @@ describe("labelmake integrate test", () => {
     });
     test("atena8serif", async () => {
       const atena8serif = JSON.parse(JSON.stringify(atena8));
-      atena8serif.fontName = "SauceHanSerifJP";
+      atena8serif.setting.fontName = "SauceHanSerifJP";
       const pdf = await labelmake({
-        input: atena8.sampledata,
-        template: atena8serif,
+        inputs: atena8serif.inputs,
+        templates: atena8serif.templates,
+        setting: atena8serif.setting,
         font: { SauceHanSerifJP },
       });
       const file = getTmpPath("atena8serif.pdf");
@@ -211,8 +219,9 @@ describe("labelmake integrate test", () => {
   describe("complex image", () => {
     test("image", async () => {
       const pdf = await labelmake({
-        input: image.sampledata,
-        template: image,
+        inputs: image.inputs,
+        templates: image.templates,
+        setting: image.setting,
         font: { SauceHanSansJP },
       });
       const file = getTmpPath("image.pdf");
@@ -228,8 +237,9 @@ describe("labelmake integrate test", () => {
   describe("complex svg", () => {
     test("svg", async () => {
       const pdf = await labelmake({
-        input: svg.sampledata,
-        template: svg,
+        inputs: svg.inputs,
+        templates: svg.templates,
+        setting: svg.setting,
         font: { SauceHanSansJP },
       });
       const file = getTmpPath("svg.pdf");
@@ -245,8 +255,9 @@ describe("labelmake integrate test", () => {
   describe("complex barcode", () => {
     test("barcode", async () => {
       const pdf = await labelmake({
-        input: barcode.sampledata,
-        template: barcode,
+        inputs: barcode.inputs,
+        templates: barcode.templates,
+        setting: barcode.setting,
         font: { SauceHanSansJP },
       });
       const file = getTmpPath("barcode.pdf");
@@ -254,6 +265,82 @@ describe("labelmake integrate test", () => {
       const ress = await Promise.all([
         getPdf(file),
         getPdf(__dirname + "/assert/barcode.pdf"),
+      ]);
+      const [a, e] = ress;
+      expect(a).toEqual(e);
+    });
+  });
+  describe("multiple template", () => {
+    test("test", async () => {
+      const pdf = await labelmake({
+        inputs: [
+          { a: "a1", b: "b1", c: "c1" },
+          { a: "a2", b: "b2", c: "c2" },
+          { a: "a3", b: "b3", c: "c3" },
+        ],
+        templates: [
+          {
+            schema: {
+              a: {
+                type: "text",
+                position: { x: 10, y: 10 },
+                width: 20,
+                height: 20,
+              },
+              b: {
+                type: "text",
+                position: { x: 20, y: 20 },
+                width: 20,
+                height: 20,
+              },
+            },
+            background: null,
+          },
+          {
+            schema: {
+              c: {
+                type: "text",
+                position: { x: 30, y: 30 },
+                width: 20,
+                height: 20,
+              },
+            },
+            background: null,
+          },
+          {
+            schema: {
+              a: {
+                type: "text",
+                position: { x: 10, y: 10 },
+                width: 20,
+                height: 20,
+              },
+              b: {
+                type: "text",
+                position: { x: 20, y: 20 },
+                width: 20,
+                height: 20,
+              },
+              c: {
+                type: "text",
+                position: { x: 30, y: 30 },
+                width: 20,
+                height: 20,
+              },
+            },
+            background: null,
+          },
+        ],
+        setting: {
+          pageSize: { width: 100, height: 100 },
+        },
+        font: { SauceHanSansJP },
+      });
+      const file = getTmpPath("multiple.pdf");
+      fs.writeFileSync(file, pdf);
+      const ress = await Promise.all([
+        getPdf(file),
+        getPdf(__dirname + "/assert/multiple.pdf"),
       ]);
       const [a, e] = ress;
       expect(a).toEqual(e);

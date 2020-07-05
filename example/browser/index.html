@@ -3,12 +3,13 @@
     <meta charset="utf-8" />
   </head>
   <iframe id="iframe" width="100%" height="900"></iframe>
-  <script src="https://cdn.jsdelivr.net/npm/labelmake@1.1.0/dist/labelmake.min.js"></script>
-  <script type="text/javascript" src="../template.js"></script>
-  <script type="text/javascript" src="../input.js"></script>
+  <script type="text/javascript" src="../../dist//labelmake.min.js"></script>
+  <script type="text/javascript" src="../templates.js"></script>
+  <script type="text/javascript" src="../inputs.js"></script>
+  <script type="text/javascript" src="../setting.js"></script>
   <script type="text/javascript" src="../font.js"></script>
   <script type="text/javascript">
-    labelmake({ input, template, font }).then(buffer => {
+    labelmake({ inputs, templates, setting, font }).then((buffer) => {
       const blob = new Blob([buffer.buffer], { type: "application/pdf" });
       document.getElementById("iframe").src = URL.createObjectURL(blob);
     });

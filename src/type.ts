@@ -21,6 +21,7 @@ export interface TemplateSchema {
   alignment?: "left" | "right" | "center";
   fontName?: string;
   fontSize?: number;
+  fontColor?: string;
   characterSpacing?: number;
   lineHeight?: number;
 }
@@ -28,12 +29,31 @@ interface PageSize {
   width: number;
   height: number;
 }
-
-export type TemplateData<T> = {
-  schema: { [P in keyof T]: TemplateSchema };
-  background: string | null;
+export interface Setting {
   pageSize: PageSize;
   fontName?: string;
+  info?: {
+    title?: string;
+    author?: string;
+    subject?: string;
+    keywords?: string;
+  };
+  userPassword?: string;
+  ownerPassword?: string;
+  permissions?: {
+    printing?: string;
+    modifying?: boolean;
+    copying?: boolean;
+    annotating?: boolean;
+    fillingForms?: boolean;
+    contentAccessibility?: boolean;
+    documentAssembly?: boolean;
+  };
+}
+
+export type TemplateData<T> = {
+  schema: { [key: string]: TemplateSchema };
+  background: string | null;
 };
 interface Style {
   font?: any;
