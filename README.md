@@ -55,7 +55,7 @@ templates
         "lineHeight": 1
       }
     }
-}];
+}]
 ```
 
 inputs
