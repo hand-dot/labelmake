@@ -33,10 +33,10 @@ You can use Yarn, NuGet or other methods as well. You can load it directly from 
 
 ### Data
 
-template
+templates
 
 ```json
-{
+[{
     "background": null,
     "schema": {
       "test1": {
@@ -54,18 +54,25 @@ template
         "characterSpacing": 0,
         "lineHeight": 1
       }
-    },
-    "pageSize": {
-      "width": 100,
-      "height": 100
     }
-};
+}];
 ```
 
-input
+inputs
 
 ```json
 [{ "test1": "aa", "test2": "aa" }]
+```
+
+setting
+
+```
+{
+  "pageSize": {
+    "width": 100,
+    "height": 100
+  }
+}
 ```
 
 ### Node
@@ -73,10 +80,11 @@ input
 ```js
 const fs = require("fs");
 const labelmake = require("labelmake");
-const template = require("../template");
-const input = require("../input");
+const templates = require("../templates");
+const inputs = require("../inputs");
+const setting = require("../setting");
 
-labelmake({ input, template }).then((pdf) => {
+labelmake({ templates, inputs, setting }).then((pdf) => {
   fs.writeFileSync(__dirname + "/my.pdf", pdf);
 });
 ```
@@ -87,10 +95,11 @@ labelmake({ input, template }).then((pdf) => {
 <html>
   <iframe id="iframe" width="100%" height="700"></iframe>
   <script src="https://cdn.jsdelivr.net/npm/labelmake/dist/labelmake.min.js"></script>
-  <script type="text/javascript" src="../template.js"></script>
-  <script type="text/javascript" src="../input.js"></script>
+  <script type="text/javascript" src="../templates.js"></script>
+  <script type="text/javascript" src="../inputs.js"></script>
+  <script type="text/javascript" src="../setting.js"></script>
   <script type="text/javascript">
-    labelmake({ input, template }).then((buffer) => {
+    labelmake({ templates, inputs, setting }).then((buffer) => {
       const blob = new Blob([buffer.buffer], { type: "application/pdf" });
       document.getElementById("iframe").src = URL.createObjectURL(blob);
     });
