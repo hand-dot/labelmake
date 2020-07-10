@@ -30,8 +30,6 @@ interface PageSize {
   height: number;
 }
 export interface Setting {
-  pageSize: PageSize;
-  fontName?: string;
   info?: {
     title?: string;
     author?: string;
@@ -51,9 +49,13 @@ export interface Setting {
   };
 }
 
-export type TemplateData<T> = {
-  schema: { [key: string]: TemplateSchema };
-  background: string | null;
+export type Template = {
+  pageSize: PageSize;
+  fontName?: string;
+  datas: {
+    schema: { [key: string]: TemplateSchema };
+    background: string | null;
+  }[];
 };
 interface Style {
   font?: any;

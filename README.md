@@ -33,29 +33,37 @@ You can use Yarn, NuGet or other methods as well. You can load it directly from 
 
 ### Data
 
-templates
+template
 
 ```json
-[{
-    "background": null,
-    "schema": {
-      "test1": {
-        "position": { "x": 0, "y": 0 },
-        "width": 50,
-        "height": 50,
-        "type": "qrcode"
-      },
-      "test2": {
-        "position": { "x": 60, "y": 60 },
-        "width": 50,
-        "type": "text",
-        "alignment": "left",
-        "fontSize": 8,
-        "characterSpacing": 0,
-        "lineHeight": 1
+{
+  "pageSize": {
+    "width": 100,
+    "height": 100
+  },
+  "datas": [
+    {
+      "background": null,
+      "schema": {
+        "test1": {
+          "position": { "x": 0, "y": 0 },
+          "width": 50,
+          "height": 50,
+          "type": "qrcode"
+        },
+        "test2": {
+          "position": { "x": 60, "y": 60 },
+          "width": 50,
+          "type": "text",
+          "alignment": "left",
+          "fontSize": 8,
+          "characterSpacing": 0,
+          "lineHeight": 1
+        }
       }
     }
-}]
+  ]
+}
 ```
 
 inputs
@@ -64,27 +72,15 @@ inputs
 [{ "test1": "aa", "test2": "aa" }]
 ```
 
-setting
-
-```
-{
-  "pageSize": {
-    "width": 100,
-    "height": 100
-  }
-}
-```
-
 ### Node
 
 ```js
 const fs = require("fs");
 const labelmake = require("labelmake");
-const templates = require("../templates");
+const template = require("../template");
 const inputs = require("../inputs");
-const setting = require("../setting");
 
-labelmake({ templates, inputs, setting }).then((pdf) => {
+labelmake({ template, inputs }).then((pdf) => {
   fs.writeFileSync(__dirname + "/my.pdf", pdf);
 });
 ```
@@ -95,11 +91,10 @@ labelmake({ templates, inputs, setting }).then((pdf) => {
 <html>
   <iframe id="iframe" width="100%" height="700"></iframe>
   <script src="https://cdn.jsdelivr.net/npm/labelmake/dist/labelmake.min.js"></script>
-  <script type="text/javascript" src="../templates.js"></script>
+  <script type="text/javascript" src="../template.js"></script>
   <script type="text/javascript" src="../inputs.js"></script>
-  <script type="text/javascript" src="../setting.js"></script>
   <script type="text/javascript">
-    labelmake({ templates, inputs, setting }).then((buffer) => {
+    labelmake({ template, inputs }).then((buffer) => {
       const blob = new Blob([buffer.buffer], { type: "application/pdf" });
       document.getElementById("iframe").src = URL.createObjectURL(blob);
     });

@@ -3,7 +3,7 @@ import SauceHanSerifJP from "./fonts/SauceHanSerifJP";
 const fs = require("fs");
 import labelmake from "../src/labelmake";
 const PDFParser = require("pdf2json");
-import { TemplateData, Setting } from "../src/type";
+import { Template } from "../src/type";
 const atena8 = require("./templates/atena8.json");
 const image = require("./templates/image.json");
 const svg = require("./templates/svg.json");
@@ -21,30 +21,28 @@ const getPdf = (pdfFilePath: string) => {
 const getTmpPath = (fileName: string) => __dirname + `/tmp/${fileName}`;
 
 type Input = { test: string };
-const getTemplateData = (): TemplateData<Input>[] => [
-  {
-    background: null,
-    schema: {
-      test: {
-        position: { x: 10, y: 10 },
-        width: 80,
-        height: 80,
-        alignment: "left",
-        fontSize: 8,
-        characterSpacing: 0,
-        type: "text",
-        lineHeight: 1,
-      },
-    },
-  },
-];
-
-const getSetting = (): Setting => ({
+const getTemplate = (): Template => ({
   pageSize: {
     width: 100,
     height: 100,
   },
-  fontName: "",
+  datas: [
+    {
+      background: null,
+      schema: {
+        test: {
+          position: { x: 10, y: 10 },
+          width: 80,
+          height: 80,
+          alignment: "left",
+          fontSize: 8,
+          characterSpacing: 0,
+          type: "text",
+          lineHeight: 1,
+        },
+      },
+    },
+  ],
 });
 
 describe("labelmake integrate test", () => {
@@ -68,10 +66,9 @@ describe("labelmake integrate test", () => {
   describe("simple", () => {
     test("Default Font(Roboto)", async () => {
       const inputs: Input[] = [{ test: "This is Roboto" }];
-      const templates = getTemplateData();
-      const setting = getSetting();
-      delete setting.fontName;
-      const pdf = await labelmake({ inputs, templates, setting });
+      const template = getTemplate();
+      delete template.fontName;
+      const pdf = await labelmake({ inputs, template });
       const file = getTmpPath("roboto.pdf");
       fs.writeFileSync(file, pdf);
       const res = await Promise.all([
@@ -89,10 +86,10 @@ describe("labelmake integrate test", () => {
           test: "1234 １２３４　春夏秋冬我我輩は猫である by SauceHanSansJP",
         },
       ];
-      const templates = getTemplateData();
-      const setting = Object.assign(getSetting(), { fontName });
+      const template = getTemplate();
+      template.fontName = fontName;
       const font = { [fontName]: SauceHanSansJP };
-      const pdf = await labelmake({ inputs, templates, setting, font });
+      const pdf = await labelmake({ inputs, template, font });
       const file = getTmpPath("sans.pdf");
       fs.writeFileSync(file, pdf);
       const res = await Promise.all([
@@ -110,10 +107,10 @@ describe("labelmake integrate test", () => {
           test: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP",
         },
       ];
-      const templates = getTemplateData();
-      const setting = Object.assign(getSetting(), { fontName });
+      const template = getTemplate();
+      template.fontName = fontName;
       const font = { SauceHanSerifJP };
-      const pdf = await labelmake({ inputs, templates, setting, font });
+      const pdf = await labelmake({ inputs, template, font });
       const file = getTmpPath("serif.pdf");
       fs.writeFileSync(file, pdf);
       const res = await Promise.all([
@@ -134,41 +131,47 @@ describe("labelmake integrate test", () => {
           serif: "1234 １２３４　春夏秋冬我輩は猫である by SauceHanSerifJP",
         },
       ];
-      const templates: TemplateData<Input>[] = [
-        {
-          background: null,
-          schema: {
-            sans: {
-              position: { x: 10, y: 10 },
-              width: 80,
-              height: 80,
+      const template: Template = {
+        pageSize: {
+          width: 100,
+          height: 100,
+        },
+        fontName: fontName1,
+        datas: [
+          {
+            background: null,
+            schema: {
+              sans: {
+                position: { x: 10, y: 10 },
+                width: 80,
+                height: 80,
 
-              alignment: "left",
-              fontSize: 8,
-              characterSpacing: 0,
-              type: "text",
-              lineHeight: 1,
-            },
-            serif: {
-              position: { x: 10, y: 60 },
-              width: 80,
-              height: 80,
-              alignment: "left",
-              fontName: fontName2,
-              fontSize: 8,
-              characterSpacing: 0,
-              type: "text",
-              lineHeight: 1,
+                alignment: "left",
+                fontSize: 8,
+                characterSpacing: 0,
+                type: "text",
+                lineHeight: 1,
+              },
+              serif: {
+                position: { x: 10, y: 60 },
+                width: 80,
+                height: 80,
+                alignment: "left",
+                fontName: fontName2,
+                fontSize: 8,
+                characterSpacing: 0,
+                type: "text",
+                lineHeight: 1,
+              },
             },
           },
-        },
-      ];
-      const setting = Object.assign(getSetting(), { fontName: fontName1 });
+        ],
+      };
       const font = {
         [fontName1]: SauceHanSansJP,
         [fontName2]: SauceHanSerifJP,
       };
-      const pdf = await labelmake({ inputs, templates, setting, font });
+      const pdf = await labelmake({ inputs, template, font });
       const file = getTmpPath("sans&serif.pdf");
       fs.writeFileSync(file, pdf);
       const ress = await Promise.all([
@@ -184,8 +187,7 @@ describe("labelmake integrate test", () => {
     test("atena8sans", async () => {
       const pdf = await labelmake({
         inputs: atena8.inputs,
-        templates: atena8.templates,
-        setting: atena8.setting,
+        template: atena8.template,
         font: { SauceHanSansJP },
       });
       const file = getTmpPath("atena8sans.pdf");
@@ -199,11 +201,10 @@ describe("labelmake integrate test", () => {
     });
     test("atena8serif", async () => {
       const atena8serif = JSON.parse(JSON.stringify(atena8));
-      atena8serif.setting.fontName = "SauceHanSerifJP";
+      atena8serif.template.fontName = "SauceHanSerifJP";
       const pdf = await labelmake({
         inputs: atena8serif.inputs,
-        templates: atena8serif.templates,
-        setting: atena8serif.setting,
+        template: atena8serif.template,
         font: { SauceHanSerifJP },
       });
       const file = getTmpPath("atena8serif.pdf");
@@ -220,8 +221,7 @@ describe("labelmake integrate test", () => {
     test("image", async () => {
       const pdf = await labelmake({
         inputs: image.inputs,
-        templates: image.templates,
-        setting: image.setting,
+        template: image.template,
         font: { SauceHanSansJP },
       });
       const file = getTmpPath("image.pdf");
@@ -238,8 +238,7 @@ describe("labelmake integrate test", () => {
     test("svg", async () => {
       const pdf = await labelmake({
         inputs: svg.inputs,
-        templates: svg.templates,
-        setting: svg.setting,
+        template: svg.template,
         font: { SauceHanSansJP },
       });
       const file = getTmpPath("svg.pdf");
@@ -256,8 +255,7 @@ describe("labelmake integrate test", () => {
     test("barcode", async () => {
       const pdf = await labelmake({
         inputs: barcode.inputs,
-        templates: barcode.templates,
-        setting: barcode.setting,
+        template: barcode.template,
         font: { SauceHanSansJP },
       });
       const file = getTmpPath("barcode.pdf");
@@ -278,61 +276,61 @@ describe("labelmake integrate test", () => {
           { a: "a2", b: "b2", c: "c2" },
           { a: "a3", b: "b3", c: "c3" },
         ],
-        templates: [
-          {
-            schema: {
-              a: {
-                type: "text",
-                position: { x: 10, y: 10 },
-                width: 20,
-                height: 20,
-              },
-              b: {
-                type: "text",
-                position: { x: 20, y: 20 },
-                width: 20,
-                height: 20,
-              },
-            },
-            background: null,
-          },
-          {
-            schema: {
-              c: {
-                type: "text",
-                position: { x: 30, y: 30 },
-                width: 20,
-                height: 20,
-              },
-            },
-            background: null,
-          },
-          {
-            schema: {
-              a: {
-                type: "text",
-                position: { x: 10, y: 10 },
-                width: 20,
-                height: 20,
-              },
-              b: {
-                type: "text",
-                position: { x: 20, y: 20 },
-                width: 20,
-                height: 20,
-              },
-              c: {
-                type: "text",
-                position: { x: 30, y: 30 },
-                width: 20,
-                height: 20,
-              },
-            },
-            background: null,
-          },
-        ],
-        setting: {
+        template: {
           pageSize: { width: 100, height: 100 },
+          datas: [
+            {
+              schema: {
+                a: {
+                  type: "text",
+                  position: { x: 10, y: 10 },
+                  width: 20,
+                  height: 20,
+                },
+                b: {
+                  type: "text",
+                  position: { x: 20, y: 20 },
+                  width: 20,
+                  height: 20,
+                },
+              },
+              background: null,
+            },
+            {
+              schema: {
+                c: {
+                  type: "text",
+                  position: { x: 30, y: 30 },
+                  width: 20,
+                  height: 20,
+                },
+              },
+              background: null,
+            },
+            {
+              schema: {
+                a: {
+                  type: "text",
+                  position: { x: 10, y: 10 },
+                  width: 20,
+                  height: 20,
+                },
+                b: {
+                  type: "text",
+                  position: { x: 20, y: 20 },
+                  width: 20,
+                  height: 20,
+                },
+                c: {
+                  type: "text",
+                  position: { x: 30, y: 30 },
+                  width: 20,
+                  height: 20,
+                },
+              },
+              background: null,
+            },
+          ],
         },
         font: { SauceHanSansJP },
       });

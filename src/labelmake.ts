@@ -1,17 +1,17 @@
 import PdfMake from "./pdfMake";
 import { createDocDefinition } from "./pdf";
-import { TemplateData, Setting } from "./type";
+import { Template, Setting } from "./type";
 
-const info = { info: { creator: "labelmake.jp", producer: "labelmake.jp" } };
+const info = { creator: "labelmake.jp", producer: "labelmake.jp" };
 const pdfMake = new PdfMake();
 
-const labelmake = <T>(data: {
+const labelmake = (data: {
   inputs: { [key: string]: string }[];
-  templates: TemplateData<T>[];
-  setting: Setting;
+  template: Template;
+  setting?: Setting;
   font?: { [key: string]: string };
 }): Promise<Buffer> =>
-  createDocDefinition(data.inputs, data.templates, data.setting).then(
+  createDocDefinition(data.inputs, data.template).then(
     (docDefinition) =>
       new Promise((resolve) => {
         if (data.font) {
@@ -21,7 +21,9 @@ const labelmake = <T>(data: {
           });
         }
         pdfMake
-          .createPdf(Object.assign(info, docDefinition))
+          .createPdf(
+            Object.assign(data.setting ? data.setting : { info }, docDefinition)
+          )
           .getBuffer(resolve);
       })
   );

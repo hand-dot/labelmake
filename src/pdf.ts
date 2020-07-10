@@ -3,7 +3,7 @@ import * as bwipjs from "bwip-js/dist/node-bwipjs.js";
 import { Buffer } from "buffer";
 import {
   Setting,
-  TemplateData,
+  Template,
   TemplateSchema,
   BarCodeType,
   Content,
@@ -128,29 +128,28 @@ export const validateBarcodeInput = (type: BarCodeType, input: string) => {
 };
 
 export const createDocDefinition = async (
-  labelDatas: {
+  inputs: {
     [key: string]: string | null;
   }[],
-  templateDatas: TemplateData<any>[],
-  setting: Setting
+  template: Template
 ): Promise<DocDefinition> => {
   const docDefinition: DocDefinition = {
     pageSize: {
-      width: mm2pt(setting.pageSize.width),
-      height: mm2pt(setting.pageSize.height),
+      width: mm2pt(template.pageSize.width),
+      height: mm2pt(template.pageSize.height),
     },
     pageMargins: [0, 0, 0, -mm2pt(20)],
-    defaultStyle: { font: setting.fontName },
+    defaultStyle: { font: template.fontName },
     content: [],
   };
-  for (let i = 0; i < labelDatas.length; i++) {
-    for (let l = 0; l < templateDatas.length; l++) {
-      const { background, schema } = templateDatas[l];
-      const data = labelDatas[i];
+  for (let i = 0; i < inputs.length; i++) {
+    for (let l = 0; l < template.datas.length; l++) {
+      const { background, schema } = template.datas[l];
+      const inputObj = inputs[i];
       const bg: Content = {
         image: createImage(background),
         absolutePosition: { x: 0, y: 0 },
-        width: mm2pt(setting.pageSize.width),
+        width: mm2pt(template.pageSize.width),
         pageBreak: i === 0 && l === 0 ? "" : "before",
       };
       if (background && validateSvg(background)) {
@@ -168,7 +167,7 @@ export const createDocDefinition = async (
             y: mm2pt(labelData.position.y),
           },
         };
-        const input = data[key] ? data[key] : "";
+        const input = inputObj[key] ? inputObj[key] : "";
         if (labelData.type === "text") {
           obj.alignment = labelData.alignment;
           obj.columns = [
