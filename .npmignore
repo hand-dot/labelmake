@@ -2,6 +2,7 @@ test/
 dist/lib/test
 dist/types/test
 coverage/
+example/
 assets/
 .DS_Store
 .github/
