@@ -1,5 +1,4 @@
 import {
-  StandardFonts,
   PDFFont,
   PDFDocument,
   rgb,

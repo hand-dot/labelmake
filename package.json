@@ -52,6 +52,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@types/bwip-js": "^1.7.0",
     "@types/jest": "^25.1.3",

@@ -1,4 +1,5 @@
 import resolve from "@rollup/plugin-node-resolve";
+import json from "@rollup/plugin-json";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "rollup-plugin-typescript2";
 import builtins from "rollup-plugin-node-builtins";
@@ -17,17 +18,18 @@ export default {
       format: "umd",
       sourcemap: true,
       compact: true,
-      freeze: false
-    }
+      freeze: false,
+    },
   ],
   watch: {
-    include: "src/**"
+    include: "src/**",
   },
   plugins: [
     typescript({ useTsconfigDeclarationDir: true }),
+    json(),
     commonjs(),
     resolve(),
     globals(),
-    builtins()
-  ]
+    builtins(),
+  ],
 };
