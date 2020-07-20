@@ -46,9 +46,9 @@
   },
   "homepage": "https://github.com/hand-dot/labelmake#readme",
   "dependencies": {
-    "buffer": "^5.5.0",
+    "@pdf-lib/fontkit": "^1.0.0",
     "bwip-js": "^2.0.6",
-    "pdfmake": "^0.1.65"
+    "pdf-lib": "^1.9.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.2",

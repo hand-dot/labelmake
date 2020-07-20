@@ -1,21 +1,6 @@
 //@ts-ignore
 import * as bwipjs from "bwip-js/dist/node-bwipjs.js";
-import { Buffer } from "buffer";
 import { BarCodeType } from "./type";
-import { base64PngHeader, dummyImage } from "./constants";
-
-const btoa = (str: string) => {
-  let buffer;
-  if (Buffer.isBuffer(str)) {
-    buffer = str;
-  } else {
-    buffer = Buffer.from(str.toString(), "binary");
-  }
-  return buffer.toString("base64");
-};
-
-const pngBuffer2PngBase64 = (buffer: Buffer) =>
-  base64PngHeader + btoa(String.fromCharCode(...new Uint8Array(buffer)));
 
 export const validateBarcodeInput = (type: BarCodeType, input: string) => {
   if (!input) return false;
@@ -70,7 +55,7 @@ export const createBarCode = async ({
   input: string | null;
   width: number;
   height: number;
-}) => {
+}): Promise<Buffer | null> => {
   if (input && validateBarcodeInput(type, input)) {
     const bwipjsArg = {
       bcid: type === "nw7" ? "rationalizedCodabar" : type,
@@ -82,8 +67,8 @@ export const createBarCode = async ({
     const buffer = bwipjs.toBuffer
       ? await bwipjs.toBuffer(bwipjsArg)
       : await bwipjs.default.toBuffer(bwipjsArg);
-    return pngBuffer2PngBase64(buffer);
+    return buffer;
   } else {
-    return dummyImage;
+    return null;
   }
 };
