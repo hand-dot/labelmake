@@ -61,32 +61,24 @@ export const createPdf = async ({
     [key: string]: string;
   }[];
   template: Template;
-  font?: {
+  font: {
     [key: string]: string | Uint8Array | ArrayBuffer;
   };
 }) => {
   const pdfDoc = await PDFDocument.create();
-  let fontObj: { [key: string]: PDFFont } = {};
-  if (font) {
-    pdfDoc.registerFontkit(fontkit);
-    const fontKeys = Object.keys(font);
-    const fontValues = await Promise.all(
-      Object.values(font).map((v) =>
-        pdfDoc.embedFont(v, {
-          subset: true,
-        })
-      )
-    );
-    fontObj = fontKeys.reduce(
-      (acc, cur, i) => Object.assign(acc, { [cur]: fontValues[i] }),
-      {} as { [key: string]: PDFFont }
-    );
-  } else {
-    const fontValue = await pdfDoc.embedFont(StandardFonts.Courier);
-    fontObj = {
-      [StandardFonts.Courier]: fontValue,
-    };
-  }
+  pdfDoc.registerFontkit(fontkit);
+  const fontKeys = Object.keys(font);
+  const fontValues = await Promise.all(
+    Object.values(font).map((v) =>
+      pdfDoc.embedFont(v, {
+        subset: true,
+      })
+    )
+  );
+  const fontObj = fontKeys.reduce(
+    (acc, cur, i) => Object.assign(acc, { [cur]: fontValues[i] }),
+    {} as { [key: string]: PDFFont }
+  );
 
   const basePdf = await PDFDocument.load(template.basePdf);
   const embeddedPages = await pdfDoc.embedPdf(
@@ -111,11 +103,8 @@ export const createPdf = async ({
         const boxWidth = mm2pt(schema.width);
         const boxHeight = mm2pt(schema.height);
         if (schema.type === "text") {
-          const _myFont =
+          const myFont =
             fontObj[schema.fontName ? schema.fontName : template.fontName];
-          const myFont = _myFont
-            ? _myFont
-            : (fontObj[StandardFonts.Courier] as PDFFont);
           const [r, g, b] = hex2rgb(
             schema.fontColor ? schema.fontColor : "#000"
           );
