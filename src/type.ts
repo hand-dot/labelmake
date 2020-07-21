@@ -27,6 +27,12 @@ interface TemplateSchema {
 }
 
 export interface Template {
+  schemas: { [key: string]: TemplateSchema }[];
+  basePdf: string;
+  fontName: string;
+}
+
+export interface _Template {
   sampledata: { [key: string]: string }[];
   schemas: { [key: string]: TemplateSchema }[];
   basePdf: string;
