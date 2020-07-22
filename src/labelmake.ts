@@ -43,12 +43,6 @@ const mm2pt = (mm: number): number => {
   return parseFloat(String(mm)) * ptRatio;
 };
 
-// const pt2mm = (pt: number): number => {
-//   // https://www.ddc.co.jp/words/archives/20090701114500.html
-//   const mmRatio = 0.3527;
-//   return parseFloat(String(pt)) * mmRatio;
-// };
-
 const calcX = (
   x: number,
   alignment: "left" | "right" | "center",
@@ -85,7 +79,7 @@ const labelmake = async ({
     (acc, cur, i) => Object.assign(acc, { [cur]: fontValues[i] }),
     {} as { [key: string]: PDFFont }
   );
-  const inputImageObj: { [key: string]: PDFImage } = {};
+  const inputImageCache: { [key: string]: PDFImage } = {};
   const basePdf = await PDFDocument.load(template.basePdf);
   const embeddedPages = await pdfDoc.embedPdf(
     basePdf,
@@ -122,22 +116,13 @@ const labelmake = async ({
             : 0;
           const textHeight = myFont.heightAtSize(fontSize);
           let beforeLineOver = 0;
-          // TODO ここをどうにかする
-          const itemHeight = fontSize * 1.2;
-          console.log(`=====${key}====`);
-          console.error("fontSize * 1.2", fontSize * 1.2);
-          console.warn("itemHeight", itemHeight);
-          console.log("fontSize", fontSize);
-          console.log("textHeight", textHeight);
-          console.log("boxHeight", boxHeight);
-          console.log("lineHeight", lineHeight);
           input.split(/\r|\n|\r\n/g).forEach((inputLine, index) => {
             const textWidth = myFont.widthOfTextAtSize(inputLine, fontSize);
             page.pushOperators(setCharacterSpacing(characterSpacing));
             page.drawText(inputLine, {
               x: calcX(schema.position.x, alignment, boxWidth, textWidth),
               y:
-                calcY(schema.position.y, embeddedPage.height, itemHeight) -
+                calcY(schema.position.y, embeddedPage.height, fontSize) -
                 (lineHeight * textHeight * index +
                   lineHeight * textHeight * beforeLineOver),
               rotate: rotate,
@@ -159,8 +144,8 @@ const labelmake = async ({
             width: boxWidth,
             height: boxHeight,
           };
-          const inputImageObjKey = `${schema.type}${input}`;
-          let image = inputImageObj[inputImageObjKey];
+          const inputImageCacheKey = `${schema.type}${input}`;
+          let image = inputImageCache[inputImageCacheKey];
           if (!image && schema.type === "image") {
             const isPng = input.startsWith("data:image/png;");
             image = await pdfDoc[isPng ? "embedPng" : "embedJpg"](input);
@@ -175,7 +160,7 @@ const labelmake = async ({
               image = await pdfDoc.embedPng(imageBuf);
             }
           }
-          inputImageObj[inputImageObjKey] = image;
+          inputImageCache[inputImageCacheKey] = image;
           page.drawImage(image, opt);
         }
       }
