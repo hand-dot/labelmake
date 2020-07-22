@@ -47,17 +47,17 @@ describe("labelmake integrate test", () => {
     for (let l = 0; l < entries.length; l++) {
       const [key, template] = entries[l];
       test(`snapshot ${key}`, async () => {
-        const hrstart = process.hrtime();
         const inputs = template.sampledata;
+        const hrstart = process.hrtime();
         const pdf = await labelmake({ inputs, template, font });
+        const hrend = process.hrtime(hrstart);
+        expect(hrend[0]).toBeLessThan(1)
         const tmpFile = getTmpPath(`${key}.pdf`);
         const assertFile = getAssertPath(`${key}.pdf`);
         fs.writeFileSync(tmpFile, pdf);
         const res = await Promise.all([getPdf(tmpFile), getPdf(assertFile)]);
         const [a, e] = res;
         expect(a).toEqual(e);
-        const hrend = process.hrtime(hrstart);
-        expect(hrend[0]).toBeLessThan(5)
       });
     }
   });
