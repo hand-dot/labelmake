@@ -4,6 +4,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import typescript from "rollup-plugin-typescript2";
 import builtins from "rollup-plugin-node-builtins";
 import globals from "rollup-plugin-node-globals";
+import { terser } from "rollup-plugin-terser";
 
 const pkg = require("./package.json");
 
@@ -31,5 +32,6 @@ export default {
     resolve(),
     globals(),
     builtins(),
+    terser(),
   ],
 };

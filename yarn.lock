@@ -1069,6 +1069,11 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
+commander@^2.20.0:
+  version "2.20.3"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.3.tgz#fd485e84c03eb4881c20722ba48035e8531aeb33"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
+
 commondir@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
@@ -2486,6 +2491,14 @@ jest-worker@^25.1.0:
     merge-stream "^2.0.0"
     supports-color "^7.0.0"
 
+jest-worker@^26.0.0:
+  version "26.1.0"
+  resolved "https://registry.yarnpkg.com/jest-worker/-/jest-worker-26.1.0.tgz#65d5641af74e08ccd561c240e7db61284f82f33d"
+  integrity sha512-Z9P5pZ6UC+kakMbNJn+tA2RdVdNX5WH1x+5UCBZ9MxIK24pjYtFt96fK+UwBTrjLYm232g1xz0L3eTh51OW+yQ==
+  dependencies:
+    merge-stream "^2.0.0"
+    supports-color "^7.0.0"
+
 jest@^25.1.0:
   version "25.1.0"
   resolved "https://registry.yarnpkg.com/jest/-/jest-25.1.0.tgz#b85ef1ddba2fdb00d295deebbd13567106d35be9"
@@ -3340,7 +3353,7 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
+randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.1.0.tgz#df6f84372f0270dc65cdf6291349ab7a473d4f2a"
   integrity sha512-vYl3iOX+4CKUWuxGi9Ukhie6fsqXqS9FE2Zaic4tNFD2N2QQaXOMFbuKK4QmDHC0JO6B1Zp41J0LpT0oR68amQ==
@@ -3546,6 +3559,16 @@ rollup-plugin-node-globals@^1.4.0:
     process-es6 "^0.11.6"
     rollup-pluginutils "^2.3.1"
 
+rollup-plugin-terser@^6.1.0:
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-terser/-/rollup-plugin-terser-6.1.0.tgz#071866585aea104bfbb9dd1019ac523e63c81e45"
+  integrity sha512-4fB3M9nuoWxrwm39habpd4hvrbrde2W2GG4zEGPQg1YITNkM3Tqur5jSuXlWNzbv/2aMLJ+dZJaySc3GCD8oDw==
+  dependencies:
+    "@babel/code-frame" "^7.8.3"
+    jest-worker "^26.0.0"
+    serialize-javascript "^3.0.0"
+    terser "^4.7.0"
+
 rollup-plugin-typescript2@^0.26.0:
   version "0.26.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-typescript2/-/rollup-plugin-typescript2-0.26.0.tgz#cee2b44d51d9623686656d76dc30a73c4de91672"
@@ -3639,6 +3662,13 @@ semver@~2.3.1:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-2.3.2.tgz#b9848f25d6cf36333073ec9ef8856d42f1233e52"
   integrity sha1-uYSPJdbPNjMwc+ye+IVtQvEjPlI=
+
+serialize-javascript@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-3.1.0.tgz#8bf3a9170712664ef2561b44b691eafe399214ea"
+  integrity sha512-JIJT1DGiWmIKhzRsG91aS6Ze4sFUrYbltlkg2onR5OrnNM02Kl/hnY/T4FN2omvyeBbQmMJv+K4cPOpGzOTFBg==
+  dependencies:
+    randombytes "^2.1.0"
 
 set-blocking@^2.0.0:
   version "2.0.0"
@@ -3752,6 +3782,14 @@ source-map-support@^0.5.6:
   version "0.5.16"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.16.tgz#0ae069e7fe3ba7538c64c98515e35339eac5a042"
   integrity sha512-efyLRJDr68D9hBBNIPWFjhpFzURh+KJykQwvMyW5UiZzYwoF6l4YMMDIJJEyFWxWCqfyxLzz6tSfUFR+kXXsVQ==
+  dependencies:
+    buffer-from "^1.0.0"
+    source-map "^0.6.0"
+
+source-map-support@~0.5.12:
+  version "0.5.19"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
+  integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
   dependencies:
     buffer-from "^1.0.0"
     source-map "^0.6.0"
@@ -3939,6 +3977,15 @@ terminal-link@^2.0.0:
   dependencies:
     ansi-escapes "^4.2.1"
     supports-hyperlinks "^2.0.0"
+
+terser@^4.7.0:
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-4.8.0.tgz#63056343d7c70bb29f3af665865a46fe03a0df17"
+  integrity sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==
+  dependencies:
+    commander "^2.20.0"
+    source-map "~0.6.1"
+    source-map-support "~0.5.12"
 
 test-exclude@^6.0.0:
   version "6.0.0"

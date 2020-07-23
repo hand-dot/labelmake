@@ -31,6 +31,8 @@ You can use Yarn, NuGet or other methods as well. You can load it directly from 
 
 ## Usage
 
+`Note: This usage is outdated, so please refer to the latest example folder. We will fix this section in the near future.`
+
 ### Data
 
 template
