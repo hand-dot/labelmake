@@ -6,7 +6,7 @@ import {
   degrees,
   setCharacterSpacing,
 } from "pdf-lib";
-const fontkit = require("@pdf-lib/fontkit");
+import fontkit from "@pdf-lib/fontkit";
 import { blankPdf } from "./constants";
 import { createBarCode } from "./barcode";
 import { Template } from "./type";
