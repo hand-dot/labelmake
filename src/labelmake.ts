@@ -97,10 +97,9 @@ const labelmake = async ({
       if (!schemas[j]) continue;
       for (let l = 0; l < keys.length; l++) {
         const key = keys[l];
-        if (!schemas[j][key]) continue;
         const schema = schemas[j][key];
         const input = inputObj[key];
-        if (!input) return;
+        if (!schema || !input) continue;
         const rotate = degrees(schema.rotate ? schema.rotate : 0);
         const boxWidth = mm2pt(schema.width);
         const boxHeight = mm2pt(schema.height);
