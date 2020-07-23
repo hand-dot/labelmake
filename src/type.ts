@@ -17,7 +17,7 @@ interface TemplateSchema {
   position: { x: number; y: number };
   width: number;
   height: number;
-  rotate: number;
+  rotate?: number;
   alignment?: "left" | "right" | "center";
   fontSize?: number;
   fontName?: string;
@@ -28,13 +28,10 @@ interface TemplateSchema {
 
 export interface Template {
   schemas: { [key: string]: TemplateSchema }[];
-  basePdf: string;
+  basePdf: string | Uint8Array | ArrayBuffer | null;
   fontName: string;
 }
 
-export interface _Template {
+export type _Template = Template & {
   sampledata: { [key: string]: string }[];
-  schemas: { [key: string]: TemplateSchema }[];
-  basePdf: string;
-  fontName: string;
-}
+};

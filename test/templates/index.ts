@@ -33,6 +33,38 @@ const 納品書 = require("./納品書.json") as _Template;
 const 書類送付状 = require("./書類送付状.json") as _Template;
 
 export default {
+  test: {
+    sampledata: [
+      { a: "a1", b: "b1", c: "c1" },
+      { a: "a2", b: "b2", c: "c2" },
+    ],
+    schemas: [
+      {
+        a: {
+          type: "text",
+          position: { x: 0, y: 0 },
+          width: 10,
+          height: 10,
+        },
+      },
+      {
+        b: {
+          type: "text",
+          position: { x: 10, y: 10 },
+          width: 10,
+          height: 10,
+        },
+        c: {
+          type: "text",
+          position: { x: 20, y: 20 },
+          width: 10,
+          height: 10,
+        },
+      },
+    ],
+    basePdf: null,
+    fontName: "SauceHanSansJP",
+  } as _Template,
   宛名8面,
   シンプルラベル24面,
   シンプルラベル24面BASE,

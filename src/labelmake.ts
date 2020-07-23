@@ -7,6 +7,7 @@ import {
   setCharacterSpacing,
 } from "pdf-lib";
 const fontkit = require("@pdf-lib/fontkit");
+import { blankPdf } from "./constants";
 import { createBarCode } from "./barcode";
 import { Template } from "./type";
 
@@ -70,6 +71,7 @@ const labelmake = async ({
   template: Template;
   font: { [key: string]: string | Uint8Array | ArrayBuffer };
 }) => {
+  const { basePdf, schemas } = template;
   const pdfDoc = await PDFDocument.create();
   pdfDoc.registerFontkit(fontkit);
   const fontValues = await Promise.all(
@@ -80,23 +82,23 @@ const labelmake = async ({
     {} as { [key: string]: PDFFont }
   );
   const inputImageCache: { [key: string]: PDFImage } = {};
-  const basePdf = await PDFDocument.load(template.basePdf);
+  const embedPdf = await PDFDocument.load(basePdf || blankPdf);
   const embeddedPages = await pdfDoc.embedPdf(
-    basePdf,
-    basePdf.getPageIndices()
+    embedPdf,
+    embedPdf.getPageIndices()
   );
   for (let i = 0; i < inputs.length; i++) {
     const inputObj = inputs[i];
     const keys = Object.keys(inputObj);
-    for (let j = 0; j < embeddedPages.length; j++) {
-      const embeddedPage = embeddedPages[j];
+    for (let j = 0; j < (basePdf ? embeddedPages : schemas).length; j++) {
+      const embeddedPage = embeddedPages[basePdf ? j : 0];
       const page = pdfDoc.addPage([embeddedPage.width, embeddedPage.height]);
       page.drawPage(embeddedPage);
-      if (!template.schemas[j]) continue;
+      if (!schemas[j]) continue;
       for (let l = 0; l < keys.length; l++) {
         const key = keys[l];
-        if (!template.schemas[j][key]) continue;
-        const schema = template.schemas[j][key];
+        if (!schemas[j][key]) continue;
+        const schema = schemas[j][key];
         const input = inputObj[key];
         if (!input) return;
         const rotate = degrees(schema.rotate ? schema.rotate : 0);

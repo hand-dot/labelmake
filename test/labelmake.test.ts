@@ -51,7 +51,7 @@ describe("labelmake integrate test", () => {
         const hrstart = process.hrtime();
         const pdf = await labelmake({ inputs, template, font });
         const hrend = process.hrtime(hrstart);
-        expect(hrend[0]).toBeLessThan(1)
+        expect(hrend[0]).toBeLessThanOrEqual(1)
         const tmpFile = getTmpPath(`${key}.pdf`);
         const assertFile = getAssertPath(`${key}.pdf`);
         fs.writeFileSync(tmpFile, pdf);
