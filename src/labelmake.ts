@@ -115,7 +115,6 @@ const labelmake = async ({
           const characterSpacing = schema.characterSpacing
             ? schema.characterSpacing
             : 0;
-          const textHeight = myFont.heightAtSize(fontSize);
           let beforeLineOver = 0;
           input.split(/\r|\n|\r\n/g).forEach((inputLine, index) => {
             const textWidth = myFont.widthOfTextAtSize(inputLine, fontSize);
@@ -124,8 +123,8 @@ const labelmake = async ({
               x: calcX(schema.position.x, alignment, boxWidth, textWidth),
               y:
                 calcY(schema.position.y, embeddedPage.height, fontSize) -
-                (lineHeight * textHeight * index +
-                  lineHeight * textHeight * beforeLineOver),
+                (lineHeight * fontSize * index +
+                  lineHeight * fontSize * beforeLineOver),
               rotate: rotate,
               size: fontSize,
               maxWidth: boxWidth,
@@ -161,8 +160,10 @@ const labelmake = async ({
               image = await pdfDoc.embedPng(imageBuf);
             }
           }
-          inputImageCache[inputImageCacheKey] = image;
-          page.drawImage(image, opt);
+          if (image) {
+            inputImageCache[inputImageCacheKey] = image;
+            page.drawImage(image, opt);
+          }
         }
       }
     }
