@@ -7,7 +7,6 @@ import {
   setCharacterSpacing,
 } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
-import { blankPdf } from "./constants";
 import { createBarCode } from "./barcode";
 import { Template } from "./type";
 
@@ -115,18 +114,19 @@ const labelmake = async ({
           const characterSpacing = schema.characterSpacing
             ? schema.characterSpacing
             : 0;
+          page.pushOperators(setCharacterSpacing(characterSpacing));
+
           let beforeLineOver = 0;
           input.split(/\r|\n|\r\n/g).forEach((inputLine, index) => {
             const textWidth = myFont.widthOfTextAtSize(inputLine, fontSize);
-            page.pushOperators(setCharacterSpacing(characterSpacing));
             page.drawText(inputLine, {
               x: calcX(schema.position.x, alignment, boxWidth, textWidth),
               y:
                 calcY(schema.position.y, embeddedPage.height, fontSize) -
-                (lineHeight * fontSize * index +
-                  lineHeight * fontSize * beforeLineOver),
+                lineHeight * fontSize * (index + beforeLineOver),
               rotate: rotate,
               size: fontSize,
+              lineHeight:lineHeight * fontSize,
               maxWidth: boxWidth,
               font: myFont,
               color: rgb(r, g, b),
