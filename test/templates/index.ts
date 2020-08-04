@@ -1,4 +1,4 @@
-import { _Template } from "../..//src/type";
+import { _Template } from "../../src/type";
 const レターパック = require("./レターパック.json") as _Template;
 const レターパックライト = require("./レターパックライト.json") as _Template;
 const レターパックプラス = require("./レターパックプラス.json") as _Template;
@@ -62,7 +62,7 @@ export default {
         },
       },
     ],
-    basePdf: null,
+    basePdf: { height: 297, width: 210 },
     fontName: "SauceHanSansJP",
   } as _Template,
   宛名8面,

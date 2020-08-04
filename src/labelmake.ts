@@ -2,13 +2,14 @@ import {
   PDFFont,
   PDFImage,
   PDFDocument,
+  PDFEmbeddedPage,
   rgb,
   degrees,
   setCharacterSpacing,
 } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { createBarCode } from "./barcode";
-import { Template } from "./type";
+import { Template, isPageSize } from "./type";
 
 const barcodes = [
   "qrcode",
@@ -81,18 +82,24 @@ const labelmake = async ({
     {} as { [key: string]: PDFFont }
   );
   const inputImageCache: { [key: string]: PDFImage } = {};
-  const embedPdf = await PDFDocument.load(basePdf || blankPdf);
-  const embeddedPages = await pdfDoc.embedPdf(
-    embedPdf,
-    embedPdf.getPageIndices()
-  );
+  const isBlank = isPageSize(basePdf);
+  let embeddedPages: PDFEmbeddedPage[] = [];
+  if (!isPageSize(basePdf)) {
+    const embedPdf = await PDFDocument.load(basePdf);
+    embeddedPages = await pdfDoc.embedPdf(embedPdf, embedPdf.getPageIndices());
+  }
   for (let i = 0; i < inputs.length; i++) {
     const inputObj = inputs[i];
     const keys = Object.keys(inputObj);
-    for (let j = 0; j < (basePdf ? embeddedPages : schemas).length; j++) {
-      const embeddedPage = embeddedPages[basePdf ? j : 0];
-      const page = pdfDoc.addPage([embeddedPage.width, embeddedPage.height]);
-      page.drawPage(embeddedPage);
+    for (let j = 0; j < (isBlank ? schemas : embeddedPages).length; j++) {
+      const pageWidth = isPageSize(basePdf)
+        ? mm2pt(basePdf.width)
+        : embeddedPages[j].width;
+      const pageHeight = isPageSize(basePdf)
+        ? mm2pt(basePdf.height)
+        : embeddedPages[j].height;
+      const page = pdfDoc.addPage([pageWidth, pageHeight]);
+      if (!isBlank) page.drawPage(embeddedPages[j]);
       if (!schemas[j]) continue;
       for (let l = 0; l < keys.length; l++) {
         const key = keys[l];
@@ -122,11 +129,11 @@ const labelmake = async ({
             page.drawText(inputLine, {
               x: calcX(schema.position.x, alignment, boxWidth, textWidth),
               y:
-                calcY(schema.position.y, embeddedPage.height, fontSize) -
+                calcY(schema.position.y, pageHeight, fontSize) -
                 lineHeight * fontSize * (index + beforeLineOver),
               rotate: rotate,
               size: fontSize,
-              lineHeight:lineHeight * fontSize,
+              lineHeight: lineHeight * fontSize,
               maxWidth: boxWidth,
               font: myFont,
               color: rgb(r, g, b),
@@ -139,7 +146,7 @@ const labelmake = async ({
         } else if (barcodes.includes(schema.type) || schema.type === "image") {
           const opt = {
             x: calcX(schema.position.x, "left", boxWidth, boxWidth),
-            y: calcY(schema.position.y, embeddedPage.height, boxHeight),
+            y: calcY(schema.position.y, pageHeight, boxHeight),
             rotate: rotate,
             width: boxWidth,
             height: boxHeight,

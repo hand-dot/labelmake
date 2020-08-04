@@ -26,9 +26,17 @@ interface TemplateSchema {
   lineHeight?: number;
 }
 
+interface PageSize {
+  height: number;
+  width: number;
+}
+
+export const isPageSize = (
+  args: PageSize | string | Uint8Array | ArrayBuffer
+): args is PageSize => typeof args === "object" && "width" in args;
 export interface Template {
   schemas: { [key: string]: TemplateSchema }[];
-  basePdf: string | Uint8Array | ArrayBuffer | null;
+  basePdf: PageSize | string | Uint8Array | ArrayBuffer;
   fontName: string;
 }
 
