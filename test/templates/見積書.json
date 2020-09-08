@@ -1,4 +1,11 @@
 {
+  "owner": "2jLkhznpUXM3YV0rVwwvF66YNFm2",
+  "team": "labelmake",
+  "tags": ["ビジネス"],
+  "description": "A4のコピー用紙に見積書が記入される書式です。<u>印刷サイズ:A4(210mmx297mm)</u>",
+  "photo": "",
+  "createdAt": null,
+  "updatedAt": null,
   "sampledata": [
     {
       "見積No": "1",
@@ -148,14 +155,14 @@
   "schemas": [
     {
       "見積No": {
-        "position": { "x": 148, "y": 34.5 },
+        "position": { "x": 148, "y": 35.5 },
         "width": 57,
         "height": 6,
         "type": "text",
         "alignment": "left",
         "fontSize": 12,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "見積日": {
         "position": { "x": 148, "y": 46 },
@@ -165,7 +172,7 @@
         "alignment": "left",
         "fontSize": 12,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "[見積先]会社名": {
         "position": { "x": 5, "y": 34 },
@@ -185,7 +192,7 @@
         "alignment": "center",
         "fontSize": 12,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "件名": {
         "position": { "x": 35, "y": 59 },
@@ -195,7 +202,7 @@
         "alignment": "center",
         "fontSize": 12.5,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "納期": {
         "position": { "x": 36, "y": 87.5 },
@@ -205,7 +212,7 @@
         "alignment": "left",
         "fontSize": 11,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "支払条件": {
         "position": { "x": 36, "y": 94.5 },
@@ -215,7 +222,7 @@
         "alignment": "left",
         "fontSize": 11,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "有効期限": {
         "position": { "x": 36, "y": 101.5 },
@@ -225,7 +232,7 @@
         "alignment": "left",
         "fontSize": 11,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "[見積元]会社名": {
         "position": { "x": 123, "y": 55 },
@@ -245,7 +252,7 @@
         "alignment": "left",
         "fontSize": 12,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "[見積元]住所": {
         "position": { "x": 122, "y": 72 },
@@ -265,7 +272,7 @@
         "alignment": "left",
         "fontSize": 12,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "[見積元]FAX": {
         "position": { "x": 143, "y": 94 },
@@ -275,7 +282,7 @@
         "alignment": "left",
         "fontSize": 12,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "[見積元]Email": {
         "position": { "x": 143, "y": 100.5 },
@@ -285,7 +292,7 @@
         "alignment": "left",
         "fontSize": 12,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "[見積元]担当者名": {
         "position": { "x": 143, "y": 107.5 },
@@ -295,7 +302,7 @@
         "alignment": "left",
         "fontSize": 12,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "合計金額": {
         "position": { "x": 42, "y": 120 },
@@ -305,7 +312,7 @@
         "alignment": "center",
         "fontSize": 13,
         "characterSpacing": 0,
-        "lineHeight": 0.65
+        "lineHeight": 1
       },
       "品目1": {
         "position": { "x": 16, "y": 141 },

@@ -1,4 +1,11 @@
 {
+  "owner": "2jLkhznpUXM3YV0rVwwvF66YNFm2",
+  "team": "labelmake",
+  "tags": ["郵便局"],
+  "description": "レターパックの書式をレターパックライトのカラーで使用いただけます。  <u>印刷サイズ:A4(210mmx297mm)</u>",
+  "photo": "",
+  "createdAt": null,
+  "updatedAt": null,
   "name": "レターパックライト",
   "id": "レターパック",
   "fontName": "SauceHanSansJP",
@@ -34,17 +41,17 @@
   "schemas": [
     {
       "[お届け先]郵便番号": {
-        "position": { "x": 102.3, "y": 39 },
+        "position": { "x": 102.3, "y": 42 },
         "width": 85,
         "alignment": "left",
         "fontSize": 40,
         "characterSpacing": 12.7,
         "type": "text",
-        "height": 21.64,
+        "height": 15.82,
         "lineHeight": 1
       },
       "[お届け先]住所": {
-        "position": { "x": 61.13, "y": 86.5 },
+        "position": { "x": 61.13, "y": 87.5 },
         "width": 119.73,
         "alignment": "left",
         "fontSize": 13,
@@ -54,7 +61,7 @@
         "lineHeight": 1.4
       },
       "[お届け先]社名": {
-        "position": { "x": 76.03, "y": 115.79 },
+        "position": { "x": 76.03, "y": 116.79 },
         "width": 98.17,
         "alignment": "right",
         "fontSize": 13.5,
@@ -64,47 +71,47 @@
         "lineHeight": 1
       },
       "[お届け先]氏名": {
-        "position": { "x": 61, "y": 123.9 },
+        "position": { "x": 61, "y": 124.9 },
         "width": 113,
         "alignment": "right",
         "fontSize": 16,
         "characterSpacing": 0,
         "type": "text",
-        "height": 9.2,
+        "height": 7.88,
         "lineHeight": 1
       },
       "[お届け先]電話番号": {
-        "position": { "x": 91, "y": 135.5 },
-        "width": 89.97,
+        "position": { "x": 91, "y": 136.57 },
+        "width": 89.96,
         "alignment": "left",
         "fontSize": 15,
         "characterSpacing": 0,
         "type": "text",
-        "height": 10,
+        "height": 6.54,
         "lineHeight": 1
       },
       "[差出人]郵便番号": {
-        "position": { "x": 77.9, "y": 145.3 },
-        "width": 40.02,
+        "position": { "x": 77.9, "y": 146.63 },
+        "width": 38.7,
         "alignment": "left",
         "fontSize": 18,
         "characterSpacing": 5.8,
         "type": "text",
-        "height": 7.61,
+        "height": 6.28,
         "lineHeight": 1
       },
       "[差出人]住所": {
-        "position": { "x": 61.13, "y": 152.7 },
+        "position": { "x": 61.13, "y": 153.49 },
         "width": 119.73,
         "alignment": "left",
         "fontSize": 13,
         "characterSpacing": 0,
         "type": "text",
-        "height": 20.04,
-        "lineHeight": 1
+        "height": 18.45,
+        "lineHeight": 1.2
       },
       "[差出人]社名": {
-        "position": { "x": 76.12, "y": 172.86 },
+        "position": { "x": 76.12, "y": 173.86 },
         "width": 104.78,
         "alignment": "left",
         "fontSize": 14,
@@ -114,23 +121,23 @@
         "lineHeight": 1
       },
       "[差出人]氏名": {
-        "position": { "x": 73, "y": 179 },
-        "width": 107.96,
+        "position": { "x": 73.01, "y": 180.33 },
+        "width": 107.95,
         "alignment": "left",
         "fontSize": 15,
         "characterSpacing": 0,
         "type": "text",
-        "height": 8.4,
+        "height": 7.07,
         "lineHeight": 1
       },
       "[差出人]電話番号": {
-        "position": { "x": 91, "y": 190 },
+        "position": { "x": 91, "y": 190.32 },
         "width": 89.96,
         "alignment": "left",
         "fontSize": 15,
         "characterSpacing": 0,
         "type": "text",
-        "height": 8.67,
+        "height": 7.35,
         "lineHeight": 1
       },
       "品名": {

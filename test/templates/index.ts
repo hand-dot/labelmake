@@ -31,6 +31,9 @@ const 見積書 = require("./見積書.json") as _Template;
 const 請求書 = require("./請求書.json") as _Template;
 const 納品書 = require("./納品書.json") as _Template;
 const 書類送付状 = require("./書類送付状.json") as _Template;
+const 履歴書 = require("./履歴書.json") as _Template;
+const 労働条件通知書 = require("./労働条件通知書.json") as _Template;
+const z97mmx210mm = require("./z97mmx210mm.json") as _Template;
 
 export default {
   test: {
@@ -97,4 +100,7 @@ export default {
   請求書,
   納品書,
   書類送付状,
+  履歴書,
+  労働条件通知書,
+  z97mmx210mm,
 };

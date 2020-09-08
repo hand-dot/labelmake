@@ -130,7 +130,8 @@ const labelmake = async ({
               x: calcX(schema.position.x, alignment, boxWidth, textWidth),
               y:
                 calcY(schema.position.y, pageHeight, fontSize) -
-                lineHeight * fontSize * (index + beforeLineOver),
+                lineHeight * fontSize * (index + beforeLineOver) -
+                (lineHeight === 0 ? 0 : ((lineHeight - 1) * fontSize) / 2),
               rotate: rotate,
               size: fontSize,
               lineHeight: lineHeight * fontSize,

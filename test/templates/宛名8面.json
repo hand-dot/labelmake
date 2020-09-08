@@ -1,6 +1,13 @@
 {
+  "owner": "2jLkhznpUXM3YV0rVwwvF66YNFm2",
+  "team": "labelmake",
+  "tags": ["宛名ラベル"],
+  "description": "汎用的に使えるお届け先と差出人がペアになったシンプルな宛名ラベルです。  封筒などに貼り付けてお使いください。  **A4用紙はもちろん、100円ショップで手に入る、シール用紙でラベルにできます。  [詳しくはこちら](https://labelmake.jp/blog/2018-12-05-100%E5%9D%87%E3%82%B7%E3%83%BC%E3%83%AB%E7%94%A8%E7%B4%99%E3%81%A7%E5%AE%9B%E5%90%8D%E3%83%A9%E3%83%99%E3%83%AB%E3%82%92%E4%BD%9C%E6%88%90%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95-excel-word%E3%81%AF%E4%BD%BF%E3%81%84%E3%81%BE%E3%81%9B%E3%82%93%EF%BC%81/)**  <u>印刷サイズ:A4(210mmx297mm)</u>",
+  "photo": "",
+  "createdAt": null,
+  "updatedAt": null,
   "name": "宛名8面",
-  "id": "宛名8面",
+  "id": "d6576600-d275-11ea-bca6-3bba3d85752d",
   "fontName": "SauceHanSansJP",
   "sampledata": [
     {
@@ -108,7 +115,7 @@
   "schemas": [
     {
       "{1}[お届け先]郵便番号": {
-        "position": { "x": 25, "y": 18 },
+        "position": { "x": 25, "y": 18.5 },
         "width": 72.8,
         "height": 7.62,
         "type": "text",
@@ -118,14 +125,14 @@
         "lineHeight": 1
       },
       "{1}[お届け先]住所": {
-        "position": { "x": 20, "y": 27 },
+        "position": { "x": 20, "y": 28.5 },
         "width": 77.82,
         "height": 18.98,
         "type": "text",
         "alignment": "left",
         "fontSize": 13,
         "characterSpacing": 0,
-        "lineHeight": 1.6
+        "lineHeight": 1.8
       },
       "{1}[お届け先]氏名": {
         "position": { "x": 20, "y": 48 },
@@ -168,7 +175,7 @@
         "lineHeight": 1
       },
       "{2}[お届け先]郵便番号": {
-        "position": { "x": 25, "y": 86 },
+        "position": { "x": 25, "y": 86.5 },
         "width": 72.8,
         "height": 7.62,
         "type": "text",
@@ -178,14 +185,14 @@
         "lineHeight": 1
       },
       "{2}[お届け先]住所": {
-        "position": { "x": 20, "y": 95 },
+        "position": { "x": 20, "y": 96.5 },
         "width": 77.82,
         "height": 18.98,
         "type": "text",
         "alignment": "left",
         "fontSize": 13,
         "characterSpacing": 0,
-        "lineHeight": 1.6
+        "lineHeight": 1.8
       },
       "{2}[お届け先]氏名": {
         "position": { "x": 20, "y": 115 },
@@ -238,14 +245,14 @@
         "lineHeight": 1
       },
       "{3}[お届け先]住所": {
-        "position": { "x": 20, "y": 163 },
+        "position": { "x": 20, "y": 164.5 },
         "width": 77.82,
         "height": 18.98,
         "type": "text",
         "alignment": "left",
         "fontSize": 13,
         "characterSpacing": 0,
-        "lineHeight": 1.6
+        "lineHeight": 1.8
       },
       "{3}[お届け先]氏名": {
         "position": { "x": 20, "y": 183 },
@@ -298,14 +305,14 @@
         "lineHeight": 1
       },
       "{4}[お届け先]住所": {
-        "position": { "x": 20, "y": 231 },
+        "position": { "x": 20, "y": 232.5 },
         "width": 77.82,
         "height": 18.98,
         "type": "text",
         "alignment": "left",
         "fontSize": 13,
         "characterSpacing": 0,
-        "lineHeight": 1.6
+        "lineHeight": 1.8
       },
       "{4}[お届け先]氏名": {
         "position": { "x": 20, "y": 251 },
@@ -348,7 +355,7 @@
         "lineHeight": 1
       },
       "{5}[お届け先]郵便番号": {
-        "position": { "x": 124, "y": 18 },
+        "position": { "x": 124, "y": 18.5 },
         "width": 72.8,
         "height": 7.62,
         "type": "text",
@@ -358,14 +365,14 @@
         "lineHeight": 1
       },
       "{5}[お届け先]住所": {
-        "position": { "x": 119, "y": 27 },
+        "position": { "x": 119, "y": 28.5 },
         "width": 77.82,
         "height": 18.98,
         "type": "text",
         "alignment": "left",
         "fontSize": 13,
         "characterSpacing": 0,
-        "lineHeight": 1.6
+        "lineHeight": 1.8
       },
       "{5}[お届け先]氏名": {
         "position": { "x": 119, "y": 48 },
@@ -408,7 +415,7 @@
         "lineHeight": 1
       },
       "{6}[お届け先]郵便番号": {
-        "position": { "x": 124, "y": 86 },
+        "position": { "x": 124, "y": 86.5 },
         "width": 72.8,
         "height": 7.62,
         "type": "text",
@@ -418,14 +425,14 @@
         "lineHeight": 1
       },
       "{6}[お届け先]住所": {
-        "position": { "x": 119, "y": 95 },
+        "position": { "x": 119, "y": 96.5 },
         "width": 77.82,
         "height": 18.98,
         "type": "text",
         "alignment": "left",
         "fontSize": 13,
         "characterSpacing": 0,
-        "lineHeight": 1.6
+        "lineHeight": 1.8
       },
       "{6}[お届け先]氏名": {
         "position": { "x": 119, "y": 115 },
@@ -478,14 +485,14 @@
         "lineHeight": 1
       },
       "{7}[お届け先]住所": {
-        "position": { "x": 119, "y": 163 },
+        "position": { "x": 119, "y": 164.5 },
         "width": 77.82,
         "height": 18.98,
         "type": "text",
         "alignment": "left",
         "fontSize": 13,
         "characterSpacing": 0,
-        "lineHeight": 1.6
+        "lineHeight": 1.8
       },
       "{7}[お届け先]氏名": {
         "position": { "x": 119, "y": 183 },
@@ -538,14 +545,14 @@
         "lineHeight": 1
       },
       "{8}[お届け先]住所": {
-        "position": { "x": 119, "y": 231 },
+        "position": { "x": 119, "y": 232.5 },
         "width": 77.82,
         "height": 18.98,
         "type": "text",
         "alignment": "left",
         "fontSize": 13,
         "characterSpacing": 0,
-        "lineHeight": 1.6
+        "lineHeight": 1.8
       },
       "{8}[お届け先]氏名": {
         "position": { "x": 119, "y": 251 },

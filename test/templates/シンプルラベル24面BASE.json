@@ -1,4 +1,11 @@
 {
+  "owner": "2jLkhznpUXM3YV0rVwwvF66YNFm2",
+  "team": "labelmake",
+  "tags": ["BASE"],
+  "description": "",
+  "photo": "",
+  "createdAt": null,
+  "updatedAt": null,
   "sampledata": [
     {
       "{1}[お届け先]郵便番号": "〒123-4567",

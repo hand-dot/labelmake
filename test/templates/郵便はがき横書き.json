@@ -1,4 +1,11 @@
 {
+  "owner": "2jLkhznpUXM3YV0rVwwvF66YNFm2",
+  "team": "labelmake",
+  "tags": ["郵便局"],
+  "description": "家庭用のプリンタに差し込み印刷で、郵便はがきが印刷できます。  私製はがきには対応していませんのでお間違いのないように。  <u>印刷サイズ:はがき(100mmx148mm)</u>",
+  "photo": "",
+  "createdAt": null,
+  "updatedAt": null,
   "name": "郵便はがき横書き",
   "id": "郵便はがき横書き",
   "fontName": "SauceHanSansJP",
