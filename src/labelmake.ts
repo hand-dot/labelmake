@@ -6,6 +6,7 @@ import {
   rgb,
   degrees,
   setCharacterSpacing,
+  StandardFonts,
 } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { createBarCode } from "./barcode";
@@ -21,6 +22,8 @@ const barcodes = [
   "nw7",
   "itf14",
 ];
+
+const uniq = <T>(array: Array<T>) => Array.from(new Set(array));
 
 const hex2rgb = (hex: string) => {
   if (hex.slice(0, 1) == "#") hex = hex.slice(1);
@@ -69,19 +72,57 @@ const labelmake = async ({
 }: {
   inputs: { [key: string]: string }[];
   template: Template;
-  font: { [key: string]: string | Uint8Array | ArrayBuffer };
+  font?: { [key: string]: string | Uint8Array | ArrayBuffer };
 }) => {
-  const { basePdf, schemas } = template;
+  if (inputs.length < 1) {
+    throw Error("inputs should be more than one length");
+  }
+
+  const fontNamesInSchemas = uniq(
+    template.schemas
+      .map((s) => Object.values(s).map((v) => v.fontName))
+      .reduce((acc, val) => acc.concat(val), [] as (string | undefined)[])
+      .filter(Boolean) as string[]
+  );
+
+  if (font) {
+    const fontNames = Object.keys(font);
+    if (template.fontName && !fontNames.includes(template.fontName)) {
+      throw Error(
+        `${template.fontName} of template.fontName is not found in font`
+      );
+    }
+    if (fontNamesInSchemas.some((f) => !fontNames.includes(f))) {
+      throw Error(
+        `${fontNamesInSchemas
+          .filter((f) => !fontNames.includes(f))
+          .join()} of template.schemas is not found in font`
+      );
+    }
+  }
+
   const pdfDoc = await PDFDocument.create();
   pdfDoc.registerFontkit(fontkit);
-  const fontValues = await Promise.all(
-    Object.values(font).map((v) => pdfDoc.embedFont(v, { subset: true }))
-  );
-  const fontObj = Object.keys(font).reduce(
-    (acc, cur, i) => Object.assign(acc, { [cur]: fontValues[i] }),
-    {} as { [key: string]: PDFFont }
-  );
+  const isUseMyfont =
+    font && (template.fontName || fontNamesInSchemas.length > 0);
+  const fontValues = isUseMyfont
+    ? await Promise.all(
+        Object.values(font!).map((v) => pdfDoc.embedFont(v, { subset: true }))
+      )
+    : [];
+  const fontObj = isUseMyfont
+    ? Object.keys(font!).reduce(
+        (acc, cur, i) => Object.assign(acc, { [cur]: fontValues[i] }),
+        {} as { [key: string]: PDFFont }
+      )
+    : {
+        [StandardFonts.Helvetica]: await pdfDoc.embedFont(
+          StandardFonts.Helvetica
+        ),
+      };
+
   const inputImageCache: { [key: string]: PDFImage } = {};
+  const { basePdf, schemas } = template;
   const isBlank = isPageSize(basePdf);
   let embeddedPages: PDFEmbeddedPage[] = [];
   if (!isPageSize(basePdf)) {
@@ -110,8 +151,9 @@ const labelmake = async ({
         const boxWidth = mm2pt(schema.width);
         const boxHeight = mm2pt(schema.height);
         if (schema.type === "text") {
-          const myFont =
-            fontObj[schema.fontName ? schema.fontName : template.fontName];
+          const fontValue = isUseMyfont
+            ? fontObj[schema.fontName ? schema.fontName : template.fontName!]
+            : fontObj[StandardFonts.Helvetica];
           const [r, g, b] = hex2rgb(
             schema.fontColor ? schema.fontColor : "#000"
           );
@@ -125,7 +167,7 @@ const labelmake = async ({
 
           let beforeLineOver = 0;
           input.split(/\r|\n|\r\n/g).forEach((inputLine, index) => {
-            const textWidth = myFont.widthOfTextAtSize(inputLine, fontSize);
+            const textWidth = fontValue.widthOfTextAtSize(inputLine, fontSize);
             page.drawText(inputLine, {
               x: calcX(schema.position.x, alignment, boxWidth, textWidth),
               y:
@@ -136,7 +178,7 @@ const labelmake = async ({
               size: fontSize,
               lineHeight: lineHeight * fontSize,
               maxWidth: boxWidth,
-              font: myFont,
+              font: fontValue,
               color: rgb(r, g, b),
               wordBreaks: [""],
             });

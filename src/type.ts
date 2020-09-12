@@ -37,7 +37,7 @@ export const isPageSize = (
 export interface Template {
   schemas: { [key: string]: TemplateSchema }[];
   basePdf: PageSize | string | Uint8Array | ArrayBuffer;
-  fontName: string;
+  fontName?: string;
 }
 
 export type _Template = Template & {

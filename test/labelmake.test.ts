@@ -4,6 +4,7 @@ import * as fs from "fs";
 import labelmake from "../src/labelmake";
 const PDFParser = require("pdf2json");
 import templateData from "./templates";
+import { Template } from "../src/type";
 
 const font: any = {
   SauceHanSansJP: fs.readFileSync(__dirname + `/fonts/SauceHanSansJP.ttf`),
@@ -23,6 +24,91 @@ const getPath = (dir: string, fileName: string) =>
   __dirname + `/${dir}/${fileName}`;
 const getTmpPath = (fileName: string) => getPath("tmp", fileName);
 const getAssertPath = (fileName: string) => getPath("assert", fileName);
+
+describe("check validation", () => {
+  test(`missing font in template.fontName`, async () => {
+    const inputs: { [key: string]: string }[] = [];
+    const template: Template = {
+      basePdf: { height: 297, width: 210 },
+      schemas: [
+        {
+          a: {
+            type: "text",
+            position: { x: 0, y: 0 },
+            width: 100,
+            height: 100,
+          },
+        },
+      ],
+    };
+    await labelmake({ inputs, template, font })
+      .then(() => {
+        fail();
+      })
+      .catch((e) => {
+        expect(e.message).toEqual("inputs should be more than one length");
+      });
+  });
+  test(`missing font in template.fontName`, async () => {
+    const inputs = [{ a: "test" }];
+    const template: Template = {
+      fontName: "dummyFont",
+      basePdf: { height: 297, width: 210 },
+      schemas: [
+        {
+          a: {
+            type: "text",
+            position: { x: 0, y: 0 },
+            width: 100,
+            height: 100,
+          },
+        },
+      ],
+    };
+    await labelmake({ inputs, template, font })
+      .then(() => {
+        fail();
+      })
+      .catch((e) => {
+        expect(e.message).toEqual(
+          "dummyFont of template.fontName is not found in font"
+        );
+      });
+  });
+  test(`missing font in template.schemas`, async () => {
+    const inputs = [{ a: "test" }];
+    const template: Template = {
+      fontName: "SauceHanSansJP",
+      basePdf: { height: 297, width: 210 },
+      schemas: [
+        {
+          a: {
+            type: "text",
+            fontName: "SauceHanSansJP2",
+            position: { x: 0, y: 0 },
+            width: 100,
+            height: 100,
+          },
+          b: {
+            type: "text",
+            position: { x: 0, y: 0 },
+            width: 100,
+            height: 100,
+          },
+        },
+      ],
+    };
+    await labelmake({ inputs, template, font })
+      .then(() => {
+        fail();
+      })
+      .catch((e) => {
+        expect(e.message).toEqual(
+          "SauceHanSansJP2 of template.schemas is not found in font"
+        );
+      });
+  });
+});
 
 describe("labelmake integrate test", () => {
   afterAll(() => {
@@ -60,5 +146,31 @@ describe("labelmake integrate test", () => {
         expect(a).toEqual(e);
       });
     }
+  });
+
+  describe("use nofont template", () => {
+    test(`sample`, async () => {
+      const inputs = [{ a: "here is Helvetica" }];
+      const template: Template = {
+        basePdf: { height: 297, width: 210 },
+        schemas: [
+          {
+            a: {
+              type: "text",
+              position: { x: 0, y: 0 },
+              width: 100,
+              height: 100,
+            },
+          },
+        ],
+      };
+      const pdf = await labelmake({ inputs, template });
+      const tmpFile = getTmpPath(`nofont.pdf`);
+      const assertFile = getAssertPath(`nofont.pdf`);
+      fs.writeFileSync(tmpFile, pdf);
+      const res = await Promise.all([getPdf(tmpFile), getPdf(assertFile)]);
+      const [a, e] = res;
+      expect(a).toEqual(e);
+    });
   });
 });
