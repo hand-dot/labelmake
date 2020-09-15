@@ -179,7 +179,7 @@ const labelmake = async ({
               lineHeight: lineHeight * fontSize,
               maxWidth: boxWidth,
               font: fontValue,
-              color: rgb(r, g, b),
+              color: rgb(r / 255, g / 255, b / 255),
               wordBreaks: [""],
             });
             for (let cnt = 1; textWidth - boxWidth * cnt > 0; cnt++) {

@@ -172,5 +172,32 @@ describe("labelmake integrate test", () => {
       const [a, e] = res;
       expect(a).toEqual(e);
     });
+
+    describe("use fontColor template", () => {
+      test(`sample`, async () => {
+        const inputs = [{ name: "here is purple color" }];
+        const template: Template = {
+          basePdf: { height: 297, width: 210 },
+          schemas: [
+            {
+              name: {
+                type: "text",
+                position: { x: 30, y: 30 },
+                width: 100,
+                height: 20,
+                fontColor: "#7d2ae8",
+              },
+            },
+          ],
+        };
+        const pdf = await labelmake({ inputs, template });
+        const tmpFile = getTmpPath(`fontColor.pdf`);
+        const assertFile = getAssertPath(`fontColor.pdf`);
+        fs.writeFileSync(tmpFile, pdf);
+        const res = await Promise.all([getPdf(tmpFile), getPdf(assertFile)]);
+        const [a, e] = res;
+        expect(a).toEqual(e);
+      });
+    });
   });
 });
