@@ -8,8 +8,8 @@
   <script type="text/javascript" src="../inputs.js"></script>
   <script type="text/javascript" src="../font.js"></script>
   <script type="text/javascript">
-    labelmake({ inputs, template, font }).then((buffer) => {
-      const blob = new Blob([buffer.buffer], { type: "application/pdf" });
+    labelmake({ inputs, template, font }).then((pdf) => {
+      const blob = new Blob([pdf.buffer], { type: "application/pdf" });
       document.getElementById("iframe").src = URL.createObjectURL(blob);
     });
   </script>
