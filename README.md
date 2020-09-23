@@ -5,6 +5,10 @@
 
 labelmake is a declarative style PDF generation library for Node and the browser.
 
+> Just realised when developing labelmaje.jp a variable data printing service.
+Other PDF generation libraries makes program complex by imperative operations. So, I developed this library aiming at a more simple declarative style PDF generation library.
+> [+@ Created a design & code generator tool, which made it really easy to create PDFs!!](https://labelmake.jp/javascript-pdf-generator-library/template-design)
+
 > ## **Learn more at [labelmake.jp/javascript-pdf-generator-library](https://labelmake.jp/javascript-pdf-generator-library)**
 
 ---
