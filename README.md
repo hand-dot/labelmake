@@ -1,11 +1,21 @@
-![Unit Testing](https://github.com/hand-dot/labelmake/workflows/Unit%20Testing/badge.svg)
+![Twitter URL](https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Flabelmake.jp%2Fjavascript-pdf-generator-library)
+![npm](https://img.shields.io/npm/v/labelmake)
+![NPM](https://img.shields.io/npm/l/labelmake)
+![npm](https://img.shields.io/npm/dm/labelmake)
 [![](https://data.jsdelivr.com/v1/package/npm/labelmake/badge)](https://www.jsdelivr.com/package/npm/labelmake)
+![Unit Testing](https://github.com/hand-dot/labelmake/workflows/Unit%20Testing/badge.svg)
 
-![top](./assets/readme-top.png)
+# [labelmake](https://labelmake.jp/javascript-pdf-generator-library)
+
+[![top](./assets/readme-top.png)](https://labelmake.jp/javascript-pdf-generator-library)
 
 labelmake is a declarative style PDF generation library for Node and the browser.
 
-> ## **Learn more at [labelmake.jp/javascript-pdf-generator-library](https://labelmake.jp/javascript-pdf-generator-library)**
+> Just realised when developing labelmaje.jp a variable data printing service.
+> Other PDF generation libraries makes program complex by imperative operations. So, I developed this library aiming at a more simple declarative style PDF generation library.
+> Finally, the layout engine and [design & code generator tools](https://labelmake.jp/javascript-pdf-generator-library/template-design) make PDF generation so easy!
+
+## **Learn more at [official website](https://labelmake.jp/javascript-pdf-generator-library)**
 
 ---
 
@@ -36,24 +46,37 @@ You can use Yarn, NuGet or other methods as well. You can load it directly from 
     - Codabar(NW-7)
     - ITF-14
 
-## Demonstration
+## [Demo](https://labelmake.jp/javascript-pdf-generator-library/example)
 
-[Demo & Example](https://labelmake.jp/javascript-pdf-generator-library/example)
+[![example](./assets/lib-example.png)](https://labelmake.jp/javascript-pdf-generator-library/example)
 
-## Development tools
+- [Simple](https://labelmake.jp/javascript-pdf-generator-library/example#labelmake-example)
+- [Custom font](https://labelmake.jp/javascript-pdf-generator-library/example#labelmake-example-customfont)
+- [Barcode](https://labelmake.jp/javascript-pdf-generator-library/example#labelmake-example-barcode)
+- [Embed PDF & Image](https://labelmake.jp/javascript-pdf-generator-library/example#labelmake-example-embedpdf)
+- [Embed MultiPage PDF](https://labelmake.jp/javascript-pdf-generator-library/example#labelmake-example-multipage)
 
-[Template Design & Code Generator](https://labelmake.jp/javascript-pdf-generator-library/template-design)
+## [Development tools](https://labelmake.jp/javascript-pdf-generator-library/template-design)
 
-## Documentation
+[![template-design](./assets/lib-template-design.png)](https://labelmake.jp/javascript-pdf-generator-library/template-design)
 
-[API Reference](https://labelmake.jp/javascript-pdf-generator-library/api)
+Templates can be customized with design tools. and code can be generated with a generator.
 
-## Services that are used in Production
+## [API Reference](https://labelmake.jp/javascript-pdf-generator-library/api)
+
+[![api](./assets/lib-api.png)](https://labelmake.jp/javascript-pdf-generator-library/api)
+
+Detailed specifications can be found in the api documentation.
+
+## [Services that are used in Production](https://labelmake.jp/)
+
+[![production](./assets/lib-production.png)](https://labelmake.jp/javascript-pdf-generator-library/production)
 
 [labelmake.jp](https://labelmake.jp/) - variable data printing service.(Japanese)
 
 ## Author
-[@hand-dot](https://github.com/hand-dot)  
+
+[@hand-dot](https://github.com/hand-dot)
 
 labelmake is based on a amazing library [pdf-lib](https://github.com/Hopding/pdf-lib)[(@Hopding)](https://github.com/Hopding).
 
