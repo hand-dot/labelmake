@@ -167,12 +167,32 @@ const labelmake = async ({
 
           let beforeLineOver = 0;
           input.split(/\r|\n|\r\n/g).forEach((inputLine, index) => {
-            const textWidth = fontValue.widthOfTextAtSize(inputLine, fontSize);
-            page.drawText(inputLine, {
+          const getSplit = (il: string, stack: string[] = []): string[] => {
+            const splited = il
+              .split("")
+              .reduce(
+                (acc, cur) =>
+                  fontValue.widthOfTextAtSize(acc + cur, fontSize) > boxWidth
+                    ? acc
+                    : acc + cur,
+                ""
+              );
+            if (splited.length === 0) return stack;
+            const next = stack.concat(splited);
+            const nextLength = next.join("").length;
+            return getSplit(inputLine.substring(nextLength), next);
+          };
+          const splitedLine = getSplit(inputLine);
+          splitedLine.forEach((inputLine2, index2) => {
+            const textWidth = fontValue.widthOfTextAtSize(
+              inputLine2,
+              fontSize
+            );
+            page.drawText(inputLine2, {
               x: calcX(schema.position.x, alignment, boxWidth, textWidth),
               y:
                 calcY(schema.position.y, pageHeight, fontSize) -
-                lineHeight * fontSize * (index + beforeLineOver) -
+                lineHeight * fontSize * (index + index2 + beforeLineOver) -
                 (lineHeight === 0 ? 0 : ((lineHeight - 1) * fontSize) / 2),
               rotate: rotate,
               size: fontSize,
@@ -182,9 +202,8 @@ const labelmake = async ({
               color: rgb(r / 255, g / 255, b / 255),
               wordBreaks: [""],
             });
-            for (let cnt = 1; textWidth - boxWidth * cnt > 0; cnt++) {
-              beforeLineOver += 1;
-            }
+            if(splitedLine.length === index2 + 1) beforeLineOver += index2;
+          });
           });
         } else if (barcodes.includes(schema.type) || schema.type === "image") {
           const opt = {
