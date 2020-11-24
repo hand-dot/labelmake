@@ -199,5 +199,55 @@ describe("labelmake integrate test", () => {
         expect(a).toEqual(e);
       });
     });
+
+    describe("use fontSubset template", () => {
+      test(`sample`, async () => {
+        const inputs = [
+          { field1: "SauceHanSansJP", field2: "SauceHanSerifJP" },
+        ];
+        const template: Template = {
+          basePdf: { height: 297, width: 210 },
+          schemas: [
+            {
+              field1: {
+                type: "text",
+                position: { x: 30, y: 30 },
+                width: 100,
+                height: 20,
+                fontName: "SauceHanSansJP",
+              },
+              field2: {
+                type: "text",
+                position: { x: 60, y: 60 },
+                width: 100,
+                height: 20,
+                fontName: "SauceHanSerifJP",
+              },
+            },
+          ],
+        };
+
+        const pdf = await labelmake({
+          inputs,
+          template,
+          font: {
+            SauceHanSansJP: {
+              data: fs.readFileSync(__dirname + `/fonts/SauceHanSansJP.ttf`),
+              subset: false,
+            },
+            SauceHanSerifJP: {
+              data: fs.readFileSync(__dirname + `/fonts/SauceHanSerifJP.ttf`),
+              subset: false,
+            },
+          },
+        });
+        const tmpFile = getTmpPath(`fontSubset.pdf`);
+        const assertFile = getAssertPath(`fontSubset.pdf`);
+        fs.writeFileSync(tmpFile, pdf);
+        const res = await Promise.all([getPdf(tmpFile), getPdf(assertFile)]);
+        const [a, e] = res;
+        expect(a).toEqual(e);
+      });
+    });
   });
 });
