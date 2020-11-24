@@ -31,9 +31,29 @@ interface PageSize {
   width: number;
 }
 
+interface SubsetFont {
+  data: string | Uint8Array | ArrayBuffer;
+  subset: boolean;
+}
+
+interface Font {
+  [key: string]: string | Uint8Array | ArrayBuffer | SubsetFont;
+}
+
+export interface Args {
+  inputs: { [key: string]: string }[];
+  template: Template;
+  font?: Font;
+}
+
 export const isPageSize = (
   args: PageSize | string | Uint8Array | ArrayBuffer
 ): args is PageSize => typeof args === "object" && "width" in args;
+
+export const isSubsetFont = (
+  v: string | Uint8Array | ArrayBuffer | SubsetFont
+): v is SubsetFont => typeof v === "object" && !!v && "data" in v;
+
 export interface Template {
   schemas: { [key: string]: TemplateSchema }[];
   basePdf: PageSize | string | Uint8Array | ArrayBuffer;
