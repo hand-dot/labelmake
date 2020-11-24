@@ -10,7 +10,7 @@ import {
 } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { createBarCode } from "./barcode";
-import { Template, isPageSize } from "./type";
+import { Args, isPageSize, isSubsetFont } from "./type";
 
 const barcodes = [
   "qrcode",
@@ -65,15 +65,7 @@ const calcX = (
 const calcY = (y: number, height: number, itemHeight: number) =>
   height - mm2pt(y) - itemHeight;
 
-const labelmake = async ({
-  inputs,
-  template,
-  font,
-}: {
-  inputs: { [key: string]: string }[];
-  template: Template;
-  font?: { [key: string]: string | Uint8Array | ArrayBuffer };
-}) => {
+const labelmake = async ({ inputs, template, font }: Args) => {
   if (inputs.length < 1) {
     throw Error("inputs should be more than one length");
   }
@@ -107,7 +99,11 @@ const labelmake = async ({
     font && (template.fontName || fontNamesInSchemas.length > 0);
   const fontValues = isUseMyfont
     ? await Promise.all(
-        Object.values(font!).map((v) => pdfDoc.embedFont(v, { subset: true }))
+        Object.values(font!).map((v) =>
+          pdfDoc.embedFont(isSubsetFont(v) ? v.data : v, {
+            subset: isSubsetFont(v) ? v.subset : true,
+          })
+        )
       )
     : [];
   const fontObj = isUseMyfont
@@ -167,43 +163,43 @@ const labelmake = async ({
 
           let beforeLineOver = 0;
           input.split(/\r|\n|\r\n/g).forEach((inputLine, index) => {
-          const getSplit = (il: string, stack: string[] = []): string[] => {
-            const splited = il
-              .split("")
-              .reduce(
-                (acc, cur) =>
-                  fontValue.widthOfTextAtSize(acc + cur, fontSize) > boxWidth
-                    ? acc
-                    : acc + cur,
-                ""
+            const getSplit = (il: string, stack: string[] = []): string[] => {
+              const splited = il
+                .split("")
+                .reduce(
+                  (acc, cur) =>
+                    fontValue.widthOfTextAtSize(acc + cur, fontSize) > boxWidth
+                      ? acc
+                      : acc + cur,
+                  ""
+                );
+              if (splited.length === 0) return stack;
+              const next = stack.concat(splited);
+              const nextLength = next.join("").length;
+              return getSplit(inputLine.substring(nextLength), next);
+            };
+            const splitedLine = getSplit(inputLine);
+            splitedLine.forEach((inputLine2, index2) => {
+              const textWidth = fontValue.widthOfTextAtSize(
+                inputLine2,
+                fontSize
               );
-            if (splited.length === 0) return stack;
-            const next = stack.concat(splited);
-            const nextLength = next.join("").length;
-            return getSplit(inputLine.substring(nextLength), next);
-          };
-          const splitedLine = getSplit(inputLine);
-          splitedLine.forEach((inputLine2, index2) => {
-            const textWidth = fontValue.widthOfTextAtSize(
-              inputLine2,
-              fontSize
-            );
-            page.drawText(inputLine2, {
-              x: calcX(schema.position.x, alignment, boxWidth, textWidth),
-              y:
-                calcY(schema.position.y, pageHeight, fontSize) -
-                lineHeight * fontSize * (index + index2 + beforeLineOver) -
-                (lineHeight === 0 ? 0 : ((lineHeight - 1) * fontSize) / 2),
-              rotate: rotate,
-              size: fontSize,
-              lineHeight: lineHeight * fontSize,
-              maxWidth: boxWidth,
-              font: fontValue,
-              color: rgb(r / 255, g / 255, b / 255),
-              wordBreaks: [""],
+              page.drawText(inputLine2, {
+                x: calcX(schema.position.x, alignment, boxWidth, textWidth),
+                y:
+                  calcY(schema.position.y, pageHeight, fontSize) -
+                  lineHeight * fontSize * (index + index2 + beforeLineOver) -
+                  (lineHeight === 0 ? 0 : ((lineHeight - 1) * fontSize) / 2),
+                rotate: rotate,
+                size: fontSize,
+                lineHeight: lineHeight * fontSize,
+                maxWidth: boxWidth,
+                font: fontValue,
+                color: rgb(r / 255, g / 255, b / 255),
+                wordBreaks: [""],
+              });
+              if (splitedLine.length === index2 + 1) beforeLineOver += index2;
             });
-            if(splitedLine.length === index2 + 1) beforeLineOver += index2;
-          });
           });
         } else if (barcodes.includes(schema.type) || schema.type === "image") {
           const opt = {
