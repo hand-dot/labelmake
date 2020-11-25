@@ -226,7 +226,7 @@ describe("labelmake integrate test", () => {
             },
           ],
         };
-
+        jest.setTimeout(30000);
         const pdf = await labelmake({
           inputs,
           template,
@@ -249,5 +249,21 @@ describe("labelmake integrate test", () => {
         expect(a).toEqual(e);
       });
     });
+
+    // describe.only("base bug", () => {
+    //   test(`check splitedLine`, async () => {
+    //     await labelmake({
+    //       inputs: [
+    //         {
+    //           "{1}[お届け先]住所":
+    //             "東京都港区六本木住友不動産住友不動産六本木グランドタワー37",
+    //         },
+    //       ],
+    //       template: templateData.シンプルラベル24面BASE,
+    //       font,
+    //     });
+    //     expect(1).toEqual(2);
+    //   });
+    // });
   });
 });

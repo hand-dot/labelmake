@@ -162,17 +162,23 @@ const labelmake = async ({ inputs, template, font }: Args) => {
           page.pushOperators(setCharacterSpacing(characterSpacing));
 
           let beforeLineOver = 0;
+
           input.split(/\r|\n|\r\n/g).forEach((inputLine, index) => {
+            // TODO UNIT TEST
             const getSplit = (il: string, stack: string[] = []): string[] => {
-              const splited = il
-                .split("")
-                .reduce(
-                  (acc, cur) =>
-                    fontValue.widthOfTextAtSize(acc + cur, fontSize) > boxWidth
-                      ? acc
-                      : acc + cur,
-                  ""
-                );
+              let skip = false;
+              const splited = il.split("").reduce((acc, cur) => {
+                const isOver =
+                  fontValue.widthOfTextAtSize(acc + cur, fontSize) > boxWidth;
+                let result = "";
+                if (isOver || skip) {
+                  skip = true;
+                  result = acc;
+                } else {
+                  result = acc + cur;
+                }
+                return result;
+              }, "");
               if (splited.length === 0) return stack;
               const next = stack.concat(splited);
               const nextLength = next.join("").length;
