@@ -35,40 +35,40 @@ describe("validateBarcodeInput", () => {
   });
   test("ean13", () => {
     // https://barcode-place.azurewebsites.net/Barcode/jan
-    // 有効文字は数値(0-9)のみ。標準タイプはチェックデジットを含まない12桁
+    // 有効文字は数値(0-9)のみ。標準タイプはチェックデジットを含まない12桁orチェックデジットを含む13桁
     const type = "ean13";
     const valid = "111111111111";
-    const invalid1 = "1111111111111";
-    const invalid2 = "111";
-    const invalid3 = "111111111111111111111111";
-    const invalid4 = "invalid";
-    const invalid5 = "11111a111111";
+    const valid2 = "1111111111111";
+    const invalid1 = "111";
+    const invalid2 = "111111111111111111111111";
+    const invalid3 = "invalid";
+    const invalid4 = "11111a111111";
     const blank = "";
     expect(validateBarcodeInput(type, valid)).toEqual(true);
+    expect(validateBarcodeInput(type, valid2)).toEqual(true);
     expect(validateBarcodeInput(type, invalid1)).toEqual(false);
     expect(validateBarcodeInput(type, invalid2)).toEqual(false);
     expect(validateBarcodeInput(type, invalid3)).toEqual(false);
     expect(validateBarcodeInput(type, invalid4)).toEqual(false);
-    expect(validateBarcodeInput(type, invalid5)).toEqual(false);
     expect(validateBarcodeInput(type, blank)).toEqual(false);
   });
   test("ean8", () => {
     // https://barcode-place.azurewebsites.net/Barcode/jan
-    // 有効文字は数値(0-9)のみ。短縮タイプはチェックデジットを含まない7桁
+    // 有効文字は数値(0-9)のみ。短縮タイプはチェックデジットを含まない7桁orチェックデジットを含む8桁
     const type = "ean8";
     const valid = "1111111";
-    const invalid1 = "11111111";
-    const invalid2 = "111";
-    const invalid3 = "11111111111111111111";
-    const invalid4 = "invalid";
-    const invalid5 = "111a111";
+    const valid2 = "11111111";
+    const invalid1 = "111";
+    const invalid2 = "11111111111111111111";
+    const invalid3 = "invalid";
+    const invalid4 = "111a111";
     const blank = "";
     expect(validateBarcodeInput(type, valid)).toEqual(true);
+    expect(validateBarcodeInput(type, valid2)).toEqual(true);
     expect(validateBarcodeInput(type, invalid1)).toEqual(false);
     expect(validateBarcodeInput(type, invalid2)).toEqual(false);
     expect(validateBarcodeInput(type, invalid3)).toEqual(false);
     expect(validateBarcodeInput(type, invalid4)).toEqual(false);
-    expect(validateBarcodeInput(type, invalid5)).toEqual(false);
     expect(validateBarcodeInput(type, blank)).toEqual(false);
   });
   test("code39", () => {
@@ -130,17 +130,17 @@ describe("validateBarcodeInput", () => {
   });
   test("itf14", () => {
     // https://barcode-place.azurewebsites.net/Barcode/itf
-    // 有効文字は数値(0-9)のみ。 チェックデジットを含まない13桁です。
+    // 有効文字は数値(0-9)のみ。 チェックデジットを含まない13桁orチェックデジットを含む14桁
     const type = "itf14";
     const valid = "1111111111111";
+    const valid2 = "11111111111111";
     const invalid1 = "111";
-    const invalid2 = "11111111111111";
-    const invalid3 = "11111111111111111111111111111";
+    const invalid2 = "11111111111111111111111111111";
     const blank = "";
     expect(validateBarcodeInput(type, valid)).toEqual(true);
+    expect(validateBarcodeInput(type, valid2)).toEqual(true);
     expect(validateBarcodeInput(type, invalid1)).toEqual(false);
     expect(validateBarcodeInput(type, invalid2)).toEqual(false);
-    expect(validateBarcodeInput(type, invalid3)).toEqual(false);
     expect(validateBarcodeInput(type, blank)).toEqual(false);
   });
 });

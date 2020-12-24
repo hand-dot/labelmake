@@ -13,12 +13,12 @@ export const validateBarcodeInput = (type: BarCodeType, input: string) => {
     const regexp = /^(\d{7})(\d|[A-Z]|-)+$/;
     return regexp.test(input);
   } else if (type === "ean13") {
-    // 有効文字は数値(0-9)のみ。標準タイプはチェックデジットを含まない12桁
-    const regexp = /^\d{12}$/;
+    // 有効文字は数値(0-9)のみ。標準タイプはチェックデジットを含まない12桁orチェックデジットを含む13桁
+    const regexp = /^\d{12}$|^\d{13}$/;
     return regexp.test(input);
   } else if (type === "ean8") {
-    // 有効文字は数値(0-9)のみ。短縮タイプはチェックデジットを含まない7桁
-    const regexp = /^\d{7}$/;
+    // 有効文字は数値(0-9)のみ。短縮タイプはチェックデジットを含まない7桁orチェックデジットを含む8桁
+    const regexp = /^\d{7}$|^\d{8}$/;
     return regexp.test(input);
   } else if (type === "code39") {
     // CODE39は数字(0-9)、アルファベット大文字(A-Z)、記号(-.$/+%)、半角スペースに対応しています。
@@ -38,8 +38,8 @@ export const validateBarcodeInput = (type: BarCodeType, input: string) => {
     const regexp = /^[A-Da-d]([0-9\-\.\$\:\/\+])+[A-Da-d]$/;
     return regexp.test(input);
   } else if (type === "itf14") {
-    // 有効文字は数値(0-9)のみ。 チェックデジットを含まない13桁です。
-    const regexp = /^\d{13}$/;
+    // 有効文字は数値(0-9)のみ。 チェックデジットを含まない13桁orチェックデジットを含む14桁
+    const regexp = /^\d{13}$|^\d{14}$/;
     return regexp.test(input);
   }
   return false;
@@ -60,13 +60,16 @@ export const createBarCode = async ({
     const bwipjsArg = {
       bcid: type === "nw7" ? "rationalizedCodabar" : type,
       text: input,
-      width: width * 3, // BWIPPは72dpiで画像を作成するため印刷用に画像を大きくしておく
-      height: height * 3,
+      scale: 5,
+      width,
+      height,
+      includetext: true,
+      textxalign: "center",
     };
     //@ts-ignore
     const buffer = bwipjs.toBuffer
-      ? await bwipjs.toBuffer(bwipjsArg)
-      : await bwipjs.default.toBuffer(bwipjsArg);
+      ? await bwipjs.toBuffer(bwipjsArg).catch(() => null)
+      : await bwipjs.default.toBuffer(bwipjsArg).catch(() => null);
     return buffer;
   } else {
     return null;
