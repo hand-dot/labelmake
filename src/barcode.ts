@@ -64,7 +64,6 @@ export const createBarCode = async ({
       width,
       height,
       includetext: true,
-      textxalign: "center",
     };
     //@ts-ignore
     const buffer = bwipjs.toBuffer
