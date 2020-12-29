@@ -43,7 +43,7 @@ You can use Yarn, NuGet or other methods as well. You can load it directly from 
     - EAN-8, EAN-13
     - Code 39, Code 128
     - Codabar(NW-7)
-    - ITF-14
+    - UPC-E, UPC-A
 
 ## [Demo](https://labelmake.jp/javascript-pdf-generator-library/example)
 

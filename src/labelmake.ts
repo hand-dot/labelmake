@@ -21,6 +21,8 @@ const barcodes = [
   "code128",
   "nw7",
   "itf14",
+  "upca",
+  "upce",
 ];
 
 const uniq = <T>(array: Array<T>) => Array.from(new Set(array));

@@ -8,7 +8,9 @@ type TemplateType =
   | "code39"
   | "code128"
   | "nw7"
-  | "itf14";
+  | "itf14"
+  | "upca"
+  | "upce";
 
 export type BarCodeType = Exclude<TemplateType, "text" | "image">;
 

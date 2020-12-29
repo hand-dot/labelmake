@@ -143,4 +143,35 @@ describe("validateBarcodeInput", () => {
     expect(validateBarcodeInput(type, invalid2)).toEqual(false);
     expect(validateBarcodeInput(type, blank)).toEqual(false);
   });
+  test("upca", () => {
+    // https://barcode-place.azurewebsites.net/Barcode/upc
+    // 有効文字は数値(0-9)のみ。 チェックデジットを含まない11桁orチェックデジットを含む12桁。
+    const type = "upca";
+    const valid = "12345678901";
+    const valid2 = "123456789012";
+    const invalid1 = "1234567890";
+    const invalid2 = "1234567890123";
+    const blank = "";
+    expect(validateBarcodeInput(type, valid)).toEqual(true);
+    expect(validateBarcodeInput(type, valid2)).toEqual(true);
+    expect(validateBarcodeInput(type, invalid1)).toEqual(false);
+    expect(validateBarcodeInput(type, invalid2)).toEqual(false);
+    expect(validateBarcodeInput(type, blank)).toEqual(false);
+  });
+  test("upce", () => {
+    // https://barcode-place.azurewebsites.net/Barcode/upc
+    // 有効文字は数値(0-9)のみ。 1桁目に指定できる数字(ナンバーシステムキャラクタ)は0のみ。
+    // チェックデジットを含まない7桁orチェックデジットを含む8桁。
+    const type = "upce";
+    const valid = "0111111";
+    const valid2 = "01111111";
+    const invalid1 = "1111111";
+    const invalid2 = "011111111";
+    const blank = "";
+    expect(validateBarcodeInput(type, valid)).toEqual(true);
+    expect(validateBarcodeInput(type, valid2)).toEqual(true);
+    expect(validateBarcodeInput(type, invalid1)).toEqual(false);
+    expect(validateBarcodeInput(type, invalid2)).toEqual(false);
+    expect(validateBarcodeInput(type, blank)).toEqual(false);
+  });
 });
