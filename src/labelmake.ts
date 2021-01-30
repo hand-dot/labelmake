@@ -149,6 +149,17 @@ const labelmake = async ({ inputs, template, font }: Args) => {
         const boxWidth = mm2pt(schema.width);
         const boxHeight = mm2pt(schema.height);
         if (schema.type === "text") {
+          if (schema.backgroundColor) {
+            const [br, bg, bb] = hex2rgb(schema.backgroundColor);
+            page.drawRectangle({
+              x: calcX(schema.position.x, "left", boxWidth, boxWidth),
+              y: calcY(schema.position.y, pageHeight, boxHeight),
+              width: boxWidth,
+              height: boxHeight,
+              color: rgb(br / 255, bg / 255, bb / 255),
+            });
+          }
+
           const fontValue = isUseMyfont
             ? fontObj[schema.fontName ? schema.fontName : template.fontName!]
             : fontObj[StandardFonts.Helvetica];

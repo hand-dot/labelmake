@@ -1,5 +1,6 @@
 import { _Template } from "../../src/type";
 const レターパック = require("./レターパック.json") as _Template;
+const レターパック_credit = require("./レターパック_credit.json") as _Template;
 const レターパックライト = require("./レターパックライト.json") as _Template;
 const レターパックプラス = require("./レターパックプラス.json") as _Template;
 const 宛名8面 = require("./宛名8面.json") as _Template;
@@ -78,6 +79,7 @@ export default {
   装飾なしラベル24面中央揃え,
   郵便はがき横書き,
   レターパック,
+  レターパック_credit,
   レターパックライト,
   レターパックプラス,
   スマートレター,

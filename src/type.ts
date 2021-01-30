@@ -24,6 +24,7 @@ interface TemplateSchema {
   fontSize?: number;
   fontName?: string;
   fontColor?: string;
+  backgroundColor?: string;
   characterSpacing?: number;
   lineHeight?: number;
 }
