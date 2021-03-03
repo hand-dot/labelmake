@@ -7,6 +7,7 @@ import {
   degrees,
   setCharacterSpacing,
   StandardFonts,
+  TransformationMatrix,
 } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { createBarCode } from "./barcode";
@@ -28,8 +29,8 @@ const barcodes = [
 const uniq = <T>(array: Array<T>) => Array.from(new Set(array));
 
 const hex2rgb = (hex: string) => {
-  if (hex.slice(0, 1) == "#") hex = hex.slice(1);
-  if (hex.length == 3)
+  if (hex.slice(0, 1) === "#") hex = hex.slice(1);
+  if (hex.length === 3)
     hex =
       hex.slice(0, 1) +
       hex.slice(0, 1) +
@@ -123,22 +124,53 @@ const labelmake = async ({ inputs, template, font }: Args) => {
   const { basePdf, schemas } = template;
   const isBlank = isPageSize(basePdf);
   let embeddedPages: PDFEmbeddedPage[] = [];
+  let embedPdfBoxes: {
+    mediaBox: { x: number; y: number; width: number; height: number };
+    bleedBox: { x: number; y: number; width: number; height: number };
+    trimBox: { x: number; y: number; width: number; height: number };
+  }[] = [];
   if (!isPageSize(basePdf)) {
     const embedPdf = await PDFDocument.load(basePdf);
-    embeddedPages = await pdfDoc.embedPdf(embedPdf, embedPdf.getPageIndices());
+    const embedPdfPages = embedPdf.getPages();
+    embedPdfBoxes = embedPdfPages.map((p) => {
+      const mediaBox = p.getMediaBox();
+      const bleedBox = p.getBleedBox();
+      const trimBox = p.getTrimBox();
+      return { mediaBox, bleedBox, trimBox };
+    });
+    const boundingBoxes = embedPdfPages.map((p) => {
+      const { x, y, width, height } = p.getMediaBox();
+      return { left: x, bottom: y, right: width, top: height + y };
+    });
+    const transformationMatrices = embedPdfPages.map(
+      () => [1, 0, 0, 1, 0, 0] as TransformationMatrix
+    );
+
+    embeddedPages = await pdfDoc.embedPages(
+      embedPdfPages,
+      boundingBoxes,
+      transformationMatrices
+    );
   }
   for (let i = 0; i < inputs.length; i++) {
     const inputObj = inputs[i];
     const keys = Object.keys(inputObj);
     for (let j = 0; j < (isBlank ? schemas : embeddedPages).length; j++) {
+      const embeddedPage = embeddedPages[j];
       const pageWidth = isPageSize(basePdf)
         ? mm2pt(basePdf.width)
-        : embeddedPages[j].width;
+        : embeddedPage.width;
       const pageHeight = isPageSize(basePdf)
         ? mm2pt(basePdf.height)
-        : embeddedPages[j].height;
+        : embeddedPage.height;
       const page = pdfDoc.addPage([pageWidth, pageHeight]);
-      if (!isBlank) page.drawPage(embeddedPages[j]);
+      if (!isBlank) {
+        page.drawPage(embeddedPage);
+        const { mediaBox: mb, bleedBox: bb, trimBox: tb } = embedPdfBoxes[j];
+        page.setMediaBox(mb.x, mb.y, mb.width, mb.height);
+        page.setBleedBox(bb.x, bb.y, bb.width, bb.height);
+        page.setTrimBox(tb.x, tb.y, tb.width, tb.height);
+      }
       if (!schemas[j]) continue;
       for (let l = 0; l < keys.length; l++) {
         const key = keys[l];

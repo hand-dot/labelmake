@@ -36,6 +36,7 @@ const 履歴書 = require("./履歴書.json") as _Template;
 const 労働条件通知書 = require("./労働条件通知書.json") as _Template;
 const z97mmx210mm = require("./z97mmx210mm.json") as _Template;
 const barcodes = require("./barcodes.json") as _Template;
+const canvasPdf = require("./canvasPdf.json") as _Template;
 
 export default {
   test: {
@@ -107,4 +108,5 @@ export default {
   労働条件通知書,
   z97mmx210mm,
   barcodes,
+  canvasPdf,
 };

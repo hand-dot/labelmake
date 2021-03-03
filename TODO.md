@@ -1,0 +1,2 @@
+- 画像やバーコードのときの背景の挙動確認 
+- alignment center, right + leterspacingで位置がおかしくなる
