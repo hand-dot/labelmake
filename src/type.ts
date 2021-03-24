@@ -14,7 +14,7 @@ type TemplateType =
 
 export type BarCodeType = Exclude<TemplateType, "text" | "image">;
 
-interface TemplateSchema {
+export interface TemplateSchema {
   type: TemplateType;
   position: { x: number; y: number };
   width: number;
