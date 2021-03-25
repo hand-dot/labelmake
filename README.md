@@ -69,7 +69,7 @@ Detailed specifications can be found in the api documentation.
 
 ## [Services that are used in Production](https://labelmake.jp/)
 
-[![production](./assets/lib-production.png)](https://labelmake.jp/javascript-pdf-generator-library/)
+[![production](./assets/lib-production.png)](https://labelmake.jp/)
 
 [labelmake.jp](https://labelmake.jp/) - variable data printing service.(Japanese)
 
