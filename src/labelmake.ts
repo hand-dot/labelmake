@@ -11,62 +11,11 @@ import {
 } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { createBarCode } from "./barcode";
+import { uniq, hex2rgb, mm2pt, calcX, calcY } from "./util"
 import { Args, isPageSize, isSubsetFont } from "./type";
+import { barcodes } from "./constants"
 
-const barcodes = [
-  "qrcode",
-  "ean13",
-  "ean8",
-  "japanpost",
-  "code39",
-  "code128",
-  "nw7",
-  "itf14",
-  "upca",
-  "upce",
-];
 
-const uniq = <T>(array: Array<T>) => Array.from(new Set(array));
-
-const hex2rgb = (hex: string) => {
-  if (hex.slice(0, 1) === "#") hex = hex.slice(1);
-  if (hex.length === 3)
-    hex =
-      hex.slice(0, 1) +
-      hex.slice(0, 1) +
-      hex.slice(1, 2) +
-      hex.slice(1, 2) +
-      hex.slice(2, 3) +
-      hex.slice(2, 3);
-
-  return [hex.slice(0, 2), hex.slice(2, 4), hex.slice(4, 6)].map((str) =>
-    parseInt(str, 16)
-  );
-};
-
-const mm2pt = (mm: number): number => {
-  // https://www.ddc.co.jp/words/archives/20090701114500.html
-  const ptRatio = 2.8346;
-  return parseFloat(String(mm)) * ptRatio;
-};
-
-const calcX = (
-  x: number,
-  alignment: "left" | "right" | "center",
-  boxWidth: number,
-  textWidth: number
-) => {
-  let addition = 0;
-  if (alignment === "center") {
-    addition = (boxWidth - textWidth) / 2;
-  } else if (alignment === "right") {
-    addition = boxWidth - textWidth;
-  }
-  return mm2pt(x) + addition;
-};
-
-const calcY = (y: number, height: number, itemHeight: number) =>
-  height - mm2pt(y) - itemHeight;
 
 const labelmake = async ({ inputs, template, font }: Args) => {
   if (inputs.length < 1) {
@@ -102,23 +51,23 @@ const labelmake = async ({ inputs, template, font }: Args) => {
     font && (template.fontName || fontNamesInSchemas.length > 0);
   const fontValues = isUseMyfont
     ? await Promise.all(
-        Object.values(font!).map((v) =>
-          pdfDoc.embedFont(isSubsetFont(v) ? v.data : v, {
-            subset: isSubsetFont(v) ? v.subset : true,
-          })
-        )
+      Object.values(font!).map((v) =>
+        pdfDoc.embedFont(isSubsetFont(v) ? v.data : v, {
+          subset: isSubsetFont(v) ? v.subset : true,
+        })
       )
+    )
     : [];
   const fontObj = isUseMyfont
     ? Object.keys(font!).reduce(
-        (acc, cur, i) => Object.assign(acc, { [cur]: fontValues[i] }),
-        {} as { [key: string]: PDFFont }
-      )
+      (acc, cur, i) => Object.assign(acc, { [cur]: fontValues[i] }),
+      {} as { [key: string]: PDFFont }
+    )
     : {
-        [StandardFonts.Helvetica]: await pdfDoc.embedFont(
-          StandardFonts.Helvetica
-        ),
-      };
+      [StandardFonts.Helvetica]: await pdfDoc.embedFont(
+        StandardFonts.Helvetica
+      ),
+    };
 
   const inputImageCache: { [key: string]: PDFImage } = {};
   const { basePdf, schemas } = template;
@@ -214,7 +163,7 @@ const labelmake = async ({ inputs, template, font }: Args) => {
               let skip = false;
               const splited = il.split("").reduce((acc, cur) => {
                 const isOver =
-                  fontValue.widthOfTextAtSize(acc + cur, fontSize) > boxWidth;
+                  fontValue.widthOfTextAtSize(acc + cur, fontSize) + (((acc + cur).length - 1) * characterSpacing) > boxWidth;
                 let result = "";
                 if (isOver || skip) {
                   skip = true;
@@ -234,7 +183,7 @@ const labelmake = async ({ inputs, template, font }: Args) => {
               const textWidth = fontValue.widthOfTextAtSize(
                 inputLine2,
                 fontSize
-              );
+              ) + ((inputLine2.length - 1) * characterSpacing);
               page.drawText(inputLine2, {
                 x: calcX(schema.position.x, alignment, boxWidth, textWidth),
                 y:
@@ -252,7 +201,7 @@ const labelmake = async ({ inputs, template, font }: Args) => {
               if (splitedLine.length === index2 + 1) beforeLineOver += index2;
             });
           });
-        } else if (barcodes.includes(schema.type) || schema.type === "image") {
+        } else if (schema.type === "image" || barcodes.includes(schema.type)) {
           const opt = {
             x: calcX(schema.position.x, "left", boxWidth, boxWidth),
             y: calcY(schema.position.y, pageHeight, boxHeight),
