@@ -63,7 +63,6 @@ export const getOverPosition = (inputLine: string, isOverEval: IsOverEval) => {
 */
 const getSplitPosition = (inputLine: string, isOverEval: IsOverEval) => {
   const overPos = getOverPosition(inputLine, isOverEval)
-  console.log('overPos', inputLine, overPos)
   /**
    * if input line is shorter as the available space. We split at the end of the line
    */
@@ -83,7 +82,6 @@ const getSplitPosition = (inputLine: string, isOverEval: IsOverEval) => {
 */
 export const getSplittedLines = (inputLine: string, isOverEval: IsOverEval): string[] => {
   const splitPos = getSplitPosition(inputLine, isOverEval)
-  console.log('splitPos', inputLine, splitPos)
   const splittedLine = inputLine.substr(0, splitPos)
   const rest = inputLine.slice(splitPos).trimLeft()
   /**
