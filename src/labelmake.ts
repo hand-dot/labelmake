@@ -17,7 +17,7 @@ import { barcodes } from "./constants"
 
 
 
-const labelmake = async ({ inputs, template, font }: Args) => {
+const labelmake = async ({ inputs, template, font, splitThreshold = 3 }: Args) => {
   if (inputs.length < 1) {
     throw Error("inputs should be more than one length");
   }
@@ -165,7 +165,7 @@ const labelmake = async ({ inputs, template, font }: Args) => {
                * split if the difference is less then two pixel
                * (found out / tested this threshold heuristically, most probably widthOfTextAtSize is unprecise)
                */
-              return boxWidth - testStringWidth <= 2;
+              return boxWidth - testStringWidth <= splitThreshold;
             }
             const splitedLine = getSplittedLines(inputLine, isOverEval);
             splitedLine.forEach((inputLine2, index2) => {
