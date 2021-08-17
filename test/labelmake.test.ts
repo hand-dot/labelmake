@@ -111,23 +111,23 @@ describe("check validation", () => {
 });
 
 describe("labelmake integrate test", () => {
-  afterAll(() => {
-    const dir = __dirname + "/tmp";
-    fs.readdir(dir, (err: any, files: any) => {
-      if (err) {
-        throw err;
-      }
-      files.forEach((file: any) => {
-        if (file !== ".gitkeep") {
-          fs.unlink(`${dir}/${file}`, (err: any) => {
-            if (err) {
-              throw err;
-            }
-          });
-        }
-      });
-    });
-  });
+  // afterAll(() => {
+  //   const dir = __dirname + "/tmp";
+  //   fs.readdir(dir, (err: any, files: any) => {
+  //     if (err) {
+  //       throw err;
+  //     }
+  //     files.forEach((file: any) => {
+  //       if (file !== ".gitkeep") {
+  //         fs.unlink(`${dir}/${file}`, (err: any) => {
+  //           if (err) {
+  //             throw err;
+  //           }
+  //         });
+  //       }
+  //     });
+  //   });
+  // });
   describe("use labelmake.jp template", () => {
     const entries = Object.entries(templateData);
     for (let l = 0; l < entries.length; l++) {
@@ -135,7 +135,12 @@ describe("labelmake integrate test", () => {
       test(`snapshot ${key}`, async () => {
         const inputs = template.sampledata;
         const hrstart = process.hrtime();
-        const pdf = await labelmake({ inputs, template, font });
+        const pdf = await labelmake({
+          inputs,
+          template,
+          font,
+          splitThreshold: 0,
+        });
         const hrend = process.hrtime(hrstart);
         expect(hrend[0]).toBeLessThanOrEqual(1);
         const tmpFile = getTmpPath(`${key}.pdf`);
