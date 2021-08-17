@@ -47,6 +47,7 @@ export interface Args {
   inputs: { [key: string]: string }[];
   template: Template;
   font?: Font;
+  splitThreshold?: number;
 }
 
 export const isPageSize = (

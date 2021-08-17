@@ -11,13 +11,13 @@ import {
 } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { createBarCode } from "./barcode";
-import { uniq, hex2rgb, mm2pt, calcX, calcY } from "./util"
+import { uniq, hex2rgb, mm2pt, calcX, calcY, getSplittedLines } from "./util"
 import { Args, isPageSize, isSubsetFont } from "./type";
 import { barcodes } from "./constants"
 
 
 
-const labelmake = async ({ inputs, template, font }: Args) => {
+const labelmake = async ({ inputs, template, font, splitThreshold = 3 }: Args) => {
   if (inputs.length < 1) {
     throw Error("inputs should be more than one length");
   }
@@ -157,28 +157,17 @@ const labelmake = async ({ inputs, template, font }: Args) => {
 
           let beforeLineOver = 0;
 
+
           input.split(/\r|\n|\r\n/g).forEach((inputLine, index) => {
-            // TODO UNIT TEST
-            const getSplit = (il: string, stack: string[] = []): string[] => {
-              let skip = false;
-              const splited = il.split("").reduce((acc, cur) => {
-                const isOver =
-                  fontValue.widthOfTextAtSize(acc + cur, fontSize) + (((acc + cur).length - 1) * characterSpacing) > boxWidth;
-                let result = "";
-                if (isOver || skip) {
-                  skip = true;
-                  result = acc;
-                } else {
-                  result = acc + cur;
-                }
-                return result;
-              }, "");
-              if (splited.length === 0) return stack;
-              const next = stack.concat(splited);
-              const nextLength = next.join("").length;
-              return getSplit(inputLine.substring(nextLength), next);
-            };
-            const splitedLine = getSplit(inputLine);
+            const isOverEval = (testString: string) => {
+              const testStringWidth = fontValue.widthOfTextAtSize(testString, fontSize) + ((testString.length - 1) * characterSpacing)
+              /**
+               * split if the difference is less then two pixel
+               * (found out / tested this threshold heuristically, most probably widthOfTextAtSize is unprecise)
+               */
+              return boxWidth - testStringWidth <= splitThreshold;
+            }
+            const splitedLine = getSplittedLines(inputLine, isOverEval);
             splitedLine.forEach((inputLine2, index2) => {
               const textWidth = fontValue.widthOfTextAtSize(
                 inputLine2,
