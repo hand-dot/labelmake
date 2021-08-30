@@ -14,24 +14,25 @@ type TemplateType =
 
 export type BarCodeType = Exclude<TemplateType, "text" | "image">;
 
+export type Alignment = "left" | "right" | "center";
+
+export interface PageSize {
+  height: number;
+  width: number;
+}
 export interface TemplateSchema {
   type: TemplateType;
   position: { x: number; y: number };
   width: number;
   height: number;
   rotate?: number;
-  alignment?: "left" | "right" | "center";
+  alignment?: Alignment;
   fontSize?: number;
   fontName?: string;
   fontColor?: string;
   backgroundColor?: string;
   characterSpacing?: number;
   lineHeight?: number;
-}
-
-interface PageSize {
-  height: number;
-  width: number;
 }
 
 interface SubsetFont {

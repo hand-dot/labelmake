@@ -252,7 +252,7 @@ describe("labelmake integrate test", () => {
         const res = await Promise.all([getPdf(tmpFile), getPdf(assertFile)]);
         const [a, e] = res;
         expect(a).toEqual(e);
-      });
+      }, 10000);
     });
 
     // describe.only("base bug", () => {

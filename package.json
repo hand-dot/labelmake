@@ -1,9 +1,12 @@
 {
   "name": "labelmake",
-  "version": "2.0.17",
+  "version": "2.0.18",
   "description": "PDF generation library of declarative style programing.",
   "main": "dist/labelmake.min.js",
   "typings": "dist/types/labelmake.d.ts",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest",
@@ -47,26 +50,28 @@
   "homepage": "https://github.com/hand-dot/labelmake#readme",
   "dependencies": {
     "@pdf-lib/fontkit": "^1.1.1",
-    "bwip-js": "^2.1.1",
+    "bwip-js": "^3.0.4",
     "pdf-lib": "^1.16.0"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-commonjs": "^20.0.0",
     "@rollup/plugin-json": "^4.1.0",
-    "@rollup/plugin-node-resolve": "^7.1.1",
-    "@types/bwip-js": "^1.7.0",
-    "@types/jest": "^25.1.3",
-    "@types/node": "^13.7.7",
-    "jest": "^25.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.4",
+    "@types/bwip-js": "^2.1.1",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.5",
+    "jest": "^27.1.0",
     "pdf2json": "^1.1.8",
     "rimraf": "^3.0.2",
     "rollup": "^2.0.2",
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
-    "rollup-plugin-terser": "^6.1.0",
-    "rollup-plugin-typescript2": "^0.26.0",
-    "ts-jest": "^25.2.1",
-    "ts-node": "^8.6.2",
-    "typescript": "^3.8.3"
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-visualizer": "^5.5.2",
+    "ts-jest": "^27.0.5",
+    "ts-node": "^10.2.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.2"
   }
 }
