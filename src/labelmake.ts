@@ -199,24 +199,28 @@ const labelmake = async ({ inputs, template, font, splitThreshold = 3 }: Args) =
             height: boxHeight,
           };
           const inputImageCacheKey = `${schema.type}${input}`;
-          let image = inputImageCache[inputImageCacheKey];
-          if (!image && schema.type === "image") {
-            const isPng = input.startsWith("data:image/png;");
-            image = await pdfDoc[isPng ? "embedPng" : "embedJpg"](input);
-          } else if (!image && schema.type !== "image") {
-            const imageBuf = await createBarCode({
-              type: schema.type,
-              width: schema.width,
-              height: schema.height,
-              input,
-            });
-            if (imageBuf) {
-              image = await pdfDoc.embedPng(imageBuf);
+          if (inputImageCache[inputImageCacheKey]) {
+            page.drawImage(inputImageCache[inputImageCacheKey], opt);
+          } else {
+            let image = undefined
+            if (schema.type === "image") {
+              const isPng = input.startsWith("data:image/png;");
+              image = await pdfDoc[isPng ? "embedPng" : "embedJpg"](input);
+            } else {
+              const imageBuf = await createBarCode({
+                type: schema.type,
+                width: schema.width,
+                height: schema.height,
+                input,
+              });
+              if (imageBuf) {
+                image = await pdfDoc.embedPng(imageBuf);
+              }
             }
-          }
-          if (image) {
-            inputImageCache[inputImageCacheKey] = image;
-            page.drawImage(image, opt);
+            if (image) {
+              inputImageCache[inputImageCacheKey] = image;
+              page.drawImage(image, opt);
+            }
           }
         }
       }
