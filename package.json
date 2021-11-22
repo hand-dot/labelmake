@@ -5,7 +5,7 @@
   "main": "dist/labelmake.min.js",
   "typings": "dist/types/labelmake.d.ts",
   "engines": {
-    "node": "14.x"
+    "node": ">=14"
   },
   "scripts": {
     "start": "rollup -c rollup.config.ts -w",
@@ -61,7 +61,7 @@
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.5",
     "jest": "^27.1.0",
-    "pdf2json": "^1.1.8",
+    "pdf2json": "^2.0.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.0.2",
     "rollup-plugin-node-builtins": "^2.1.2",
