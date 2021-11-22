@@ -222,6 +222,9 @@ const labelmake = async ({ inputs, template, font, splitThreshold = 3 }: Args) =
       }
     }
   }
+  const author = "labelmake (https://github.com/hand-dot/labelmake)";
+  pdfDoc.setProducer(author);
+  pdfDoc.setCreator(author);
   return await pdfDoc.save();
 };
 
