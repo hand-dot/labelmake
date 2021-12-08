@@ -8,8 +8,8 @@
   "updatedAt": null,
   "sampledata": [
     {
-      "{1}1行": "https://labelmake.jp/#1",
-      "{1}2行": "https://labelmake.jp/#2",
+      "{1}1行": "あいうえおあいうえお２",
+      "{1}2行": "漢字も有効です。",
       "{1}3行": "https://labelmake.jp/#3",
       "{1}4行": "https://labelmake.jp/#4",
       "{1}5行": "https://labelmake.jp/#5",

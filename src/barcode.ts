@@ -1,13 +1,12 @@
 import bwipjs from "bwip-js";
+import Encoding from "encoding-japanese";
 import { BarCodeType } from "./type";
 
 export const validateBarcodeInput = (type: BarCodeType, input: string) => {
   if (!input) return false;
   if (type === "qrcode") {
-    // 漢字を含まない500文字以下
-    const regexp =
-      /([\u{3005}\u{3007}\u{303b}\u{3400}-\u{9FFF}\u{F900}-\u{FAFF}\u{20000}-\u{2FFFF}][\u{E0100}-\u{E01EF}\u{FE00}-\u{FE02}]?)/mu;
-    return !regexp.test(input) && input.length < 500;
+    // 500文字以下
+    return input.length < 500;
   } else if (type === "japanpost") {
     // 郵便番号は数字(0-9)のみ。住所表示番号は英数字(0-9,A-Z)とハイフン(-)が使用可能です。
     const regexp = /^(\d{7})(\d|[A-Z]|-)+$/;
@@ -68,7 +67,7 @@ export const createBarCode = async ({
   if (input && validateBarcodeInput(type, input)) {
     const bwipjsArg = {
       bcid: type === "nw7" ? "rationalizedCodabar" : type,
-      text: input,
+      text: type === "qrcode" ? Encoding.convert(input, "SJIS") : input,
       scale: 5,
       width,
       height,
