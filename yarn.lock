@@ -648,11 +648,6 @@
   dependencies:
     "@types/node" "*"
 
-"@types/encoding-japanese@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.yarnpkg.com/@types/encoding-japanese/-/encoding-japanese-1.0.18.tgz#2e86cb46bbc88d7a42878e7a86af44aaf97754ca"
-  integrity sha512-tjfjChRDhI2gpbOhccj4O9txN7nLnZEWyFA3fPGO0VchGeH6FeogwNfXvEyuHM+SlKEc7Q+/kt1/4nRNgP8SeQ==
-
 "@types/estree@*":
   version "0.0.50"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.50.tgz#1e0caa9364d3fccd2931c3ed96fdbeaa5d4cca83"
@@ -1417,11 +1412,6 @@ emoji-regex@^8.0.0:
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-8.0.0.tgz#e818fd69ce5ccfcb404594f842963bf53164cc37"
   integrity sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==
-
-encoding-japanese@^1.0.30:
-  version "1.0.30"
-  resolved "https://registry.yarnpkg.com/encoding-japanese/-/encoding-japanese-1.0.30.tgz#537c4d62881767925d601acb4c79fb14db81703a"
-  integrity sha512-bd/DFLAoJetvv7ar/KIpE3CNO8wEuyrt9Xuw6nSMiZ+Vrz/Q21BPsMHvARL2Wz6IKHKXgb+DWZqtRg1vql9cBg==
 
 errno@^0.1.1, errno@~0.1.1:
   version "0.1.7"

@@ -1,5 +1,4 @@
 import bwipjs, {ToBufferOptions} from "bwip-js";
-import Encoding from "encoding-japanese";
 import { BarCodeType } from "./type";
 
 export const validateBarcodeInput = (type: BarCodeType, input: string) => {
