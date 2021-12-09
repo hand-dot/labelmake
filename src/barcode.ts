@@ -1,4 +1,4 @@
-import bwipjs from "bwip-js";
+import bwipjs, {ToBufferOptions} from "bwip-js";
 import Encoding from "encoding-japanese";
 import { BarCodeType } from "./type";
 
@@ -58,21 +58,26 @@ export const createBarCode = async ({
   input,
   width,
   height,
+  backgroundcolor,
 }: {
   type: BarCodeType;
   input: string | null;
   width: number;
   height: number;
+  backgroundcolor?: string;
 }): Promise<Buffer | null> => {
   if (input && validateBarcodeInput(type, input)) {
-    const bwipjsArg = {
+    const bwipjsArg: ToBufferOptions = {
       bcid: type === "nw7" ? "rationalizedCodabar" : type,
-      text: type === "qrcode" ? Encoding.convert(input, "SJIS") : input,
+      text: input,
       scale: 5,
       width,
       height,
       includetext: true,
     };
+    if (backgroundcolor) {
+      bwipjsArg.backgroundcolor = backgroundcolor;
+    }
     const buffer = await bwipjs.toBuffer(bwipjsArg).catch(() => null);
     return buffer;
   } else {
