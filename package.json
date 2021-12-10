@@ -60,6 +60,7 @@
     "@types/bwip-js": "^2.1.1",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.5",
+    "@types/pngjs": "^6.0.1",
     "jest": "^27.1.0",
     "jsqr": "^1.4.0",
     "pdf2json": "^2.0.0",

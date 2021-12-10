@@ -1,7 +1,6 @@
 import { validateBarcodeInput, createBarCode } from "../src/barcode";
-import jsQR, {QRCode} from 'jsqr';
-import * as fs from "fs";
-const PNG = require('pngjs').PNG;
+import jsQR, { QRCode } from "jsqr";
+import { PNG } from "pngjs";
 
 describe("validateBarcodeInput", () => {
   test("qrcode", () => {
@@ -183,33 +182,33 @@ describe("validateBarcodeInput", () => {
  * 生成したQRコード（png）画像から入力データが正常に読み取れるかをテスト
  */
 describe("createBarCode", () => {
- describe("qrcode", () => {
-   const type = "qrcode";
-
-   // テスト名, input, expected
-   const tests = [
-     ["URL", "https://www.google.com/", "https://www.google.com/"],
-     ["ひらがな", "てすとです", "てすとです"],
-     ["カタカナ", "テストです", "テストです"],
-     ["漢字", "お正月", "お正月"],
-     ["中国語", "新年快乐", "新年快乐"],
-     ["タイ語", "สวัสดีปีใหม่", "สวัสดีปีใหม่"],
-   ];
-   for (const t of tests) {
-     test(`${t[0]}: ${t[1]}`, async () => {
-       const buffer = await createBarCode({
-         type: type,
-         input: t[1],
-         width: 10, // mm
-         height: 10, // mm
-         backgroundcolor: '00000000' // 背景色を指定しないとjsQRでうまく解析できない
-       }) as Buffer;
-       const png = PNG.sync.read(buffer);
-       const qrcode = jsQR(png.data, png.width, png.height) as QRCode;
-       expect(qrcode).not.toBeNull();
-       const dataBuffer = new Buffer(qrcode.binaryData);
-       expect(dataBuffer.toString('utf8')).toEqual(t[2]);
-     });
-   }
- });
+  describe("qrcode", () => {
+    // テスト名, input, expected
+    const tests = [
+      ["URL", "https://www.google.com/", "https://www.google.com/"],
+      ["ひらがな", "てすとです", "てすとです"],
+      ["ひらがな2", "あいうえおあいうえお２", "あいうえおあいうえお２"],
+      ["カタカナ", "テストです", "テストです"],
+      ["漢字", "お正月", "お正月"],
+      ["中国語", "新年快乐", "新年快乐"],
+      ["タイ語", "สวัสดีปีใหม่", "สวัสดีปีใหม่"],
+    ];
+    for (const t of tests) {
+      test(`${t[0]}: ${t[1]}`, async () => {
+        const buffer = (await createBarCode({
+          type: "qrcode",
+          input: t[1],
+          width: 10, // mm
+          height: 10, // mm
+          backgroundColor: "00000000", // 背景色を指定しないとjsQRでうまく解析できない
+        })) as Buffer;
+        const png = PNG.sync.read(buffer);
+        const pngData = new Uint8ClampedArray(png.data);
+        const qr = jsQR(pngData, png.width, png.height) as QRCode;
+        expect(qr).not.toBeNull();
+        const dataBuffer = Buffer.from(qr.binaryData);
+        expect(dataBuffer.toString("utf8")).toEqual(t[2]);
+      });
+    }
+  });
 });

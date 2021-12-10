@@ -1,4 +1,4 @@
-import bwipjs, {ToBufferOptions} from "bwip-js";
+import bwipjs, { ToBufferOptions } from "bwip-js";
 import { BarCodeType } from "./type";
 
 export const validateBarcodeInput = (type: BarCodeType, input: string) => {
@@ -57,13 +57,13 @@ export const createBarCode = async ({
   input,
   width,
   height,
-  backgroundcolor,
+  backgroundColor,
 }: {
   type: BarCodeType;
   input: string | null;
   width: number;
   height: number;
-  backgroundcolor?: string;
+  backgroundColor?: string;
 }): Promise<Buffer | null> => {
   if (input && validateBarcodeInput(type, input)) {
     const bwipjsArg: ToBufferOptions = {
@@ -74,8 +74,8 @@ export const createBarCode = async ({
       height,
       includetext: true,
     };
-    if (backgroundcolor) {
-      bwipjsArg.backgroundcolor = backgroundcolor;
+    if (backgroundColor) {
+      bwipjsArg.backgroundcolor = backgroundColor;
     }
     const buffer = await bwipjs.toBuffer(bwipjsArg).catch(() => null);
     return buffer;
