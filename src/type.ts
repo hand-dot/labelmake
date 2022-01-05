@@ -33,6 +33,7 @@ export interface TemplateSchema {
   backgroundColor?: string;
   characterSpacing?: number;
   lineHeight?: number;
+  keepAspectRatio?: boolean;
 }
 
 interface SubsetFont {
@@ -45,7 +46,7 @@ interface Font {
 }
 
 export interface Args {
-  inputs: { [key: string]: string }[];
+  inputs: { [key: string]: string | Buffer }[];
   template: Template;
   font?: Font;
   splitThreshold?: number;

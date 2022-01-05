@@ -10,8 +10,9 @@ import {
   TransformationMatrix,
 } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
+import sizeOf from "image-size";
 import { createBarCode } from "./barcode";
-import { uniq, hex2rgb, mm2pt, calcX, calcY, getSplittedLines } from "./util"
+import { uniq, hex2rgb, mm2pt, mm2px, px2pt, calcX, calcY, getSplittedLines } from "./util"
 import { Args, isPageSize, isSubsetFont } from "./type";
 import { barcodes } from "./constants"
 
@@ -124,12 +125,18 @@ const labelmake = async ({ inputs, template, font, splitThreshold = 3 }: Args) =
       for (let l = 0; l < keys.length; l++) {
         const key = keys[l];
         const schema = schemas[j][key];
-        const input = inputObj[key];
+        let input = inputObj[key];
         if (!schema || !input) continue;
+
         const rotate = degrees(schema.rotate ? schema.rotate : 0);
+
         const boxWidth = mm2pt(schema.width);
         const boxHeight = mm2pt(schema.height);
+
+        const alignment = schema.alignment ? schema.alignment : "left";
+
         if (schema.type === "text") {
+          input = input as string;
           if (schema.backgroundColor) {
             const [br, bg, bb] = hex2rgb(schema.backgroundColor);
             page.drawRectangle({
@@ -148,7 +155,6 @@ const labelmake = async ({ inputs, template, font, splitThreshold = 3 }: Args) =
             schema.fontColor ? schema.fontColor : "#000"
           );
           const fontSize = schema.fontSize ? schema.fontSize : 13;
-          const alignment = schema.alignment ? schema.alignment : "left";
           const lineHeight = schema.lineHeight ? schema.lineHeight : 1;
           const characterSpacing = schema.characterSpacing
             ? schema.characterSpacing
@@ -191,29 +197,65 @@ const labelmake = async ({ inputs, template, font, splitThreshold = 3 }: Args) =
             });
           });
         } else if (schema.type === "image" || barcodes.includes(schema.type)) {
-          const opt = {
-            x: calcX(schema.position.x, "left", boxWidth, boxWidth),
-            y: calcY(schema.position.y, pageHeight, boxHeight),
-            rotate: rotate,
-            width: boxWidth,
-            height: boxHeight,
-          };
-          const inputImageCacheKey = `${schema.type}${input}`;
-          let image = inputImageCache[inputImageCacheKey];
-          if (!image && schema.type === "image") {
-            const isPng = input.startsWith("data:image/png;");
-            image = await pdfDoc[isPng ? "embedPng" : "embedJpg"](input);
-          } else if (!image && schema.type !== "image") {
-            const imageBuf = await createBarCode({
-              type: schema.type,
-              width: schema.width,
-              height: schema.height,
-              input,
-            });
-            if (imageBuf) {
-              image = await pdfDoc.embedPng(imageBuf);
+
+          let imgWidth = boxWidth;
+          let imgHeight = boxWidth;
+          let imgType = 'png';
+          if (schema.type === "image") {
+            let dimensions;
+            if (!Buffer.isBuffer(input)) {
+              input = input as string;
+              const dataUriPrefix =  ';base64,';
+              const idx = input.indexOf(dataUriPrefix);
+              const imgBase64 = input.substring(idx + dataUriPrefix.length, input.length);
+              input = Buffer.from(imgBase64, 'base64');
+            }
+            dimensions = sizeOf(input);
+
+            if (dimensions.type) {
+              imgType = dimensions.type;
+            }
+
+            if (schema.keepAspectRatio && dimensions.width && dimensions.height) {
+              const srcWidth = dimensions.width;
+              const srcHeight = dimensions.height;
+
+              const ratio = Math.min(
+                mm2px(schema.width) / srcWidth,
+                mm2px(schema.height) / srcHeight
+              );
+
+              imgWidth = px2pt(srcWidth * ratio);
+              imgHeight = px2pt(srcHeight * ratio);
             }
           }
+
+          const opt = {
+            x: calcX(schema.position.x, alignment, boxWidth, imgWidth),
+            y: calcY(schema.position.y, pageHeight, boxHeight),
+            rotate: rotate,
+            width: imgWidth,
+            height: imgHeight,
+          };
+
+          const inputImageCacheKey = `${schema.type}:${key}:${i}`;
+          let image = inputImageCache[inputImageCacheKey];
+          if (!image) {
+            if (schema.type === "image") {
+              image = await pdfDoc[imgType === 'png' ? "embedPng" : "embedJpg"](input);
+            } else {
+              const imageBuf = await createBarCode({
+                type: schema.type,
+                width: schema.width,
+                height: schema.height,
+                input: input as string,
+              });
+              if (imageBuf) {
+                image = await pdfDoc.embedPng(imageBuf);
+              }
+            }
+          }
+
           if (image) {
             inputImageCache[inputImageCacheKey] = image;
             page.drawImage(image, opt);

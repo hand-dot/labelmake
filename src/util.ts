@@ -22,6 +22,18 @@ export const mm2pt = (mm: number): number => {
   return parseFloat(String(mm)) * ptRatio;
 };
 
+export const mm2px = (mm: number): number => {
+  // http://www.endmemo.com/sconvert/millimeterpixel.php
+  const ratio = 3.7795275593333;
+  return parseFloat(String(mm)) * ratio;
+}
+
+export const px2pt = (px: number): number => {
+  // http://www.endmemo.com/sconvert/millimeterpixel.php
+  const ratio = 0.75;
+  return parseFloat(String(px)) * ratio;
+}
+
 export const calcX = (
     x: number,
     alignment: "left" | "right" | "center",
@@ -36,16 +48,16 @@ export const calcX = (
     }
     return mm2pt(x) + addition;
   };
-  
+
 export const calcY = (y: number, height: number, itemHeight: number) =>
     height - mm2pt(y) - itemHeight;
 
 
 type IsOverEval = (testString: string) => boolean
 /**
- * Incrementally check the current line for it's real length 
+ * Incrementally check the current line for it's real length
  * and return the position where it exceeds the bbox width.
- * 
+ *
  * return `null` to indicate if inputLine is shorter as the available bbox
  */
 export const getOverPosition = (inputLine: string, isOverEval: IsOverEval) => {
@@ -58,7 +70,7 @@ export const getOverPosition = (inputLine: string, isOverEval: IsOverEval) => {
 }
 
 /**
-* Get position of the split. Split the exceeding line at 
+* Get position of the split. Split the exceeding line at
 * the last whitepsace bevor it exceeds the bounding box width.
 */
 const getSplitPosition = (inputLine: string, isOverEval: IsOverEval) => {
@@ -70,14 +82,14 @@ const getSplitPosition = (inputLine: string, isOverEval: IsOverEval) => {
   let overPosTmp = overPos
   while(inputLine[overPosTmp] !== " " && overPosTmp >= 0) overPosTmp--;
   /**
-   * for very long lines with no whitespace use the original overPos and 
+   * for very long lines with no whitespace use the original overPos and
    * split one char bevor so we do not overfill the bbox
    */
   return overPosTmp > 0 ? overPosTmp : overPos - 1;
 }
 
-/** 
-* recursivly split the line at getSplitPosition. 
+/**
+* recursivly split the line at getSplitPosition.
 * If there is some leftover, split the rest again in the same manner.
 */
 export const getSplittedLines = (inputLine: string, isOverEval: IsOverEval): string[] => {
