@@ -50,7 +50,7 @@
   "homepage": "https://github.com/hand-dot/labelmake#readme",
   "dependencies": {
     "@pdf-lib/fontkit": "^1.1.1",
-    "bwip-js": "^3.0.4",
+    "bwip-js": "^2.1.3",
     "pdf-lib": "^1.16.0"
   },
   "devDependencies": {

@@ -1,29 +1,20 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "node",
-        "target": "es5",
-        "downlevelIteration": true,
-        "module": "es2015",
-        "lib": [
-            "es2015",
-            "es2016",
-            "es2017",
-            "dom"
-        ],
-        "strict": true,
-        "sourceMap": true,
-        "declaration": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
-        "declarationDir": "dist/types",
-        "outDir": "dist/lib",
-        "typeRoots": [
-            "node_modules/@types"
-        ]
-    },
-    "include": [
-        "src"
-    ]
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "target": "es5",
+    "downlevelIteration": true,
+    "module": "es2015",
+    "lib": ["es2015", "es2016", "es2017", "dom"],
+    "strict": true,
+    "sourceMap": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "declarationDir": "dist/types",
+    "outDir": "dist/lib",
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": ["declaration.d.ts", "src/**/*.ts"]
 }
