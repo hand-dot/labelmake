@@ -4,6 +4,28 @@ import bwipjsBrowser from "bwip-js/dist/bwip-js";
 import { BarCodeType } from "./type";
 import { b64toUint8Array } from "./util";
 
+// GTIN-13, GTIN-8, GTIN-12, GTIN-14
+const validateCheckDigit = (input: string, checkDigitPos: number) => {
+  let passCheckDigit = true;
+
+  if (input.length === checkDigitPos) {
+    const ds = input.slice(0, -1).replace(/[^0-9]/g, "");
+    let sum = 0;
+    let odd = 1;
+    for (let i = ds.length - 1; i > -1; i -= 1) {
+      sum += Number(ds[i]) * (odd ? 3 : 1);
+      odd ^= 1;
+      if (sum > 0xffffffffffff) {
+        // ~2^48 at max
+        sum %= 10;
+      }
+    }
+    passCheckDigit = String(10 - (sum % 10)).slice(-1) === input.slice(-1);
+  }
+
+  return passCheckDigit;
+};
+
 export const validateBarcodeInput = (type: BarCodeType, input: string) => {
   if (!input) return false;
   if (type === "qrcode") {
@@ -16,11 +38,11 @@ export const validateBarcodeInput = (type: BarCodeType, input: string) => {
   } else if (type === "ean13") {
     // 有効文字は数値(0-9)のみ。チェックデジットを含まない12桁orチェックデジットを含む13桁。
     const regexp = /^\d{12}$|^\d{13}$/;
-    return regexp.test(input);
+    return regexp.test(input) && validateCheckDigit(input, 13);
   } else if (type === "ean8") {
     // 有効文字は数値(0-9)のみ。チェックデジットを含まない7桁orチェックデジットを含む8桁。
     const regexp = /^\d{7}$|^\d{8}$/;
-    return regexp.test(input);
+    return regexp.test(input) && validateCheckDigit(input, 8);
   } else if (type === "code39") {
     // 有効文字は数字(0-9)。アルファベット大文字(A-Z)、記号(-.$/+%)、半角スペース。
     const regexp = /^(\d|[A-Z]|\-|\.|\$|\/|\+|\%|\s)+$/;
@@ -41,16 +63,16 @@ export const validateBarcodeInput = (type: BarCodeType, input: string) => {
   } else if (type === "itf14") {
     // 有効文字は数値(0-9)のみ。 チェックデジットを含まない13桁orチェックデジットを含む14桁。
     const regexp = /^\d{13}$|^\d{14}$/;
-    return regexp.test(input);
+    return regexp.test(input) && validateCheckDigit(input, 14);
   } else if (type === "upca") {
     // 有効文字は数値(0-9)のみ。 チェックデジットを含まない11桁orチェックデジットを含む12桁。
     const regexp = /^\d{11}$|^\d{12}$/;
-    return regexp.test(input);
+    return regexp.test(input) && validateCheckDigit(input, 12);
   } else if (type === "upce") {
     // 有効文字は数値(0-9)のみ。 1桁目に指定できる数字(ナンバーシステムキャラクタ)は0のみ。
     // チェックデジットを含まない7桁orチェックデジットを含む8桁。
     const regexp = /^0(\d{6}$|\d{7}$)/;
-    return regexp.test(input);
+    return regexp.test(input) && validateCheckDigit(input, 8);
   }
   return false;
 };
