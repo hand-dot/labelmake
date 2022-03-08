@@ -1,4 +1,4 @@
-> :warning: **labelmake is now archived. Please use [pdfme](https://github.com/pdfme/pdfme).
+> :warning: **labelmake has now stopped development. Please use [pdfme](https://github.com/pdfme/pdfme).
 pdfme is a renewed version of labelmake which allows to use template designers as a UI library, improved documentation, etc. Of course, open source and MIT licensed.**
 
 
