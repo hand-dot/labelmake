@@ -1,3 +1,7 @@
+> :warning: **labelmake is now archived. Please use [pdfme](https://github.com/pdfme/pdfme).
+pdfme is a renewed version of labelmake which allows to use template designers as a UI library, improved documentation, etc. Of course, open source and MIT licensed.**
+
+
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=JavaScript%20PDF%20Library.%20Works%20on%20Node%20and%20Browser!!&hashtags=JS,PDF&url=https://labelmake.jp/javascript-pdf-generator-library&via=labelmake)
 ![npm](https://img.shields.io/npm/v/labelmake)
 ![NPM](https://img.shields.io/npm/l/labelmake)
